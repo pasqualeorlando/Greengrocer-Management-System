@@ -7,9 +7,10 @@
   * [Eclipse](https://www.eclipse.org/) - IDE per lo sviluppo in Java
   * [PostgreSQL](https://www.postgresql.org/) - Database Management System
   * [Java Swing - WindowBuilder](https://www.eclipse.org/windowbuilder/) estensione dell'Eclipse Marketplace - usata per creare GUIs
-  * Raspberry PI4 - usato per ospitare il database (Apache2 webserver & Postgresql server)
+  
 ## Versionamento  
   Abbiamo utilizzato l'estensione [Egit](https://www.eclipse.org/egit/) dell'Eclipse Marketplace e [GitHub](https://www.github.com) per il versionamento.
+  
 ## Autori
   **ID Gruppo**: 6
   * **Pasquale Orlando** - Matricola: N86003266
