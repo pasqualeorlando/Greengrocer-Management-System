@@ -1,9 +1,18 @@
 package Enum;
 
-public enum TAllevamento {
+public enum TAllevamento{
+	Biologico(0),
+	Aperto(1),
+	Terra(2),
+	Gabbia(3);
+	
+	private int numeroAllevamento;
 
-	0,
-	1,
-	2,
-	3
+	private TAllevamento(int n) {
+		this.numeroAllevamento = n;
+	}
+
+	public int getNumber() {
+		return numeroAllevamento;
+	}
 }
