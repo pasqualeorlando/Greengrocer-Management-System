@@ -1,6 +1,7 @@
 package Classi;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Prodotto {
 	
@@ -13,6 +14,20 @@ public class Prodotto {
 	private double PrezzoUnitario;
 	private int ScontoPercentuale;
 	private double QuantitaDeposito;
+	private Fornitura Fornitura;
+	private ArrayList<SpecificaAcquisto>SpecificaAcquisto;
+	
+	//Costruttore
+	public Prodotto(String nome, String paeseDiProvenienza, double quantitaNegozio, double prezzoUnitario,
+			int scontoPercentuale, double quantitaDeposito, Classi.Fornitura fornitura) {
+		Nome = nome;
+		PaeseDiProvenienza = paeseDiProvenienza;
+		QuantitaNegozio = quantitaNegozio;
+		PrezzoUnitario = prezzoUnitario;
+		ScontoPercentuale = scontoPercentuale;
+		QuantitaDeposito = quantitaDeposito;
+		Fornitura = fornitura;
+	}
 	
 	//Getter e setter
 	public String getNome() {
@@ -63,6 +78,11 @@ public class Prodotto {
 	public void setQuantitaDeposito(double quantitaDeposito) {
 		QuantitaDeposito = quantitaDeposito;
 	}
-	
+	public Fornitura getFornitura() {
+		return Fornitura;
+	}
+	public void setFornitura(Fornitura fornitura) {
+		Fornitura = fornitura;
+	}
 	
 }

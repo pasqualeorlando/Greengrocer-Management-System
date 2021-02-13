@@ -8,6 +8,18 @@ public class Fornitura {
 	private double QuantitaFornita;
 	private LocalDate DataFornitura;
 	private double PrezzoFornitura;
+	private Prodotto Prodotto;
+	private Fornitore Fornitore;
+	
+	//Costruttore
+	public Fornitura(double quantitaFornita, LocalDate dataFornitura, double prezzoFornitura, Classi.Prodotto prodotto,
+			Classi.Fornitore fornitore) {
+		QuantitaFornita = quantitaFornita;
+		DataFornitura = dataFornitura;
+		PrezzoFornitura = prezzoFornitura;
+		Prodotto = prodotto;
+		Fornitore = fornitore;
+	}
 	
 	//Getter e setter
 	public double getQuantitaFornita() {
@@ -27,6 +39,18 @@ public class Fornitura {
 	}
 	public void setPrezzoFornitura(double prezzoFornitura) {
 		PrezzoFornitura = prezzoFornitura;
+	}
+	public Prodotto getProdotto() {
+		return Prodotto;
+	}
+	public void setProdotto(Prodotto prodotto) {
+		Prodotto = prodotto;
+	}
+	public Fornitore getFornitore() {
+		return Fornitore;
+	}
+	public void setFornitore(Fornitore fornitore) {
+		Fornitore = fornitore;
 	}
 	
 }

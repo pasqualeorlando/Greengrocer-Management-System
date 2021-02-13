@@ -13,6 +13,7 @@ public class TesseraPunti {
 	private int PuntiLatticini;
 	private int PuntiUova;
 	private int PuntiConfezionati;
+	private String CF;
 	
 	//Getter e setter
 	public String getCodiceBarre() {
@@ -62,6 +63,12 @@ public class TesseraPunti {
 	}
 	public void setPuntiConfezionati(int puntiConfezionati) {
 		PuntiConfezionati = puntiConfezionati;
+	}
+	public String getCF() {
+		return CF;
+	}
+	public void setCF(String cF) {
+		CF = cF;
 	}
 	
 

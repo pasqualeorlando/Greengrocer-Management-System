@@ -1,5 +1,7 @@
 package Classi;
 
+import java.util.ArrayList;
+
 public class CittaItaliana {
 
 	//Attributi
@@ -7,6 +9,17 @@ public class CittaItaliana {
 	private String Denominazione;
 	private String Provincia;
 	private String Regione;
+	private ArrayList<Persona>PersoneNate;
+	
+	//Costruttore
+	public CittaItaliana(String codiceCatastale, String denominazione, String provincia, String regione,
+			ArrayList<Persona> personeNate) {
+		CodiceCatastale = codiceCatastale;
+		Denominazione = denominazione;
+		Provincia = provincia;
+		Regione = regione;
+		PersoneNate = personeNate;
+	}
 	
 	//Getter e setter
 	public String getCodiceCatastale() {
@@ -33,6 +46,10 @@ public class CittaItaliana {
 	public void setRegione(String regione) {
 		Regione = regione;
 	}
-	
-	
+	public ArrayList<Persona> getPersoneNate() {
+		return PersoneNate;
+	}
+	public void setPersoneNate(ArrayList<Persona> personeNate) {
+		PersoneNate = personeNate;
+	}
 }
