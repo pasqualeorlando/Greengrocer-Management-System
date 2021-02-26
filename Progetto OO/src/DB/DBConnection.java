@@ -11,9 +11,6 @@ public class DBConnection {
 
     private static DBConnection instance;
     private Connection connection = null;
-    private final String IP = "localhost";
-    private final String PORT = "5432";
-    private String url = "jdbc:postgresql://"+IP+":"+PORT+"/Progetto";
 
     private DBConnection() throws SQLException, IOException {
         try{
@@ -26,8 +23,10 @@ public class DBConnection {
             
             String USERNAME = props.getProperty("username");
             String PASSWORD = props.getProperty("password");
+            String IP = props.getProperty("ip");
+            String URL = "jdbc:postgresql://"+IP+":5432"+"/Progetto";
             
-            connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         }
         catch (ClassNotFoundException ex){
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());
