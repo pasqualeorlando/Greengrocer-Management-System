@@ -10,16 +10,16 @@ public class Prodotto {
 	private String PaeseDiProvenienza;
 	private String Marca;
 	private LocalDate DataScadenza;
-	private double QuantitaNegozio;
-	private double PrezzoUnitario;
+	private float QuantitaNegozio;
+	private float PrezzoUnitario;
 	private int ScontoPercentuale;
-	private double QuantitaDeposito;
+	private float QuantitaDeposito;
 	private Fornitura Fornitura;
 	private ArrayList<SpecificaAcquisto>SpecificaAcquisto;
 	
 	//Costruttore
-	public Prodotto(String nome, String paeseDiProvenienza, double quantitaNegozio, double prezzoUnitario,
-			int scontoPercentuale, double quantitaDeposito, Classi.Fornitura fornitura) {
+	public Prodotto(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura) {
 		Nome = nome;
 		PaeseDiProvenienza = paeseDiProvenienza;
 		QuantitaNegozio = quantitaNegozio;
@@ -54,16 +54,16 @@ public class Prodotto {
 	public void setDataScadenza(LocalDate dataScadenza) {
 		DataScadenza = dataScadenza;
 	}
-	public double getQuantitaNegozio() {
+	public float getQuantitaNegozio() {
 		return QuantitaNegozio;
 	}
-	public void setQuantitaNegozio(double quantitaNegozio) {
+	public void setQuantitaNegozio(float quantitaNegozio) {
 		QuantitaNegozio = quantitaNegozio;
 	}
-	public double getPrezzoUnitario() {
+	public float getPrezzoUnitario() {
 		return PrezzoUnitario;
 	}
-	public void setPrezzoUnitario(double prezzoUnitario) {
+	public void setPrezzoUnitario(float prezzoUnitario) {
 		PrezzoUnitario = prezzoUnitario;
 	}
 	public int getScontoPercentuale() {
@@ -72,10 +72,10 @@ public class Prodotto {
 	public void setScontoPercentuale(int scontoPercentuale) {
 		ScontoPercentuale = scontoPercentuale;
 	}
-	public double getQuantitaDeposito() {
+	public float getQuantitaDeposito() {
 		return QuantitaDeposito;
 	}
-	public void setQuantitaDeposito(double quantitaDeposito) {
+	public void setQuantitaDeposito(float quantitaDeposito) {
 		QuantitaDeposito = quantitaDeposito;
 	}
 	public Fornitura getFornitura() {

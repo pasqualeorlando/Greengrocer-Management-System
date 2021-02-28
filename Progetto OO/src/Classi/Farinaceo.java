@@ -8,8 +8,8 @@ public class Farinaceo extends Prodotto {
 	private TFarinaceo TipoFarinaceo;
 	
 	//Costruttore
-	public Farinaceo(String nome, String paeseDiProvenienza, double quantitaNegozio, double prezzoUnitario,
-			int scontoPercentuale, double quantitaDeposito, Classi.Fornitura fornitura, TFarinaceo tipoFarinaceo) {
+	public Farinaceo(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, TFarinaceo tipoFarinaceo) {
 		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		TipoFarinaceo = tipoFarinaceo;

@@ -9,13 +9,13 @@ public class Acquisto {
 	private LocalDateTime DataOra;
 	private char Cassa;
 	private int ScontoPercentuale;
-	private double Totale;
+	private float Totale;
 	private boolean Completato;
 	private String CF;
 	private ArrayList<SpecificaAcquisto>SpecificaAcquisto;
 	
 	//Costruttore
-	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, double totale, boolean completato) {
+	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato) {
 		DataOra = dataOra;
 		Cassa = cassa;
 		ScontoPercentuale = scontoPercentuale;
@@ -23,7 +23,7 @@ public class Acquisto {
 		Completato = completato;
 	}
 	
-	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, double totale, boolean completato, String cf) {
+	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato, String cf) {
 		DataOra = dataOra;
 		Cassa = cassa;
 		ScontoPercentuale = scontoPercentuale;
@@ -51,10 +51,10 @@ public class Acquisto {
 	public void setScontoPercentuale(int scontoPercentuale) {
 		ScontoPercentuale = scontoPercentuale;
 	}
-	public double getTotale() {
+	public float getTotale() {
 		return Totale;
 	}
-	public void setTotale(double totale) {
+	public void setTotale(float totale) {
 		Totale = totale;
 	}
 	public boolean isCompletato() {

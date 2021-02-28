@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Fornitura {
 	
 	//Attributi
-	private double QuantitaFornita;
+	private float QuantitaFornita;
 	private LocalDate DataFornitura;
-	private double PrezzoFornitura;
+	private float PrezzoFornitura;
 	private Prodotto Prodotto;
 	private Fornitore Fornitore;
 	
 	//Costruttore
-	public Fornitura(double quantitaFornita, LocalDate dataFornitura, double prezzoFornitura, Classi.Prodotto prodotto,
+	public Fornitura(float quantitaFornita, LocalDate dataFornitura, float prezzoFornitura, Classi.Prodotto prodotto,
 			Classi.Fornitore fornitore) {
 		QuantitaFornita = quantitaFornita;
 		DataFornitura = dataFornitura;
@@ -22,10 +22,10 @@ public class Fornitura {
 	}
 	
 	//Getter e setter
-	public double getQuantitaFornita() {
+	public float getQuantitaFornita() {
 		return QuantitaFornita;
 	}
-	public void setQuantitaFornita(double quantitaFornita) {
+	public void setQuantitaFornita(float quantitaFornita) {
 		QuantitaFornita = quantitaFornita;
 	}
 	public LocalDate getDataFornitura() {
@@ -34,10 +34,10 @@ public class Fornitura {
 	public void setDataFornitura(LocalDate dataFornitura) {
 		DataFornitura = dataFornitura;
 	}
-	public double getPrezzoFornitura() {
+	public float getPrezzoFornitura() {
 		return PrezzoFornitura;
 	}
-	public void setPrezzoFornitura(double prezzoFornitura) {
+	public void setPrezzoFornitura(float prezzoFornitura) {
 		PrezzoFornitura = prezzoFornitura;
 	}
 	public Prodotto getProdotto() {

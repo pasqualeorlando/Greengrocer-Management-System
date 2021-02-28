@@ -3,13 +3,13 @@ package Classi;
 public class SpecificaAcquisto {
 
 	//Attributi
-	private double QuantitaAcquistata;
+	private float QuantitaAcquistata;
 	private Acquisto Acq;
 	private Prodotto Prod;
 
 	
 	//Costruttore
-	public SpecificaAcquisto(double quantitaAcquistata, Acquisto acq, Prodotto prod) {
+	public SpecificaAcquisto(float quantitaAcquistata, Acquisto acq, Prodotto prod) {
 		super();
 		QuantitaAcquistata = quantitaAcquistata;
 		Acq = acq;
@@ -18,10 +18,10 @@ public class SpecificaAcquisto {
 	
 	
 	//Getter e setter
-	public double getQuantitaAcquistata() {
+	public float getQuantitaAcquistata() {
 		return QuantitaAcquistata;
 	}
-	public void setQuantitaAcquistata(double quantitaAcquistata) {
+	public void setQuantitaAcquistata(float quantitaAcquistata) {
 		QuantitaAcquistata = quantitaAcquistata;
 	}
 	public Acquisto getAcq() {

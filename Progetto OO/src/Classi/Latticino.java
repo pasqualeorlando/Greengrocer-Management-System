@@ -9,8 +9,8 @@ public class Latticino extends Prodotto {
 	private LocalDate DataMungitura;
 	
 	//Costruttore
-	public Latticino(String nome, String paeseDiProvenienza, double quantitaNegozio, double prezzoUnitario,
-			int scontoPercentuale, double quantitaDeposito, Classi.Fornitura fornitura, LocalDate dataProduzione,
+	public Latticino(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, LocalDate dataProduzione,
 			LocalDate dataMungitura) {
 		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);

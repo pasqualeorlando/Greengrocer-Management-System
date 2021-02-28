@@ -8,8 +8,8 @@ public class Uova extends Prodotto {
 	private TAllevamento TipoAllevamento;
 	
 	//Costruttore
-	public Uova(String nome, String paeseDiProvenienza, double quantitaNegozio, double prezzoUnitario,
-			int scontoPercentuale, double quantitaDeposito, Classi.Fornitura fornitura, TAllevamento tipoAllevamento) {
+	public Uova(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, TAllevamento tipoAllevamento) {
 		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		TipoAllevamento = tipoAllevamento;
