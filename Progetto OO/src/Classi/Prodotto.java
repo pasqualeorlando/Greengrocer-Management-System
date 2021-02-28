@@ -15,7 +15,7 @@ public class Prodotto {
 	private int ScontoPercentuale;
 	private float QuantitaDeposito;
 	private Fornitura Fornitura;
-	private ArrayList<SpecificaAcquisto>SpecificaAcquisto;
+	private ArrayList<SpecificaAcquisto> SpecificaAcquisto;
 	
 	//Costruttore
 	public Prodotto(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
@@ -83,6 +83,14 @@ public class Prodotto {
 	}
 	public void setFornitura(Fornitura fornitura) {
 		Fornitura = fornitura;
+	}
+
+	public ArrayList<SpecificaAcquisto> getSpecificaAcquisto() {
+		return SpecificaAcquisto;
+	}
+
+	public void setSpecificaAcquisto(ArrayList<SpecificaAcquisto> specificaAcquisto) {
+		SpecificaAcquisto = specificaAcquisto;
 	}
 	
 }
