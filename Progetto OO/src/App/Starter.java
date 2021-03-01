@@ -3,7 +3,6 @@ package App;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import DB.*;
 
 public class Starter {
@@ -20,7 +19,6 @@ public class Starter {
         } catch (IOException e) {
 			System.out.println("Impossibile trovare il file di configurazione del DB");
 		}
-
 	}
 
 }

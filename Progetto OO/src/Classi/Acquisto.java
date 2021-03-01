@@ -16,20 +16,20 @@ public class Acquisto {
 	
 	//Costruttore
 	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato) {
-		DataOra = dataOra;
-		Cassa = cassa;
-		ScontoPercentuale = scontoPercentuale;
-		Totale = totale;
-		Completato = completato;
+		setDataOra(dataOra);
+		setCassa(cassa);
+		setScontoPercentuale(scontoPercentuale);
+		setTotale(totale);
+		setCompletato(completato);
 	}
 	
 	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato, String cf) {
-		DataOra = dataOra;
-		Cassa = cassa;
-		ScontoPercentuale = scontoPercentuale;
-		Totale = totale;
-		Completato = completato;
-		CF = cf;
+		setDataOra(dataOra);
+		setCassa(cassa);
+		setScontoPercentuale(scontoPercentuale);
+		setTotale(totale);
+		setCompletato(completato);
+		setCF(cf);
 	}
 	
 	//Getter e setter
@@ -37,25 +37,45 @@ public class Acquisto {
 		return DataOra;
 	}
 	public void setDataOra(LocalDateTime dataOra) {
-		DataOra = dataOra;
+		if(dataOra.isAfter(LocalDateTime.now())) {
+			System.out.println("Data e ora errati, sono stati automaticamente impostati ad oggi");
+			dataOra = LocalDateTime.now();
+		}else {
+			DataOra = dataOra;
+		}
 	}
 	public char getCassa() {
 		return Cassa;
 	}
 	public void setCassa(char cassa) {
-		Cassa = cassa;
+		if(cassa-'0' < 0 || cassa-'0' > 10) {
+			System.out.println("La cassa deve essere compresa tra 0 o 9");
+			Cassa = '0';
+		}else {
+			Cassa = cassa;
+		}
 	}
 	public int getScontoPercentuale() {
 		return ScontoPercentuale;
 	}
 	public void setScontoPercentuale(int scontoPercentuale) {
-		ScontoPercentuale = scontoPercentuale;
+		if(scontoPercentuale < 0 || scontoPercentuale > 100) {
+			System.out.println("Non è possibile impostare uno sconto negativo, sarà impostato a 0");
+			ScontoPercentuale = 0;
+		}else {
+			ScontoPercentuale = scontoPercentuale;
+		}
 	}
 	public float getTotale() {
 		return Totale;
 	}
 	public void setTotale(float totale) {
-		Totale = totale;
+		if(totale<0) {
+			System.out.println("Non è possibile impostare un totale negativo");
+			Totale = 0;
+		}else {
+			Totale = totale;
+		}
 	}
 	public boolean isCompletato() {
 		return Completato;
@@ -67,7 +87,12 @@ public class Acquisto {
 		return CF;
 	}
 	public void setCF(String cF) {
-		CF = cF;
+		if(cF.length()!=16) {
+			System.out.println("CF malformato, sarà impostato a null");
+			CF = null;
+		}else {
+			CF = cF;
+		}
 	}
 	public ArrayList<SpecificaAcquisto> getSpecificaAcquisto() {
 		return SpecificaAcquisto;
