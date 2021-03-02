@@ -14,6 +14,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+
+import Classi.*;
+import Controller.Controller;
+
 import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -22,9 +26,12 @@ import java.awt.event.ActionEvent;
 public class HomepageFrame extends JFrame {
 
 	private JPanel contentPane;
+	private Controller controller;
 
 	
-	public HomepageFrame() {
+	public HomepageFrame(Controller c, Persona p) {
+		controller = c;
+		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(HomepageFrame.class.getResource("/immagini/fruits.png")));
 		setTitle("OrtofruttaPerTutti - Homepage");
@@ -42,28 +49,28 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel SalutoLabel = new JLabel("");
+		JLabel SalutoLabel = new JLabel("Ciao " + p.getNome() + "!");
 		SalutoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		SalutoLabel.setForeground(new Color(255, 255, 255));
 		SalutoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 25));
 		SalutoLabel.setBounds(21, 60, 225, 54);
 		panel.add(SalutoLabel);
 		
-		JLabel NomeLabel = new JLabel("Nome: ");
+		JLabel NomeLabel = new JLabel("Nome: " + p.getNome());
 		NomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		NomeLabel.setForeground(new Color(255, 255, 255));
 		NomeLabel.setFont(new Font("Georgia", Font.PLAIN, 18));
 		NomeLabel.setBounds(10, 221, 225, 21);
 		panel.add(NomeLabel);
 		
-		JLabel CognomeLabel = new JLabel("Cognome: ");
+		JLabel CognomeLabel = new JLabel("Cognome: " + p.getCognome());
 		CognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		CognomeLabel.setForeground(Color.WHITE);
 		CognomeLabel.setFont(new Font("Georgia", Font.PLAIN, 18));
 		CognomeLabel.setBounds(10, 266, 225, 21);
 		panel.add(CognomeLabel);
 		
-		JLabel RuoloLabel = new JLabel("Ruolo: ");
+		JLabel RuoloLabel = new JLabel("Ruolo: " + p.getRuolo());
 		RuoloLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		RuoloLabel.setForeground(Color.WHITE);
 		RuoloLabel.setFont(new Font("Georgia", Font.PLAIN, 18));
@@ -71,6 +78,11 @@ public class HomepageFrame extends JFrame {
 		panel.add(RuoloLabel);
 		
 		JButton EsciButton = new JButton("Esci");
+		EsciButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.exit();
+			}
+		});
 		EsciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(255, 255, 255)));
 		EsciButton.setContentAreaFilled(false);
 		EsciButton.setForeground(new Color(255, 255, 255));
@@ -87,6 +99,7 @@ public class HomepageFrame extends JFrame {
 		panel.add(ModificaAccButton);
 		
 		JButton PersonaleButton = new JButton("Personale");
+		PersonaleButton.setContentAreaFilled(false);
 		PersonaleButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/personale.png")));
 		PersonaleButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		PersonaleButton.setForeground(new Color(178, 34, 34));
@@ -99,6 +112,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(PersonaleButton);
 		
 		JButton ClientiButton = new JButton("Clienti");
+		ClientiButton.setContentAreaFilled(false);
 		ClientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/clienti.png")));
 		ClientiButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		ClientiButton.setForeground(new Color(178, 34, 34));
@@ -110,6 +124,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(ClientiButton);
 		
 		JButton ProdottiButton = new JButton("Prodotti");
+		ProdottiButton.setContentAreaFilled(false);
 		ProdottiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/prodotti.png")));
 		ProdottiButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		ProdottiButton.setForeground(new Color(178, 34, 34));
@@ -121,6 +136,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(ProdottiButton);
 		
 		JButton RicercaClientiButton = new JButton("<html><center>Ricerca<br>Clienti</center></html>");
+		RicercaClientiButton.setContentAreaFilled(false);
 		RicercaClientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/ricercaclienti.png")));
 		RicercaClientiButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		RicercaClientiButton.setForeground(new Color(178, 34, 34));
@@ -132,6 +148,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(RicercaClientiButton);
 		
 		JButton AcquistiButton = new JButton("<html><center>Visualizza<br>Acquisti</center></html>");
+		AcquistiButton.setContentAreaFilled(false);
 		AcquistiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzacquisto.png")));
 		AcquistiButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		AcquistiButton.setForeground(new Color(178, 34, 34));
@@ -143,6 +160,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(AcquistiButton);
 		
 		JButton FornitureButton = new JButton("<html><center>Visualizza<br>Forniture</center></html>");
+		FornitureButton.setContentAreaFilled(false);
 		FornitureButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzaforniture.png")));
 		FornitureButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		FornitureButton.setForeground(new Color(178, 34, 34));
@@ -154,6 +172,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(FornitureButton);
 		
 		JButton RifornimentoButton = new JButton("<html><center>Rifornisci<br>Negozio</center></html>");
+		RifornimentoButton.setContentAreaFilled(false);
 		RifornimentoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/rifornimento.png")));
 		RifornimentoButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		RifornimentoButton.setForeground(new Color(178, 34, 34));
@@ -165,6 +184,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(RifornimentoButton);
 		
 		JButton NuovoAcquistoButton = new JButton("<html><center>Effettua<br>Acquisto</center></html>");
+		NuovoAcquistoButton.setContentAreaFilled(false);
 		NuovoAcquistoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/acquisto.png")));
 		NuovoAcquistoButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		NuovoAcquistoButton.setForeground(new Color(178, 34, 34));
@@ -176,6 +196,7 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(NuovoAcquistoButton);
 		
 		JButton NuovaFornituraButton = new JButton("<html><center>Nuova<br>Fornitura</center></html>");
+		NuovaFornituraButton.setContentAreaFilled(false);
 		NuovaFornituraButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

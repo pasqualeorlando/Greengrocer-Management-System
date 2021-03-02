@@ -10,6 +10,7 @@ import Classi.*;
 
 public class Controller {
 	private LoginFrame Login;
+	private HomepageFrame Homepage;
 	private PersonaDAOPostgresImpl PersonaDAO;
 	
 	public Controller() {
@@ -35,7 +36,11 @@ public class Controller {
 		}else {
 			try {
 				if(PersonaDAO.controlloCredenzialiDipendente(user, password)) {
-					JOptionPane.showInternalMessageDialog(null, "Login effettuato con successo", "Login", JOptionPane.INFORMATION_MESSAGE);
+					//JOptionPane.showInternalMessageDialog(null, "Login effettuato con successo", "Login", JOptionPane.INFORMATION_MESSAGE);
+					Login.setVisible(false);
+					Persona p = PersonaDAO.getPersonaDaEmail(user);
+					Homepage = new HomepageFrame(this, p);
+					Homepage.setVisible(true);
 				}else {
 					JOptionPane.showInternalMessageDialog(null, "Credenziali errate", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
@@ -43,5 +48,11 @@ public class Controller {
 				JOptionPane.showInternalMessageDialog(null, "Non è possibile eseguire l'accesso. Controllare la connessione al database", "Errore connessione", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	public void exit() {
+		//Homepage.setVisible(false);
+		Homepage.dispose();
+		Login.setVisible(true);
 	}
 }

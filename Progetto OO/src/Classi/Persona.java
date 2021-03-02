@@ -1,5 +1,6 @@
 package Classi;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -21,28 +22,62 @@ public class Persona {
 	private CittaItaliana NatoIn;
 	
 	//Costruttore
-	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, TSesso sesso, CittaItaliana Citta) {
-		Nome = nome;
-		Cognome = cognome;
-		CF = cF;
-		DataNascita = dataNascita;
-		Email = email;
-		Sesso = sesso;
-		NatoIn = Citta;
+	public Persona(String nome, String cognome, String cF, Date dataNascita, String email, String sesso,
+			String ruolo, String tipo, ArrayList<Acquisto> acquisti, String codiceBarre, CittaItaliana natoIn) {
+		this.setNome(nome);
+		this.setCognome(cognome);
+		this.setCF(cF);
+		this.setDataNascita(dataNascita);
+		this.setEmail(email);
+		this.setSesso(sesso);
+		this.setRuolo(ruolo);
+		this.setTipo(tipo);
+		this.setAcquisti(acquisti);
+		this.setCodiceBarre(codiceBarre);
+		this.setNatoIn(natoIn);
+		this.checkInfo();
 	}
-	
+
+
+
+	private void checkInfo() {
+		if(this.getTipo()=="Cliente" && this.getRuolo()!=null) this.setTipo("Personale");
+	}
+
+
+
 	//Getter e setter
 	public String getNome() {
 		return Nome;
 	}
 	public void setNome(String nome) {
-		Nome = nome;
+		if(nome.length()==0) System.out.println("Non puoi inserire un nome vuoto");
+		else {
+			for(char c:nome.toCharArray()) {
+				if(c=='0' || c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9') {
+					System.out.println("La stringa contiene caratteri non validi");
+					Nome = " ";
+					return;
+				}
+			}
+			Nome = nome;
+		}
 	}
 	public String getCognome() {
 		return Cognome;
 	}
 	public void setCognome(String cognome) {
-		Cognome = cognome;
+		if(cognome.length()==0) System.out.println("Non puoi inserire un cognome vuoto");
+		else {
+			for(char c:cognome.toCharArray()) {
+				if(c=='0' || c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9') {
+					System.out.println("La stringa contiene caratteri non validi");
+					Nome = " ";
+					return;
+				}
+			}
+			Cognome = cognome;
+		}
 	}
 	public String getCF() {
 		return CF;
@@ -53,32 +88,42 @@ public class Persona {
 	public LocalDate getDataNascita() {
 		return DataNascita;
 	}
-	public void setDataNascita(LocalDate dataNascita) {
-		DataNascita = dataNascita;
+	public void setDataNascita(Date dataNascita) {
+		DataNascita = dataNascita.toLocalDate();
 	}
 	public String getEmail() {
 		return Email;
 	}
 	public void setEmail(String email) {
-		Email = email;
+		if(email.length()==0) System.out.println("Non puoi inserire una mail vuota");
+		else {
+			if(email.matches("^(.+)@(.+)$")) {
+				Email = email;
+			}else {
+				Email = "mail@non.valida";
+			}
+		}
 	}
 	public TSesso getSesso() {
 		return Sesso;
 	}
-	public void setSesso(TSesso sesso) {
-		Sesso = sesso;
+	public void setSesso(String sesso) {
+		if(sesso.equalsIgnoreCase("maschio") || sesso.equalsIgnoreCase("m")) Sesso = TSesso.M;
+		else Sesso = TSesso.F;
 	}
-	public TRuolo getRuolo() {
-		return Ruolo;
+	public String getRuolo() {
+		return Ruolo.toString();
 	}
-	public void setRuolo(TRuolo ruolo) {
-		Ruolo = ruolo;
+	public void setRuolo(String ruolo) {
+		if(ruolo.equalsIgnoreCase("titolare")) Ruolo = TRuolo.Titolare;
+		else Ruolo = TRuolo.Dipendente;
 	}
-	public TPersona getTipo() {
-		return Tipo;
+	public String getTipo() {
+		return Tipo.toString();
 	}
-	public void setTipo(TPersona tipo) {
-		Tipo = tipo;
+	public void setTipo(String tipo) {
+		if(tipo.equalsIgnoreCase("cliente")) Tipo = TPersona.Cliente;
+		else Tipo = TPersona.Personale;
 	}
 	public ArrayList<Acquisto> getAcquisti() {
 		return Acquisti;

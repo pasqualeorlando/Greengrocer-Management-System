@@ -63,7 +63,7 @@ public class LoginFrame extends JFrame {
 		usernameTF.setColumns(10);
 		
 		passPF = new JPasswordField();
-		passPF.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		passPF.setFont(new Font("Georgia", Font.PLAIN, 17));
 		passPF.setBounds(239, 232, 239, 30);
 		contentPane.add(passPF);
 		
