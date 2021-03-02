@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
 
 public class LoginFrame extends JFrame {
 
@@ -44,13 +45,15 @@ public class LoginFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel usernameLab = new JLabel("Username:");
+		usernameLab.setHorizontalAlignment(SwingConstants.RIGHT);
 		usernameLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		usernameLab.setBounds(125, 192, 98, 30);
+		usernameLab.setBounds(95, 192, 128, 30);
 		contentPane.add(usernameLab);
 		
 		JLabel passwordLab = new JLabel("Password :");
+		passwordLab.setHorizontalAlignment(SwingConstants.RIGHT);
 		passwordLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		passwordLab.setBounds(125, 232, 98, 30);
+		passwordLab.setBounds(95, 232, 128, 30);
 		contentPane.add(passwordLab);
 		
 		usernameTF = new JTextField();
@@ -76,7 +79,7 @@ public class LoginFrame extends JFrame {
 		entra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entra.setBorderPainted(false);
 		entra.setBackground(new Color(255, 255, 255));
-		entra.setBounds(450, 324, 136, 38);
+		entra.setBounds(448, 322, 136, 38);
 		contentPane.add(entra);
 		
 		JLabel foto = new JLabel("");
