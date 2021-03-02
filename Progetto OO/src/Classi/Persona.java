@@ -15,6 +15,7 @@ public class Persona {
 	private String Email;
 	private TSesso Sesso;
 	private TRuolo Ruolo;
+	private TPersona Tipo;
 	private ArrayList<Acquisto>Acquisti;
 	private String CodiceBarre;
 	private CittaItaliana NatoIn;
@@ -72,6 +73,12 @@ public class Persona {
 	}
 	public void setRuolo(TRuolo ruolo) {
 		Ruolo = ruolo;
+	}
+	public TPersona getTipo() {
+		return Tipo;
+	}
+	public void setTipo(TPersona tipo) {
+		Tipo = tipo;
 	}
 	public ArrayList<Acquisto> getAcquisti() {
 		return Acquisti;
