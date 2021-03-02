@@ -40,7 +40,6 @@ public class Controller {
 					JOptionPane.showInternalMessageDialog(null, "Credenziali errate", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (SQLException e) {
-				//e.printStackTrace();
 				JOptionPane.showInternalMessageDialog(null, "Non è possibile eseguire l'accesso. Controllare la connessione al database", "Errore connessione", JOptionPane.ERROR_MESSAGE);
 			}
 		}
