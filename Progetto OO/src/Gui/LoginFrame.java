@@ -79,7 +79,7 @@ public class LoginFrame extends JFrame {
 		entra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entra.setBorderPainted(false);
 		entra.setBackground(new Color(255, 255, 255));
-		entra.setBounds(448, 322, 136, 38);
+		entra.setBounds(452, 322, 116, 38);
 		contentPane.add(entra);
 		
 		JLabel foto = new JLabel("");
