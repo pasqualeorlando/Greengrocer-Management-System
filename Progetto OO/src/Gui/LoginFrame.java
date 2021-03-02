@@ -1,13 +1,11 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
+
+import Controller.Controller;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -16,19 +14,23 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameTF;
 	private JPasswordField passPF;
+	private Controller controller;
 
 	/**
 	 * Create the frame.
 	 */
-	public LoginFrame() {
+	public LoginFrame(Controller c) {
+		controller = c;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/immagini/fruits.png")));
 		setTitle("OrtofruttaPerTutti - Login");
 		setResizable(false);
@@ -43,26 +45,32 @@ public class LoginFrame extends JFrame {
 		
 		JLabel usernameLab = new JLabel("Username:");
 		usernameLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		usernameLab.setBounds(137, 170, 98, 30);
+		usernameLab.setBounds(125, 192, 98, 30);
 		contentPane.add(usernameLab);
 		
 		JLabel passwordLab = new JLabel("Password :");
 		passwordLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		passwordLab.setBounds(137, 210, 98, 30);
+		passwordLab.setBounds(125, 232, 98, 30);
 		contentPane.add(passwordLab);
 		
 		usernameTF = new JTextField();
 		usernameTF.setFont(new Font("Georgia", Font.PLAIN, 17));
-		usernameTF.setBounds(251, 170, 239, 30);
+		usernameTF.setBounds(239, 192, 239, 30);
 		contentPane.add(usernameTF);
 		usernameTF.setColumns(10);
 		
 		passPF = new JPasswordField();
 		passPF.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		passPF.setBounds(251, 210, 239, 30);
+		passPF.setBounds(239, 232, 239, 30);
 		contentPane.add(passPF);
 		
 		JButton entra = new JButton("Entra");
+		entra.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.validaCredenziali(usernameTF.getText(), passPF.getText());
+			}
+		});
 		entra.setForeground(new Color(178, 34, 34));
 		entra.setFont(new Font("Georgia", Font.PLAIN, 16));
 		entra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

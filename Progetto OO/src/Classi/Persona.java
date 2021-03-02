@@ -3,7 +3,7 @@ package Classi;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Enum.TSesso;
+import Enum.*;
 
 public class Persona {
 
@@ -14,6 +14,7 @@ public class Persona {
 	private LocalDate DataNascita;
 	private String Email;
 	private TSesso Sesso;
+	private TRuolo Ruolo;
 	private ArrayList<Acquisto>Acquisti;
 	private String CodiceBarre;
 	private CittaItaliana NatoIn;
@@ -65,6 +66,12 @@ public class Persona {
 	}
 	public void setSesso(TSesso sesso) {
 		Sesso = sesso;
+	}
+	public TRuolo getRuolo() {
+		return Ruolo;
+	}
+	public void setRuolo(TRuolo ruolo) {
+		Ruolo = ruolo;
 	}
 	public ArrayList<Acquisto> getAcquisti() {
 		return Acquisti;
