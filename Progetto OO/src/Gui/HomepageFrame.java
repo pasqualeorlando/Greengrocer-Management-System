@@ -22,6 +22,8 @@ import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class HomepageFrame extends JFrame {
 
@@ -91,6 +93,12 @@ public class HomepageFrame extends JFrame {
 		panel.add(EsciButton);
 		
 		JButton ModificaAccButton = new JButton("<html><center>Modifica<br>Account</center></html>");
+		ModificaAccButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiModificaAccount(p);
+			}
+		});
 		ModificaAccButton.setForeground(Color.WHITE);
 		ModificaAccButton.setFont(new Font("Georgia", Font.PLAIN, 16));
 		ModificaAccButton.setContentAreaFilled(false);
@@ -99,6 +107,12 @@ public class HomepageFrame extends JFrame {
 		panel.add(ModificaAccButton);
 		
 		JButton PersonaleButton = new JButton("Personale");
+		PersonaleButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiPersonale();
+			}
+		});
 		PersonaleButton.setContentAreaFilled(false);
 		PersonaleButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/personale.png")));
 		PersonaleButton.setFont(new Font("Georgia", Font.BOLD, 15));

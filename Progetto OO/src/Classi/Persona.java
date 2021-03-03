@@ -21,7 +21,7 @@ public class Persona {
 	private String CodiceBarre;
 	private CittaItaliana NatoIn;
 	
-	//Costruttore
+	//Costruttori
 	public Persona(String nome, String cognome, String cF, Date dataNascita, String email, String sesso,
 			String ruolo, String tipo, ArrayList<Acquisto> acquisti, String codiceBarre, CittaItaliana natoIn) {
 		this.setNome(nome);
@@ -37,7 +37,18 @@ public class Persona {
 		this.setNatoIn(natoIn);
 		this.checkInfo();
 	}
-
+	public Persona(String nome, String cognome, String cF, Date dataNascita, String email, String sesso,
+			String ruolo, CittaItaliana natoIn) {
+		this.setNome(nome);
+		this.setCognome(cognome);
+		this.setCF(cF);
+		this.setDataNascita(dataNascita);
+		this.setEmail(email);
+		this.setSesso(sesso);
+		this.setRuolo(ruolo);;
+		this.setNatoIn(natoIn);
+		//this.checkInfo();
+	}
 
 
 	private void checkInfo() {

@@ -21,6 +21,11 @@ public class CittaItaliana {
 		PersoneNate = personeNate;
 	}
 	
+	public CittaItaliana(String denominazione, String provincia) {
+		this.setDenominazione(denominazione);
+		this.setProvincia(provincia);
+	}
+	
 	//Getter e setter
 	public String getCodiceCatastale() {
 		return CodiceCatastale;
