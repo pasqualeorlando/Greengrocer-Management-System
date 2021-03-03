@@ -12,9 +12,12 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	
 	private Connection connessione;
 	private String queryCredenzialiDip = "SELECT * FROM persona WHERE email = ? AND cf = ? AND Tipo = 'Personale'";
-	private String queryPersona = "SELECT * FROM persona WHERE email = ?";
+	private String queryPersonaCF = "SELECT * FROM persona WHERE cf = ?";
+	private String queryPersonaEmail = "SELECT * FROM persona WHERE email = ?";
 	private String queryModificaMail = "UPDATE persona SET email = ? WHERE email = ?";
 	private String queryGetPersonale = "SELECT * FROM persona WHERE Tipo = 'Personale'";
+	private String eliminaPersona = "DELETE FROM persona WHERE cf = ?";
+	private String modificaRuolo = "UPDATE persona SET ruolo = ? WHERE cf = ?";
 	
 	public PersonaDAOPostgresImpl(Connection conn) {
 		connessione = conn;
@@ -29,15 +32,29 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 		return risultato.next();
 	}
 	
+	public Persona getPersonaDaCF(String CF) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement(queryPersonaCF);
+		statement.setString(1, CF);
+		
+		ResultSet risultato = statement.executeQuery();
+		risultato.next();
+		Persona p = new Persona(risultato.getString("nome"), risultato.getString("cognome"), risultato.getString("cf"), 
+								risultato.getDate("datanascita"), risultato.getString("email"), risultato.getString("sesso"), 
+								risultato.getString("ruolo"), risultato.getString("tipo"), null, risultato.getString("codicebarre"),
+								new CittaItaliana(risultato.getString("denominazione"), risultato.getString("provincia")));
+		return p;
+	}
+	
 	public Persona getPersonaDaEmail(String email) throws SQLException{
-		PreparedStatement statement = connessione.prepareStatement(queryPersona);
+		PreparedStatement statement = connessione.prepareStatement(queryPersonaEmail);
 		statement.setString(1, email);
 		
 		ResultSet risultato = statement.executeQuery();
 		risultato.next();
 		Persona p = new Persona(risultato.getString("nome"), risultato.getString("cognome"), risultato.getString("cf"), 
 								risultato.getDate("datanascita"), risultato.getString("email"), risultato.getString("sesso"), 
-								risultato.getString("ruolo"), risultato.getString("tipo"), null, risultato.getString("codicebarre"), null);
+								risultato.getString("ruolo"), risultato.getString("tipo"), null, risultato.getString("codicebarre"),
+								new CittaItaliana(risultato.getString("denominazione"), risultato.getString("provincia")));
 		return p;
 	}
 	
@@ -60,5 +77,18 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 			ret.add(p);
 		}
 		return ret;
+	}
+	
+	public void eliminaPersonaDaCF(String CF) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement(eliminaPersona);
+		statement.setString(1, CF);
+		statement.executeUpdate();
+	}
+	
+	public void modificaRuolo(String nuovoRuolo, String CF) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement(modificaRuolo);
+		statement.setString(1, nuovoRuolo);
+		statement.setString(2, CF);
+		statement.executeUpdate();
 	}
 }

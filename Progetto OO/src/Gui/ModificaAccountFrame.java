@@ -76,7 +76,7 @@ public class ModificaAccountFrame extends JFrame {
 		AnnullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiHomepage(attuale);
+				controller.vaiHomepage(attuale, p);
 			}
 		});
 		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(255, 255, 255)));

@@ -110,7 +110,7 @@ public class HomepageFrame extends JFrame {
 		PersonaleButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiPersonale();
+				controller.vaiPersonale(p);
 			}
 		});
 		PersonaleButton.setContentAreaFilled(false);

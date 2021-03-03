@@ -59,14 +59,16 @@ public class Controller {
 		Homepage.dispose();
 		Login.setVisible(true);
 	}
-	public void vaiHomepage(JFrame framePrecedente) {
+	public void vaiHomepage(JFrame framePrecedente, Persona p) {
+		Homepage = new HomepageFrame(this, p);
 		Homepage.setVisible(true);
 		framePrecedente.dispose();
 	}
 	public void vaiModificaAccount(Persona p) {
 		ModificaAccount = new ModificaAccountFrame(this, p);
 		ModificaAccount.setVisible(true);
-		Homepage.setVisible(false);
+		//Homepage.setVisible(false);
+		Homepage.dispose();
 	}
 	public void salvaNuovaMail(String newMail, Persona p) {
 		if(newMail.equals(p.getEmail()))
@@ -82,12 +84,14 @@ public class Controller {
 				JOptionPane.showInternalMessageDialog(null, "Non è stato possibile portare a termine l'operazione", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 			}
 			ModificaAccount.dispose();
+			Homepage = new HomepageFrame(this, p);
 			Homepage.setVisible(true);
 		}
 	}
-	public void vaiPersonale() {
-		Homepage.setVisible(false);
-		Personale = new PersonaleFrame(this);
+	public void vaiPersonale(Persona p) {
+		//Homepage.setVisible(false);
+		Homepage.dispose();
+		Personale = new PersonaleFrame(this, p);
 		Personale.setVisible(true);
 	}
 	
@@ -95,7 +99,7 @@ public class Controller {
 		int i = 0;
 		try {
 			int len = PersonaDAO.getPersonale().size();
-			Object[][] personale = new Object[len][8];
+			Object[][] personale = new Object[len][9];
 			for(Persona p : PersonaDAO.getPersonale()) {
 				personale[i][0]=p.getCF();
 				personale[i][1]=p.getNome();
@@ -105,12 +109,54 @@ public class Controller {
 				personale[i][5]=p.getSesso();
 				personale[i][6]=p.getRuolo();
 				personale[i][7]=p.getNatoIn().getDenominazione();
-				personale[i][7]=p.getNatoIn().getProvincia();
+				personale[i][8]=p.getNatoIn().getProvincia();
 				i++;
 			}
 			return personale;
 		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca del Personale", "Errore", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
+	}
+	public void aggiornaLabels(String cf) {
+		try {
+			Persona p = PersonaDAO.getPersonaDaCF(cf);
+			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
+			int index;
+			
+			if(p.getRuolo().equals("Titolare")) index = 0;
+			else index = 1;
+			Personale.setData(aggiornamento, index);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante l'aggiornamento delle etichette", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);;
+		}
+	}
+	
+	public void eliminaPersonaDaCF(String cf, Persona p) {
+		try {
+			if(cf.equals(p.getCF()))
+				JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare l'account corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+			else{
+				PersonaDAO.eliminaPersonaDaCF(cf);
+				JOptionPane.showInternalMessageDialog(null, "Profilo eliminato", "Eliminazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante l'eliminazione", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void modificaRuolo(String nuovoRuolo, Persona p) {
+		try{
+			if(nuovoRuolo.equals(p.getRuolo()))
+				JOptionPane.showInternalMessageDialog(null, "Il profilo selezionato ha già questo ruolo", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+			else {
+				PersonaDAO.modificaRuolo(nuovoRuolo, p.getCF());
+				JOptionPane.showInternalMessageDialog(null, "Profilo modificato", "Modifica avvenuta", JOptionPane.INFORMATION_MESSAGE);
+				p.setRuolo(nuovoRuolo);
+			}
+		}catch(SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+		}
+			
 	}
 }
