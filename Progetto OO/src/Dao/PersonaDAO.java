@@ -14,4 +14,5 @@ public interface PersonaDAO {
 	public ArrayList<Persona>getPersonale() throws SQLException;
 	public void eliminaPersonaDaCF(String CF) throws SQLException;
 	public void modificaRuolo(String nuovoRuolo, String CF) throws SQLException;
+	public void inserirePersonale(Persona p) throws SQLException;
 }

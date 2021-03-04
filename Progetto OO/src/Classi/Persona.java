@@ -1,8 +1,11 @@
 package Classi;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import Enum.*;
 
@@ -22,7 +25,7 @@ public class Persona {
 	private CittaItaliana NatoIn;
 	
 	//Costruttori
-	public Persona(String nome, String cognome, String cF, Date dataNascita, String email, String sesso,
+	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, String sesso,
 			String ruolo, String tipo, ArrayList<Acquisto> acquisti, String codiceBarre, CittaItaliana natoIn) {
 		this.setNome(nome);
 		this.setCognome(cognome);
@@ -37,7 +40,7 @@ public class Persona {
 		this.setNatoIn(natoIn);
 		this.checkInfo();
 	}
-	public Persona(String nome, String cognome, String cF, Date dataNascita, String email, String sesso,
+	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, String sesso,
 			String ruolo, CittaItaliana natoIn) {
 		this.setNome(nome);
 		this.setCognome(cognome);
@@ -49,7 +52,18 @@ public class Persona {
 		this.setNatoIn(natoIn);
 		//this.checkInfo();
 	}
-
+	public Persona(String nome, String cognome, String cF, String dataNascita, String email, String sesso,
+			String ruolo, CittaItaliana natoIn) {
+		this.setNome(nome);
+		this.setCognome(cognome);
+		this.setCF(cF);
+		this.setDataNascita(dataNascita);
+		this.setEmail(email);
+		this.setSesso(sesso);
+		this.setRuolo(ruolo);;
+		this.setNatoIn(natoIn);
+		//this.checkInfo();
+	}
 
 	private void checkInfo() {
 		if(this.getTipo()=="Cliente" && this.getRuolo()!=null) this.setTipo("Personale");
@@ -99,8 +113,11 @@ public class Persona {
 	public LocalDate getDataNascita() {
 		return DataNascita;
 	}
-	public void setDataNascita(Date dataNascita) {
-		DataNascita = dataNascita.toLocalDate();
+	public void setDataNascita(LocalDate dataNascita) {
+		DataNascita = dataNascita;
+	}
+	public void setDataNascita(String dataNascita) {
+		DataNascita = LocalDate.parse(dataNascita, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
 	}
 	public String getEmail() {
 		return Email;

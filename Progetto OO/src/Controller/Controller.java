@@ -16,6 +16,7 @@ public class Controller {
 	private ModificaAccountFrame ModificaAccount;
 	private PersonaleFrame Personale;
 	private PersonaDAOPostgresImpl PersonaDAO;
+	private CittaItalianaDAOPostgresImpl CittaItalianaDAO;
 	
 	public Controller() {
 		DBConnection dbconn = null;
@@ -25,6 +26,7 @@ public class Controller {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             PersonaDAO = new PersonaDAOPostgresImpl(connection);
+            CittaItalianaDAO = new CittaItalianaDAOPostgresImpl(connection);
             Login = new LoginFrame(this);
             Login.setVisible(true);
         }catch(SQLException e) {
@@ -166,6 +168,39 @@ public class Controller {
 			}
 		}catch(SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void inserisciPersonale(Persona p) {
+		try {
+			if(p.getNome().equals("")||p.getCognome().equals("")||p.getEmail().equals("")
+					||p.getSesso().equals("")||p.getRuolo().equals("")||p.getDataNascita().equals("")
+					||p.getNatoIn().getDenominazione().equals("")||p.getNatoIn().getProvincia().equals("")) {
+				JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi del form!", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+			} else {
+				PersonaDAO.inserirePersonale(p);
+				JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public ArrayList<String> getProvince() {
+		try {
+			return CittaItalianaDAO.getProvince();
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le province", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public ArrayList<String> getCittaFromProvincia(String provincia){
+		try {
+			return CittaItalianaDAO.getCittaFromProvincia(provincia);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le città", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
 	}
 }
