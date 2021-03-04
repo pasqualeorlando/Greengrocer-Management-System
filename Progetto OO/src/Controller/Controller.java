@@ -28,10 +28,14 @@ public class Controller {
             Login = new LoginFrame(this);
             Login.setVisible(true);
         }catch(SQLException e) {
-        	System.out.println("Impossibile connettersi al DB");
+        	//System.out.println("Impossibile connettersi al DB");
+        	JOptionPane.showInternalMessageDialog(null, "Impossibile connettersi al Database.\nRiprova più tardi.", "Errore connessione", JOptionPane.ERROR_MESSAGE);
+        	System.exit(1);
         } catch (IOException e) {
-			System.out.println("Impossibile trovare il file di configurazione del DB");
-		}
+			//System.out.println("Impossibile trovare il file di configurazione del DB");
+			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare il file dbconf.properties.\nVerificare nelle directory del programma.", "File configurazione non trovato", JOptionPane.ERROR_MESSAGE);
+			System.exit(2);
+        }
 	}
 	
 	public void validaCredenziali(String user, String password) {
@@ -114,7 +118,9 @@ public class Controller {
 			}
 			return personale;
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca del Personale", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca del Personale nel database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
+			Personale.dispose();
+			Homepage.dispose();
 			return null;
 		}
 	}
@@ -128,16 +134,18 @@ public class Controller {
 			else index = 1;
 			Personale.setData(aggiornamento, index);
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante l'aggiornamento delle etichette", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);;
+			JOptionPane.showInternalMessageDialog(null, "Errore durante l'aggiornamento delle etichette", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+		} catch(ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void eliminaPersonaDaCF(String cf, Persona p) {
+	public void eliminaPersonaDaCF(String cfPersonaDaEliminare, Persona committente) {
 		try {
-			if(cf.equals(p.getCF()))
-				JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare l'account corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+			if(cfPersonaDaEliminare.equals(committente.getCF()))
+				JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare il profilo corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
 			else{
-				PersonaDAO.eliminaPersonaDaCF(cf);
+				PersonaDAO.eliminaPersonaDaCF(cfPersonaDaEliminare);
 				JOptionPane.showInternalMessageDialog(null, "Profilo eliminato", "Eliminazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (SQLException e) {
@@ -145,18 +153,19 @@ public class Controller {
 		}
 	}
 	
-	public void modificaRuolo(String nuovoRuolo, Persona p) {
+	public void modificaRuoloDaCF(String nuovoRuolo, Persona committente, String cfPersonaDaModificare) {
 		try{
-			if(nuovoRuolo.equals(p.getRuolo()))
+			Persona personaDaModificare = PersonaDAO.getPersonaDaCF(cfPersonaDaModificare);
+			if(nuovoRuolo.equals(personaDaModificare.getRuolo()))
 				JOptionPane.showInternalMessageDialog(null, "Il profilo selezionato ha già questo ruolo", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
 			else {
-				PersonaDAO.modificaRuolo(nuovoRuolo, p.getCF());
+				PersonaDAO.modificaRuolo(nuovoRuolo, personaDaModificare.getCF());
 				JOptionPane.showInternalMessageDialog(null, "Profilo modificato", "Modifica avvenuta", JOptionPane.INFORMATION_MESSAGE);
-				p.setRuolo(nuovoRuolo);
+				if(committente.getCF().equals(cfPersonaDaModificare))
+					committente.setRuolo(nuovoRuolo);
 			}
 		}catch(SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
 		}
-			
 	}
 }

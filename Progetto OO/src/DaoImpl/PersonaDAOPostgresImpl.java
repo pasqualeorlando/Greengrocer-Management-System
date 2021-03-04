@@ -15,7 +15,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	private String queryPersonaCF = "SELECT * FROM persona WHERE cf = ?";
 	private String queryPersonaEmail = "SELECT * FROM persona WHERE email = ?";
 	private String queryModificaMail = "UPDATE persona SET email = ? WHERE email = ?";
-	private String queryGetPersonale = "SELECT * FROM persona WHERE Tipo = 'Personale'";
+	private String queryGetPersonale = "SELECT * FROM persona WHERE Tipo = 'Personale' ORDER BY cognome";
 	private String eliminaPersona = "DELETE FROM persona WHERE cf = ?";
 	private String modificaRuolo = "UPDATE persona SET ruolo = ? WHERE cf = ?";
 	
