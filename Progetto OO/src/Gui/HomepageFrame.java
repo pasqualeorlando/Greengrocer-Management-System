@@ -126,6 +126,11 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(PersonaleButton);
 		
 		JButton ClientiButton = new JButton("Clienti");
+		ClientiButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiClienti(p);
+			}
+		});
 		ClientiButton.setContentAreaFilled(false);
 		ClientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/clienti.png")));
 		ClientiButton.setFont(new Font("Georgia", Font.BOLD, 15));

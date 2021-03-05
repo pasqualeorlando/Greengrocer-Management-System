@@ -16,6 +16,7 @@ public class Controller {
 	private HomepageFrame Homepage;
 	private ModificaAccountFrame ModificaAccount;
 	private PersonaleFrame Personale;
+	private ClientiFrame Clienti;
 	private PersonaDAOPostgresImpl PersonaDAO;
 	private CittaItalianaDAOPostgresImpl CittaItalianaDAO;
 	
@@ -133,15 +134,21 @@ public class Controller {
 	public void aggiornaLabels(String cf) {
 		try {
 			Persona p = PersonaDAO.getPersonaDaCF(cf);
-			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
-			int index;
-			
-			if(p.getRuolo().equals("Titolare")) index = 0;
-			else index = 1;
-			Personale.setData(aggiornamento, index);
+			if(p.getTipo().equals("Personale")) {
+				String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
+				int index;
+				
+				if(p.getRuolo().equals("Titolare")) index = 0;
+				else index = 1;
+				Personale.setData(aggiornamento, index);
+			} else {
+				
+			}
 		} catch (SQLException e) {
 			String[] aggiornamento = {"", "", "", "", "", "", "", ""};
+			if(p.getTipo().equals("Personale"))
 			Personale.setData(aggiornamento, -1);
+			Clienti.setData(aggiornamento);
 		} catch(ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 		}
@@ -188,23 +195,40 @@ public class Controller {
 		}
 	}
 	
-	public boolean inserisciPersonale(String nuovoNome, String nuovoCognome, String nuovaDataNascita, String nuovaMail, String nuovoSesso, String nuovoRuolo, String nuovaCitta, String nuovaProvincia) {
+	public boolean inserisciPersona(String nuovoNome, String nuovoCognome, String nuovaDataNascita, String nuovaMail, String nuovoSesso, String nuovoRuolo, String Tipo, String nuovaCitta, String nuovaProvincia) {
 		try {
-			if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
-					||nuovoSesso.equals("")||nuovoRuolo.equals("")||nuovaDataNascita.equals("")
-					||nuovaCitta.equals("")||nuovaProvincia.equals("")) {
-				JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi del form!", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
-				return false;
+			if(Tipo.equals(TPersona.Personale.toString())) {
+				if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
+						||nuovoSesso.equals("")||nuovoRuolo.equals("")||nuovaDataNascita.equals("")
+						||nuovaCitta.equals("")||nuovaProvincia.equals("")) {
+					JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi del form!", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+					return false;
+				} else {
+					Persona p = new Persona(nuovoNome, nuovoCognome, "", nuovaDataNascita, nuovaMail, nuovoSesso, nuovoRuolo, new CittaItaliana(nuovaCitta, nuovaProvincia));
+					PersonaDAO.inserirePersona(p);
+					JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					return true;
+				}
 			} else {
-				Persona p = new Persona(nuovoNome, nuovoCognome, "", nuovaDataNascita, nuovaMail, nuovoSesso, nuovoRuolo, new CittaItaliana(nuovaCitta, nuovaProvincia));
-				PersonaDAO.inserirePersonale(p);
-				JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
-				return true;
+				if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
+						||nuovoSesso.equals("")||nuovaDataNascita.equals("")
+						||nuovaCitta.equals("")||nuovaProvincia.equals("")) {
+					JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi del form!", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+					return false;
+				} else {
+					Persona p = new Persona(nuovoNome, nuovoCognome, "", nuovaDataNascita, nuovaMail, nuovoSesso, "", new CittaItaliana(nuovaCitta, nuovaProvincia));
+					PersonaDAO.inserirePersona(p);
+					JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					return true;
+				}
 			}
+			
+			
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+		
 	}
 	
 	public ArrayList<String> getProvince() {
@@ -223,5 +247,36 @@ public class Controller {
 			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le città", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
+	}
+	
+	public Object[][] getClienti(){
+		int i = 0;
+		try {
+			int len = PersonaDAO.getClienti().size();
+			Object[][] clienti = new Object[len][8];
+			for(Persona p : PersonaDAO.getClienti()) {
+				clienti[i][0]=p.getCF();
+				clienti[i][1]=p.getNome();
+				clienti[i][2]=p.getCognome();
+				clienti[i][3]=p.getDataNascita();
+				clienti[i][4]=p.getEmail();
+				clienti[i][5]=p.getSesso();
+				clienti[i][6]=p.getNatoIn().getDenominazione();
+				clienti[i][7]=p.getNatoIn().getProvincia();
+				i++;
+			}
+			return clienti;
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Clienti nel database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
+			Clienti.dispose();
+			Homepage.dispose();
+			return null;
+		}
+	}
+	
+	public void vaiClienti(Persona p) {
+			Homepage.dispose();
+			Clienti = new ClientiFrame(this, p);
+			Clienti.setVisible(true);
 	}
 }

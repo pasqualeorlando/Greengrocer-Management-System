@@ -25,6 +25,8 @@ public class Persona {
 	private CittaItaliana NatoIn;
 	
 	//Costruttori
+	
+	//Costruttore completo di tutti gli attributi
 	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, String sesso,
 			String ruolo, String tipo, ArrayList<Acquisto> acquisti, String codiceBarre, CittaItaliana natoIn) {
 		this.setNome(nome);
@@ -40,6 +42,8 @@ public class Persona {
 		this.setNatoIn(natoIn);
 		this.checkInfo();
 	}
+	
+	//costruttore con dataNascita LocalDate
 	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, String sesso,
 			String ruolo, CittaItaliana natoIn) {
 		this.setNome(nome);
@@ -48,10 +52,12 @@ public class Persona {
 		this.setDataNascita(dataNascita);
 		this.setEmail(email);
 		this.setSesso(sesso);
-		this.setRuolo(ruolo);;
+		this.setRuolo(ruolo);
 		this.setNatoIn(natoIn);
 		//this.checkInfo();
 	}
+	
+	//costruttore con dataNascita String
 	public Persona(String nome, String cognome, String cF, String dataNascita, String email, String sesso,
 			String ruolo, CittaItaliana natoIn) {
 		this.setNome(nome);
@@ -60,7 +66,7 @@ public class Persona {
 		this.setDataNascita(dataNascita);
 		this.setEmail(email);
 		this.setSesso(sesso);
-		this.setRuolo(ruolo);;
+		this.setRuolo(ruolo);
 		this.setNatoIn(natoIn);
 		//this.checkInfo();
 	}
@@ -140,11 +146,13 @@ public class Persona {
 		else Sesso = TSesso.F;
 	}
 	public String getRuolo() {
+		if(Ruolo == null) return "";
 		return Ruolo.toString();
 	}
 	public void setRuolo(String ruolo) {
 		if(ruolo.equalsIgnoreCase("titolare")) Ruolo = TRuolo.Titolare;
-		else Ruolo = TRuolo.Dipendente;
+		else if(ruolo.equalsIgnoreCase("dipendente")) Ruolo = TRuolo.Dipendente;
+		else Ruolo = null;
 	}
 	public String getTipo() {
 		return Tipo.toString();
