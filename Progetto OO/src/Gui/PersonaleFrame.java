@@ -1,7 +1,5 @@
 package Gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,17 +21,14 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import java.awt.ScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Enum.*;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -44,14 +39,9 @@ public class PersonaleFrame extends JFrame {
 	private JTable table;
 	private JLabel CFLabel, NomeLabel, CognomeLabel, DataNascitaLabel, EmailLabel, SessoLabel, Citt‡Label, ProvinciaLabel;
 	private JComboBox CambioRuoloCB;
-	private JTextField NuovoNomeTF;
-	private JTextField NuovoCognomeTF;
-	private JTextField NuovaDataNascitaTF;
-	private JTextField NuovaMailTF;
-	private JComboBox NuovoSessoCB;
-	private JComboBox NuovoRuoloCB;
-	private JComboBox NuovaProvinciaCB;
-	private JComboBox NuovaCittaCB;
+	private JTextField NuovoNomeTF, NuovoCognomeTF, NuovaDataNascitaTF, NuovaMailTF;
+	private JComboBox NuovoSessoCB, NuovoRuoloCB, NuovaProvinciaCB, NuovaCittaCB;
+	private JButton AnnullaButton, EliminaButton, SalvaButton;
 	
 	public PersonaleFrame(Controller c, Persona p) {
 		controller = c;
@@ -75,6 +65,11 @@ public class PersonaleFrame extends JFrame {
 		InserimentoPersonalePanel.setLayout(null);
 		
 		JButton ResetButton = new JButton("Reset");
+		ResetButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				resetForm();
+			}
+		});
 		ResetButton.setForeground(new Color(255, 255, 255));
 		ResetButton.setBorderPainted(false);
 		ResetButton.setBackground(new Color(165, 42, 42));
@@ -85,19 +80,22 @@ public class PersonaleFrame extends JFrame {
 		JButton InserisciButton = new JButton("Inserisci");
 		InserisciButton.setForeground(new Color(255, 255, 255));
 		InserisciButton.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				Persona p = new Persona(NuovoNomeTF.getText(), NuovoCognomeTF.getText(), "", NuovaDataNascitaTF.getText(),
-						NuovaMailTF.getText(), NuovoSessoCB.getSelectedItem().toString(), NuovoRuoloCB.getSelectedItem().toString(),
-						new CittaItaliana(NuovaCittaCB.getSelectedItem().toString(), NuovaProvinciaCB.getSelectedItem().toString()));
-				controller.inserisciPersonale(p);
+				boolean inserito = controller.inserisciPersonale(NuovoNomeTF.getText().toUpperCase(), NuovoCognomeTF.getText().toUpperCase(), 
+																NuovaDataNascitaTF.getText(), NuovaMailTF.getText(), NuovoSessoCB.getSelectedItem().toString(), 
+																NuovoRuoloCB.getSelectedItem().toString(),NuovaCittaCB.getSelectedItem().toString(), 
+																NuovaProvinciaCB.getSelectedItem().toString());
 				table.setModel(new DefaultTableModel(
 						controller.getPersonale(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
 						}
 					));
-				
+				if(inserito) {
+					controller.aggiornaLabels("");
+					CambioRuoloCB.setEnabled(false);
+					resetForm();
+				}
 			}
 		});
 		InserisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
@@ -146,7 +144,7 @@ public class PersonaleFrame extends JFrame {
 		NuovoSessoCB = new JComboBox();
 		NuovoSessoCB.setFont(new Font("Georgia", Font.PLAIN, 14));
 		NuovoSessoCB.setModel(new DefaultComboBoxModel(TSesso.values()));
-		NuovoSessoCB.setBounds(297, 61, 44, 22);
+		NuovoSessoCB.setBounds(298, 61, 44, 22);
 		InserimentoPersonalePanel.add(NuovoSessoCB);
 		
 		JLabel NuovoRuoloLabel = new JLabel("Ruolo:");
@@ -179,7 +177,8 @@ public class PersonaleFrame extends JFrame {
 		NuovaProvinciaLabel.setBounds(7, 153, 82, 14);
 		InserimentoPersonalePanel.add(NuovaProvinciaLabel);
 		
-		String[] province = controller.getProvince().toArray(new String[controller.getProvince().size()]);
+		String[] province = null;
+		province = controller.getProvince().toArray(new String[controller.getProvince().size()]);
 		NuovaProvinciaCB = new JComboBox(province);
 		NuovaProvinciaCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -212,12 +211,14 @@ public class PersonaleFrame extends JFrame {
 		InserimentoPersonalePanel.add(NuovaCittaLabel);
 		
 		NuovaCittaCB = new JComboBox();
-		NuovaCittaCB.setEnabled(false);
+		NuovaCittaCB.setEnabled(true);
 		NuovaCittaCB.setFont(new Font("Georgia", Font.PLAIN, 14));
+		NuovaCittaCB.setSelectedIndex(-1);
+		NuovaCittaCB.setModel(new DefaultComboBoxModel(controller.getCittaFromProvincia(NuovaProvinciaCB.getSelectedItem().toString()).toArray(new String[controller.getCittaFromProvincia(NuovaProvinciaCB.getSelectedItem().toString()).size()])));
 		NuovaCittaCB.setBounds(280, 149, 110, 22);
 		InserimentoPersonalePanel.add(NuovaCittaCB);
 		
-		JButton AnnullaButton = new JButton("Annulla");
+		AnnullaButton = new JButton("Annulla");
 		AnnullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -231,17 +232,26 @@ public class PersonaleFrame extends JFrame {
 		AnnullaButton.setBounds(420, 518, 101, 42);
 		contentPane.add(AnnullaButton);
 		
-		JButton EliminaButton = new JButton("Elimina");
+		EliminaButton = new JButton("Elimina");
 		EliminaButton.setEnabled(false);
 		EliminaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.eliminaPersonaDaCF(table.getValueAt(table.getSelectedRow(), 0).toString(), p);
+				int riga = table.getSelectedRow();
+				boolean eliminato = controller.eliminaPersonaDaCF(table.getValueAt(riga, 0).toString(), p);
 				table.setModel(new DefaultTableModel(
 						controller.getPersonale(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
 						}
 					));
+				if(eliminato) {
+					controller.aggiornaLabels("");
+					EliminaButton.setEnabled(false);
+					SalvaButton.setEnabled(false);
+					CambioRuoloCB.setEnabled(false);
+				}
+				else
+					table.setRowSelectionInterval(riga, riga);
 			}
 		});
 		EliminaButton.setForeground(Color.BLACK);
@@ -251,7 +261,7 @@ public class PersonaleFrame extends JFrame {
 		EliminaButton.setBounds(551, 518, 101, 42);
 		contentPane.add(EliminaButton);
 		
-		JButton SalvaButton = new JButton("Salva");
+		SalvaButton = new JButton("Salva");
 		SalvaButton.setEnabled(false);
 		SalvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,6 +274,7 @@ public class PersonaleFrame extends JFrame {
 						}
 				));
 				table.setRowSelectionInterval(riga, riga);
+				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString());
 			}
 		});
 		SalvaButton.setForeground(Color.BLACK);
@@ -353,10 +364,8 @@ public class PersonaleFrame extends JFrame {
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e){
 				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString());
-				//table.setRowSelectionInterval(0, 0);
 				CambioRuoloCB.setEnabled(true);
 				SalvaButton.setEnabled(true);
 				EliminaButton.setEnabled(true);
@@ -368,8 +377,6 @@ public class PersonaleFrame extends JFrame {
 					"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
 			}
 		));
-		//table.setRowSelectionInterval(0, 0);
-		//controller.aggiornaLabels(table.getValueAt(0, 0).toString());
 		table.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table);
@@ -386,5 +393,16 @@ public class PersonaleFrame extends JFrame {
 		Citt‡Label.setText("Citt‡ nascita: " + etichetteAggiornate[6]);
 		ProvinciaLabel.setText("Provincia: " + etichetteAggiornate[7]);
 		CambioRuoloCB.setSelectedIndex(index);
+	}
+	
+	private void resetForm() {
+		NuovoNomeTF.setText("");
+		NuovoCognomeTF.setText("");
+		NuovaDataNascitaTF.setText("");
+		NuovaMailTF.setText("");
+		NuovoSessoCB.setSelectedIndex(0);
+		NuovoRuoloCB.setSelectedIndex(0);
+		NuovaProvinciaCB.setSelectedIndex(0);
+		NuovaCittaCB.setSelectedIndex(0);
 	}
 }

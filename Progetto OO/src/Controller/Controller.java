@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import DB.*;
 import DaoImpl.*;
+import Enum.*;
 import Gui.*;
 import Classi.*;
 
@@ -95,10 +96,13 @@ public class Controller {
 		}
 	}
 	public void vaiPersonale(Persona p) {
-		//Homepage.setVisible(false);
-		Homepage.dispose();
-		Personale = new PersonaleFrame(this, p);
-		Personale.setVisible(true);
+		if(p.getRuolo().equals(TRuolo.Dipendente.toString())) {
+			JOptionPane.showInternalMessageDialog(null, "Questa operazione non è consentita ai dipendenti", "Accesso non consentito", JOptionPane.ERROR_MESSAGE);
+		}else {
+			Homepage.dispose();
+			Personale = new PersonaleFrame(this, p);
+			Personale.setVisible(true);
+		}
 	}
 	
 	public Object[][] getPersonale(){
@@ -136,53 +140,70 @@ public class Controller {
 			else index = 1;
 			Personale.setData(aggiornamento, index);
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante l'aggiornamento delle etichette", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+			String[] aggiornamento = {"", "", "", "", "", "", "", ""};
+			Personale.setData(aggiornamento, -1);
 		} catch(ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void eliminaPersonaDaCF(String cfPersonaDaEliminare, Persona committente) {
+	public boolean eliminaPersonaDaCF(String cfPersonaDaEliminare, Persona committente) {
 		try {
-			if(cfPersonaDaEliminare.equals(committente.getCF()))
+			if(cfPersonaDaEliminare.equals(committente.getCF())) {
 				JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare il profilo corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 			else{
 				PersonaDAO.eliminaPersonaDaCF(cfPersonaDaEliminare);
 				JOptionPane.showInternalMessageDialog(null, "Profilo eliminato", "Eliminazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+				return true;
 			}
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Errore durante l'eliminazione", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
-	public void modificaRuoloDaCF(String nuovoRuolo, Persona committente, String cfPersonaDaModificare) {
+	public boolean modificaRuoloDaCF(String nuovoRuolo, Persona committente, String cfPersonaDaModificare) {
 		try{
 			Persona personaDaModificare = PersonaDAO.getPersonaDaCF(cfPersonaDaModificare);
-			if(nuovoRuolo.equals(personaDaModificare.getRuolo()))
+			if(personaDaModificare.getCF().equals(committente.getCF())) {
+				JOptionPane.showInternalMessageDialog(null, "Non puoi modificare il tuo ruolo", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}else if(personaDaModificare.getRuolo().equals(TRuolo.Titolare.toString())) {
+				JOptionPane.showInternalMessageDialog(null, "Non puoi modificare un titolare, puoi solo eliminarlo.", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else if(nuovoRuolo.equals(personaDaModificare.getRuolo())) {
 				JOptionPane.showInternalMessageDialog(null, "Il profilo selezionato ha già questo ruolo", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
-			else {
+				return false;
+			}else {
 				PersonaDAO.modificaRuolo(nuovoRuolo, personaDaModificare.getCF());
 				JOptionPane.showInternalMessageDialog(null, "Profilo modificato", "Modifica avvenuta", JOptionPane.INFORMATION_MESSAGE);
-				if(committente.getCF().equals(cfPersonaDaModificare))
-					committente.setRuolo(nuovoRuolo);
+				return true;
 			}
 		}catch(SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
-	public void inserisciPersonale(Persona p) {
+	public boolean inserisciPersonale(String nuovoNome, String nuovoCognome, String nuovaDataNascita, String nuovaMail, String nuovoSesso, String nuovoRuolo, String nuovaCitta, String nuovaProvincia) {
 		try {
-			if(p.getNome().equals("")||p.getCognome().equals("")||p.getEmail().equals("")
-					||p.getSesso().equals("")||p.getRuolo().equals("")||p.getDataNascita().equals("")
-					||p.getNatoIn().getDenominazione().equals("")||p.getNatoIn().getProvincia().equals("")) {
+			if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
+					||nuovoSesso.equals("")||nuovoRuolo.equals("")||nuovaDataNascita.equals("")
+					||nuovaCitta.equals("")||nuovaProvincia.equals("")) {
 				JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi del form!", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+				return false;
 			} else {
+				Persona p = new Persona(nuovoNome, nuovoCognome, "", nuovaDataNascita, nuovaMail, nuovoSesso, nuovoRuolo, new CittaItaliana(nuovaCitta, nuovaProvincia));
 				PersonaDAO.inserirePersonale(p);
-				JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showInternalMessageDialog(null, "La persona è stata inserita", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+				return true;
 			}
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
