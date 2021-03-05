@@ -92,7 +92,7 @@ public class PersonaleFrame extends JFrame {
 						}
 					));
 				if(inserito) {
-					controller.aggiornaLabels("");
+					controller.aggiornaLabels("", "Personale");
 					CambioRuoloCB.setEnabled(false);
 					resetForm();
 				}
@@ -245,7 +245,7 @@ public class PersonaleFrame extends JFrame {
 						}
 					));
 				if(eliminato) {
-					controller.aggiornaLabels("");
+					controller.aggiornaLabels("", "Personale");
 					EliminaButton.setEnabled(false);
 					SalvaButton.setEnabled(false);
 					CambioRuoloCB.setEnabled(false);
@@ -274,7 +274,7 @@ public class PersonaleFrame extends JFrame {
 						}
 				));
 				table.setRowSelectionInterval(riga, riga);
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString());
+				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Personale");
 			}
 		});
 		SalvaButton.setForeground(Color.BLACK);
@@ -365,7 +365,7 @@ public class PersonaleFrame extends JFrame {
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString());
+				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Personale");
 				CambioRuoloCB.setEnabled(true);
 				SalvaButton.setEnabled(true);
 				EliminaButton.setEnabled(true);

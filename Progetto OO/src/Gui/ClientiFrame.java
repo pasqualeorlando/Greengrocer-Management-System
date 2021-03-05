@@ -91,7 +91,7 @@ public class ClientiFrame extends JFrame {
 						}
 					));
 				if(inserito) {
-					controller.aggiornaLabels("");
+					controller.aggiornaLabels("", "Clienti");
 					resetForm();
 				}
 			}
@@ -231,7 +231,7 @@ public class ClientiFrame extends JFrame {
 						}
 					));
 				if(eliminato) {
-					controller.aggiornaLabels("");
+					controller.aggiornaLabels("", "Clienti");
 					EliminaButton.setEnabled(false);
 				}
 				else
@@ -310,7 +310,7 @@ public class ClientiFrame extends JFrame {
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString());
+				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Clienti");
 				EliminaButton.setEnabled(true);
 			}
 		});

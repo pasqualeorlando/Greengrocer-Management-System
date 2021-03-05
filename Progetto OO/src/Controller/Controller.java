@@ -131,24 +131,21 @@ public class Controller {
 			return null;
 		}
 	}
-	public void aggiornaLabels(String cf) {
+	public void aggiornaLabels(String cf, String finestra) {
 		try {
 			Persona p = PersonaDAO.getPersonaDaCF(cf);
+			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
 			if(p.getTipo().equals("Personale")) {
-				String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
-				int index;
-				
-				if(p.getRuolo().equals("Titolare")) index = 0;
-				else index = 1;
-				Personale.setData(aggiornamento, index);
-			} else {
-				
-			}
+				if(p.getRuolo().equals("Titolare")) Personale.setData(aggiornamento, 0);
+				else Personale.setData(aggiornamento, 1);
+			} else
+				Clienti.setData(aggiornamento);
 		} catch (SQLException e) {
 			String[] aggiornamento = {"", "", "", "", "", "", "", ""};
-			if(p.getTipo().equals("Personale"))
-			Personale.setData(aggiornamento, -1);
-			Clienti.setData(aggiornamento);
+			if(finestra.equals("Personale"))
+				Personale.setData(aggiornamento, -1);
+			else
+				Clienti.setData(aggiornamento);
 		} catch(ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 		}

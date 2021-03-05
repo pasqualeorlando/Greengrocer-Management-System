@@ -72,7 +72,9 @@ public class Persona {
 	}
 
 	private void checkInfo() {
-		if(this.getTipo()=="Cliente" && this.getRuolo()!=null) this.setTipo("Personale");
+		if(this.getTipo().equals("Cliente") && this.getRuolo().equals("null")) {
+			this.setTipo("Personale");
+		}
 	}
 
 
@@ -150,14 +152,16 @@ public class Persona {
 		return Ruolo.toString();
 	}
 	public void setRuolo(String ruolo) {
-		if(ruolo.equalsIgnoreCase("titolare")) Ruolo = TRuolo.Titolare;
+		if(ruolo==null) Ruolo=null;
+		else if(ruolo.equalsIgnoreCase("titolare")) Ruolo = TRuolo.Titolare;
 		else if(ruolo.equalsIgnoreCase("dipendente")) Ruolo = TRuolo.Dipendente;
-		else Ruolo = null;
+		else Ruolo=null;
 	}
 	public String getTipo() {
 		return Tipo.toString();
 	}
 	public void setTipo(String tipo) {
+		//System.out.println(tipo);
 		if(tipo.equalsIgnoreCase("cliente")) Tipo = TPersona.Cliente;
 		else Tipo = TPersona.Personale;
 	}
