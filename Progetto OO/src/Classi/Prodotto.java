@@ -20,13 +20,13 @@ public class Prodotto {
 	//Costruttore
 	public Prodotto(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura) {
-		Nome = nome;
-		PaeseDiProvenienza = paeseDiProvenienza;
-		QuantitaNegozio = quantitaNegozio;
-		PrezzoUnitario = prezzoUnitario;
-		ScontoPercentuale = scontoPercentuale;
-		QuantitaDeposito = quantitaDeposito;
-		Fornitura = fornitura;
+		this.setNome(nome);
+		this.setPaeseDiProvenienza(paeseDiProvenienza);
+		this.setQuantitaNegozio(quantitaNegozio);
+		this.setPrezzoUnitario(prezzoUnitario);
+		this.setScontoPercentuale(scontoPercentuale);
+		this.setQuantitaDeposito(quantitaDeposito);
+		this.setFornitura(fornitura);
 	}
 	
 	//Getter e setter
@@ -92,5 +92,4 @@ public class Prodotto {
 	public void setSpecificaAcquisto(ArrayList<SpecificaAcquisto> specificaAcquisto) {
 		SpecificaAcquisto = specificaAcquisto;
 	}
-	
 }

@@ -36,7 +36,7 @@ public class PersonaleFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
-	private JTable table;
+	private JTable PersonaleTab;
 	private JLabel CFLabel, NomeLabel, CognomeLabel, DataNascitaLabel, EmailLabel, SessoLabel, Citt‡Label, ProvinciaLabel;
 	private JComboBox CambioRuoloCB;
 	private JTextField NuovoNomeTF, NuovoCognomeTF, NuovaDataNascitaTF, NuovaMailTF;
@@ -85,7 +85,7 @@ public class PersonaleFrame extends JFrame {
 																NuovaDataNascitaTF.getText(), NuovaMailTF.getText(), NuovoSessoCB.getSelectedItem().toString(), 
 																NuovoRuoloCB.getSelectedItem().toString(), "Personale", NuovaCittaCB.getSelectedItem().toString(), 
 																NuovaProvinciaCB.getSelectedItem().toString());
-				table.setModel(new DefaultTableModel(
+				PersonaleTab.setModel(new DefaultTableModel(
 						controller.getPersonale(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
@@ -236,9 +236,9 @@ public class PersonaleFrame extends JFrame {
 		EliminaButton.setEnabled(false);
 		EliminaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int riga = table.getSelectedRow();
-				boolean eliminato = controller.eliminaPersonaDaCF(table.getValueAt(riga, 0).toString(), p);
-				table.setModel(new DefaultTableModel(
+				int riga = PersonaleTab.getSelectedRow();
+				boolean eliminato = controller.eliminaPersonaDaCF(PersonaleTab.getValueAt(riga, 0).toString(), p);
+				PersonaleTab.setModel(new DefaultTableModel(
 						controller.getPersonale(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
@@ -251,7 +251,7 @@ public class PersonaleFrame extends JFrame {
 					CambioRuoloCB.setEnabled(false);
 				}
 				else
-					table.setRowSelectionInterval(riga, riga);
+					PersonaleTab.setRowSelectionInterval(riga, riga);
 			}
 		});
 		EliminaButton.setForeground(Color.BLACK);
@@ -265,16 +265,16 @@ public class PersonaleFrame extends JFrame {
 		SalvaButton.setEnabled(false);
 		SalvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int riga = table.getSelectedRow();
-				controller.modificaRuoloDaCF(CambioRuoloCB.getSelectedItem().toString(), p, table.getValueAt(table.getSelectedRow(), 0).toString());
-				table.setModel(new DefaultTableModel(
+				int riga = PersonaleTab.getSelectedRow();
+				controller.modificaRuoloDaCF(CambioRuoloCB.getSelectedItem().toString(), p, PersonaleTab.getValueAt(PersonaleTab.getSelectedRow(), 0).toString());
+				PersonaleTab.setModel(new DefaultTableModel(
 						controller.getPersonale(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
 						}
 				));
-				table.setRowSelectionInterval(riga, riga);
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Personale");
+				PersonaleTab.setRowSelectionInterval(riga, riga);
+				controller.aggiornaLabels(PersonaleTab.getValueAt(PersonaleTab.getSelectedRow(), 0).toString(), "Personale");
 			}
 		});
 		SalvaButton.setForeground(Color.BLACK);
@@ -362,24 +362,24 @@ public class PersonaleFrame extends JFrame {
 		scrollPane.setBounds(10, 10, 400, 266);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
+		PersonaleTab = new JTable();
+		PersonaleTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Personale");
+				controller.aggiornaLabels(PersonaleTab.getValueAt(PersonaleTab.getSelectedRow(), 0).toString(), "Personale");
 				CambioRuoloCB.setEnabled(true);
 				SalvaButton.setEnabled(true);
 				EliminaButton.setEnabled(true);
 			}
 		});
-		table.setModel(new DefaultTableModel(
+		PersonaleTab.setModel(new DefaultTableModel(
 			controller.getPersonale(),
 			new String[] {
 					"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Ruolo", "Citta", "Provincia"
 			}
 		));
-		table.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(table);
+		PersonaleTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
+		PersonaleTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(PersonaleTab);
 		
 		
 	}

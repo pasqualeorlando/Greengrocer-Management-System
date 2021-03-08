@@ -36,7 +36,7 @@ public class ClientiFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
-	private JTable table;
+	private JTable ClientiTab;
 	private JLabel CFLabel, NomeLabel, CognomeLabel, DataNascitaLabel, EmailLabel, SessoLabel, Citt‡Label, ProvinciaLabel;
 	private JTextField NuovoNomeTF, NuovoCognomeTF, NuovaDataNascitaTF, NuovaMailTF;
 	private JComboBox NuovoSessoCB, NuovaProvinciaCB, NuovaCittaCB;
@@ -84,7 +84,7 @@ public class ClientiFrame extends JFrame {
 																NuovaDataNascitaTF.getText(), NuovaMailTF.getText(), NuovoSessoCB.getSelectedItem().toString(), 
 																"", "Cliente", NuovaCittaCB.getSelectedItem().toString(), 
 																NuovaProvinciaCB.getSelectedItem().toString());
-				table.setModel(new DefaultTableModel(
+				ClientiTab.setModel(new DefaultTableModel(
 						controller.getClienti(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
@@ -222,9 +222,9 @@ public class ClientiFrame extends JFrame {
 		EliminaButton.setEnabled(false);
 		EliminaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int riga = table.getSelectedRow();
-				boolean eliminato = controller.eliminaPersonaDaCF(table.getValueAt(riga, 0).toString(), p);
-				table.setModel(new DefaultTableModel(
+				int riga = ClientiTab.getSelectedRow();
+				boolean eliminato = controller.eliminaPersonaDaCF(ClientiTab.getValueAt(riga, 0).toString(), p);
+				ClientiTab.setModel(new DefaultTableModel(
 						controller.getClienti(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
@@ -235,7 +235,7 @@ public class ClientiFrame extends JFrame {
 					EliminaButton.setEnabled(false);
 				}
 				else
-					table.setRowSelectionInterval(riga, riga);
+					ClientiTab.setRowSelectionInterval(riga, riga);
 			}
 		});
 		EliminaButton.setForeground(Color.BLACK);
@@ -277,28 +277,28 @@ public class ClientiFrame extends JFrame {
 		EmailLabel.setForeground(Color.WHITE);
 		EmailLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		EmailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		EmailLabel.setBounds(434, 197, 350, 26);
+		EmailLabel.setBounds(434, 314, 350, 26);
 		contentPane.add(EmailLabel);
 		
 		SessoLabel = new JLabel("Sesso:");
 		SessoLabel.setForeground(Color.WHITE);
 		SessoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		SessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		SessoLabel.setBounds(434, 233, 350, 26);
+		SessoLabel.setBounds(434, 198, 350, 26);
 		contentPane.add(SessoLabel);
 		
 		Citt‡Label = new JLabel("Citt\u00E0:");
 		Citt‡Label.setForeground(Color.WHITE);
 		Citt‡Label.setHorizontalAlignment(SwingConstants.LEFT);
 		Citt‡Label.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		Citt‡Label.setBounds(434, 269, 350, 27);
+		Citt‡Label.setBounds(434, 235, 350, 27);
 		contentPane.add(Citt‡Label);
 		
 		ProvinciaLabel = new JLabel("Provincia:");
 		ProvinciaLabel.setForeground(Color.WHITE);
 		ProvinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		ProvinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		ProvinciaLabel.setBounds(434, 306, 350, 31);
+		ProvinciaLabel.setBounds(434, 273, 350, 31);
 		contentPane.add(ProvinciaLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -307,22 +307,35 @@ public class ClientiFrame extends JFrame {
 		scrollPane.setBounds(10, 10, 400, 266);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
+		ClientiTab = new JTable();
+		ClientiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabels(table.getValueAt(table.getSelectedRow(), 0).toString(), "Clienti");
+				controller.aggiornaLabels(ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString(), "Clienti");
 				EliminaButton.setEnabled(true);
 			}
 		});
-		table.setModel(new DefaultTableModel(
+		ClientiTab.setModel(new DefaultTableModel(
 			controller.getClienti(),
 			new String[] {
 					"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
 			}
 		));
-		table.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(table);
+		ClientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
+		ClientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(ClientiTab);
+		
+		/*JButton SalvaMailButton = new JButton("Salva Mail");
+		SalvaMailButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				controller.
+			}
+		});*/
+		/*SalvaMailButton.setForeground(Color.BLACK);
+		SalvaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		SalvaMailButton.setContentAreaFilled(false);
+		SalvaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		SalvaMailButton.setBounds(553, 518, 101, 42);
+		contentPane.add(SalvaMailButton);*/
 		
 		
 	}

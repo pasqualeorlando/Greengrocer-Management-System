@@ -75,7 +75,6 @@ public class Controller {
 	public void vaiModificaAccount(Persona p) {
 		ModificaAccount = new ModificaAccountFrame(this, p);
 		ModificaAccount.setVisible(true);
-		//Homepage.setVisible(false);
 		Homepage.dispose();
 	}
 	public void salvaNuovaMail(String newMail, Persona p) {
@@ -146,6 +145,22 @@ public class Controller {
 				Personale.setData(aggiornamento, -1);
 			else
 				Clienti.setData(aggiornamento);
+		} catch(ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void aggiornaLabelsProdotti(String cf) {
+		try {
+			Persona p = PersonaDAO.getPersonaDaCF(cf);
+			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
+			if(p.getTipo().equals("Personale")) {
+				if(p.getRuolo().equals("Titolare")) Personale.setData(aggiornamento, 0);
+				else Personale.setData(aggiornamento, 1);
+			} else
+				Clienti.setData(aggiornamento);
+		} catch (SQLException e) {
+			String[] aggiornamento = {"", "", "", "", "", "", "", ""};
 		} catch(ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 		}
