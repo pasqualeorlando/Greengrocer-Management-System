@@ -34,6 +34,7 @@ public class ProdottiFrame extends JFrame {
 	public ProdottiFrame(Controller c) {
 		controller = c;
 		
+		
 		setTitle("OrtofruttaPerTutti - Prodotti");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ProdottiFrame.class.getResource("/immagini/fruits.png")));
@@ -46,7 +47,7 @@ public class ProdottiFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 774, 266);
+		scrollPane.setBounds(10, 10, 674, 266);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scrollPane);
@@ -59,7 +60,7 @@ public class ProdottiFrame extends JFrame {
 			}
 		});
 		ProdottiTab.setModel(new DefaultTableModel(
-			controller.getClienti(),
+			controller.getProdotti(),
 			new String[] {
 					"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
 			}
@@ -119,7 +120,7 @@ public class ProdottiFrame extends JFrame {
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		spinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		spinner.setBounds(202, 444, 42, 20);
+		spinner.setBounds(202, 444, 51, 26);
 		contentPane.add(spinner);
 		
 		JButton AnnullaButton = new JButton("Annulla");

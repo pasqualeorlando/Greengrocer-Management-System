@@ -143,6 +143,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(ClientiButton);
 		
 		JButton ProdottiButton = new JButton("Prodotti");
+		ProdottiButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiProdotti();
+			}
+		});
 		ProdottiButton.setContentAreaFilled(false);
 		ProdottiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/prodotti.png")));
 		ProdottiButton.setFont(new Font("Georgia", Font.BOLD, 15));

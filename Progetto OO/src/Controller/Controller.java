@@ -19,6 +19,8 @@ public class Controller {
 	private ClientiFrame Clienti;
 	private PersonaDAOPostgresImpl PersonaDAO;
 	private CittaItalianaDAOPostgresImpl CittaItalianaDAO;
+	private ProdottiFrame Prodotti;
+	private ProdottoDAOPostgresImpl ProdottoDAO;
 	
 	public Controller() {
 		DBConnection dbconn = null;
@@ -29,6 +31,7 @@ public class Controller {
             connection = dbconn.getConnection();
             PersonaDAO = new PersonaDAOPostgresImpl(connection);
             CittaItalianaDAO = new CittaItalianaDAOPostgresImpl(connection);
+            ProdottoDAO = new ProdottoDAOPostgresImpl(connection);
             Login = new LoginFrame(this);
             Login.setVisible(true);
         }catch(SQLException e) {
@@ -287,8 +290,38 @@ public class Controller {
 	}
 	
 	public void vaiClienti(Persona p) {
+		Homepage.dispose();
+		Clienti = new ClientiFrame(this, p);
+		Clienti.setVisible(true);
+	}
+	public void vaiProdotti() {
+		Homepage.dispose();
+		Prodotti = new ProdottiFrame(this);
+		Prodotti.setVisible(true);
+	}
+	
+	public Object[][] getProdotti(){
+		int i = 0;
+		try {
+			int len = ProdottoDAO.getProdotti().size();
+			Object[][] prodotti = new Object[len][8];
+			for(Prodotto p : ProdottoDAO.getProdotti()) {
+				prodotti[i][0]=p.getNome();
+				prodotti[i][1]=p.getPaeseDiProvenienza();
+				prodotti[i][2]=p.getMarca();
+				prodotti[i][3]=p.getDataScadenza();
+				prodotti[i][4]=p.getQuantitaNegozio();
+				prodotti[i][5]=p.getPrezzoUnitario();
+				prodotti[i][6]=p.getScontoPercentuale();
+				prodotti[i][7]=p.getQuantitaDeposito();
+				i++;
+			}
+			return prodotti;
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Prodotti nel database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
+			Prodotti.dispose();
 			Homepage.dispose();
-			Clienti = new ClientiFrame(this, p);
-			Clienti.setVisible(true);
+			return null;
+		}
 	}
 }

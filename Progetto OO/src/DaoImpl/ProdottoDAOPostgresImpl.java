@@ -20,19 +20,27 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	
 	public ArrayList<Prodotto> getProdotti() throws SQLException{
 		ArrayList<Prodotto> risultato = new ArrayList<Prodotto>();
-		String[] tipi = {"Frutta", "Verdura", "Farinaceo", "Latticino", "Uova", "Confezionato"};
+		String[] queries = {
+				"SELECT * FROM prodotto NATURAL JOIN Frutta ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Verdura ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Farinaceo ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Latticino ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Uova ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Confezionato ORDER BY nome"
+		};
 		
-		for(String s:tipi) {
-			PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto NATURAL JOIN ? ORDER BY nome");
-			statement.setString(1, s);
+		for(int i=0; i<6; i++) {
+			PreparedStatement statement = connessione.prepareStatement(queries[i]);
 			ResultSet ris = statement.executeQuery();
 			while(ris.next()) {
 				Prodotto p = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getFloat("quantitanegozio"),
 										  ris.getFloat("prezzounitario"), ris.getInt("scontopercentuale"), 
 										  ris.getFloat("quantitadeposito"), null);
+				p.setMarca(ris.getString("marca"));
 				
-				if(s.equals("Frutta")||s.equals("Verdura"))
+				if(i>1)
 					p.setDataScadenza(ris.getDate("datascadenza").toLocalDate());
+				risultato.add(p);
 			}
 		}
 		return risultato;
