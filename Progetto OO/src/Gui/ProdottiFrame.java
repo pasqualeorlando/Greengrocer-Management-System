@@ -1,8 +1,6 @@
 package Gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +13,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Classi.Persona;
 import Controller.Controller;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -23,17 +22,26 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProdottiFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
 	private JTable ProdottiTab;
-
+	private JLabel NomeLabel;
+	private JLabel PaeseDiProvenienzaLabel;
+	private JLabel MarcaLabel;
+	private JLabel DataScadenzaLabel;
+	private JLabel QuantitaNegozioLabel;
+	private JLabel PrezzoUnitarioLabel;
+	private JLabel QuantitaDepositoLabel;
+	private JSpinner spinner;
 	
-	public ProdottiFrame(Controller c) {
+	public ProdottiFrame(Controller c, Persona p) {
 		controller = c;
-		
+		JFrame attuale = this;
 		
 		setTitle("OrtofruttaPerTutti - Prodotti");
 		setResizable(false);
@@ -52,11 +60,33 @@ public class ProdottiFrame extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scrollPane);
 		
+		JButton SalvaButton = new JButton("Salva");
+		SalvaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int riga = ProdottiTab.getSelectedRow();
+				controller.aggiornaScontoProdotto(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString(), (int)spinner.getValue());
+				ProdottiTab.setModel(new DefaultTableModel(
+						controller.getProdotti(),
+						new String[] {
+								"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
+						}
+					));
+				ProdottiTab.setRowSelectionInterval(riga, riga);
+			}
+		});
+		SalvaButton.setEnabled(false);
+		SalvaButton.setForeground(Color.BLACK);
+		SalvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		SalvaButton.setContentAreaFilled(false);
+		SalvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		SalvaButton.setBounds(542, 497, 101, 42);
+		contentPane.add(SalvaButton);
+		
 		ProdottiTab = new JTable();
 		ProdottiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				//controller.aggiornaLabelsProdotti();
-				
+				controller.aggiornaLabelsProdotti(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString());
+				SalvaButton.setEnabled(true);
 			}
 		});
 		ProdottiTab.setModel(new DefaultTableModel(
@@ -69,38 +99,38 @@ public class ProdottiFrame extends JFrame {
 		ProdottiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(ProdottiTab);
 		
-		JLabel NomeLabel = new JLabel("Nome:");
-		NomeLabel.setBounds(21, 308, 257, 17);
+		NomeLabel = new JLabel("Nome:");
+		NomeLabel.setBounds(21, 308, 232, 17);
 		NomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		NomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(NomeLabel);
 		
-		JLabel PaeseDiProvenienzaLabel = new JLabel("Paese Di Provenienza:");
-		PaeseDiProvenienzaLabel.setBounds(330, 308, 399, 17);
+		PaeseDiProvenienzaLabel = new JLabel("Paese Di Provenienza:");
+		PaeseDiProvenienzaLabel.setBounds(330, 308, 356, 17);
 		PaeseDiProvenienzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		PaeseDiProvenienzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(PaeseDiProvenienzaLabel);
 		
-		JLabel MarcaLabel = new JLabel("Marca:");
-		MarcaLabel.setBounds(21, 353, 195, 17);
+		MarcaLabel = new JLabel("Marca:");
+		MarcaLabel.setBounds(21, 353, 232, 17);
 		MarcaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		MarcaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(MarcaLabel);
 		
-		JLabel DataScadenzaLabel = new JLabel("Data Scadenza:");
-		DataScadenzaLabel.setBounds(330, 353, 346, 17);
+		DataScadenzaLabel = new JLabel("Data Scadenza:");
+		DataScadenzaLabel.setBounds(330, 353, 354, 17);
 		DataScadenzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		DataScadenzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(DataScadenzaLabel);
 		
-		JLabel QuantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio:");
-		QuantitaNegozioLabel.setBounds(21, 398, 195, 17);
+		QuantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio:");
+		QuantitaNegozioLabel.setBounds(21, 398, 232, 17);
 		QuantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		QuantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(QuantitaNegozioLabel);
 		
-		JLabel PrezzoUnitarioLabel = new JLabel("Prezzo Unitario:");
-		PrezzoUnitarioLabel.setBounds(330, 398, 184, 17);
+		PrezzoUnitarioLabel = new JLabel("Prezzo Unitario:");
+		PrezzoUnitarioLabel.setBounds(330, 398, 354, 17);
 		PrezzoUnitarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		PrezzoUnitarioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(PrezzoUnitarioLabel);
@@ -111,32 +141,43 @@ public class ProdottiFrame extends JFrame {
 		ScontoPercentualeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(ScontoPercentualeLabel);
 		
-		JLabel QuantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito:");
-		QuantitaDepositoLabel.setBounds(330, 444, 200, 17);
+		QuantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito:");
+		QuantitaDepositoLabel.setBounds(330, 444, 354, 17);
 		QuantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		QuantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(QuantitaDepositoLabel);
 		
-		JSpinner spinner = new JSpinner();
+		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		spinner.setFont(new Font("Georgia", Font.PLAIN, 16));
 		spinner.setBounds(202, 444, 51, 26);
 		contentPane.add(spinner);
 		
 		JButton AnnullaButton = new JButton("Annulla");
+		AnnullaButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiHomepage(attuale, p);
+			}
+		});
 		AnnullaButton.setForeground(Color.BLACK);
 		AnnullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		AnnullaButton.setContentAreaFilled(false);
 		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		AnnullaButton.setBounds(39, 497, 101, 42);
 		contentPane.add(AnnullaButton);
-		
-		JButton SalvaButton = new JButton("Salva");
-		SalvaButton.setForeground(Color.BLACK);
-		SalvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		SalvaButton.setContentAreaFilled(false);
-		SalvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		SalvaButton.setBounds(542, 497, 101, 42);
-		contentPane.add(SalvaButton);
+	}
+	
+	public void setData(Object aggiornamento[]) {
+		NomeLabel.setText("Nome: " + aggiornamento[0]);
+		PaeseDiProvenienzaLabel.setText("Paese Di Provenienza: " + aggiornamento[1]);
+		MarcaLabel.setText("Marca: " + aggiornamento[2]);
+		if(aggiornamento[3] == null)
+			aggiornamento[3] = "non disponibile";
+		DataScadenzaLabel.setText("Data Scadenza: " + aggiornamento[3]);
+		QuantitaNegozioLabel.setText("Quantità Negozio: " + aggiornamento[4]);
+		PrezzoUnitarioLabel.setText("Prezzo Unitario: " + aggiornamento[5]);
+		spinner.setValue((int)aggiornamento[6]);
+		QuantitaDepositoLabel.setText("Quantità Deposito: " + aggiornamento[7]);
 	}
 }

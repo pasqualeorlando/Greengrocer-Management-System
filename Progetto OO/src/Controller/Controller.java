@@ -76,18 +76,16 @@ public class Controller {
 		Homepage.setVisible(true);
 		framePrecedente.dispose();
 	}
-	public Persona getPersonaDaCF(String CF) {
+	public void vaiModificaAccount(JFrame provenienza, Persona committente, String CFPersonaDaModificare) {
 		try {
-			return PersonaDAO.getPersonaDaCF(CF);
+			Persona daModificare = PersonaDAO.getPersonaDaCF(CFPersonaDaModificare);
+			ModificaAccount = new ModificaAccountFrame(this, daModificare, committente);
+			ModificaAccount.setVisible(true);
+			provenienza.dispose();
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare questa persona", "Errore", JOptionPane.ERROR_MESSAGE);
-			return null;
+			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare la persona selezionata.\nRiavviare l'applicazione e verificare la connessione", "Errore", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 		}
-	}
-	public void vaiModificaAccount(JFrame provenienza, Persona committente, Persona daModificare) {
-		ModificaAccount = new ModificaAccountFrame(this, daModificare, committente);
-		ModificaAccount.setVisible(true);
-		provenienza.dispose();
 	}
 	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) {
 		if(newMail.equals(daModificare.getEmail()))
@@ -103,7 +101,7 @@ public class Controller {
 				JOptionPane.showInternalMessageDialog(null, "Non è stato possibile portare a termine l'operazione. Riavviare l'applicazione e verificare la connessione", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 				System.exit(-1);
 			}
-			if(daModificare == committente) {
+			if(daModificare.getCF().equals(committente.getCF())) {
 				ModificaAccount.dispose();
 				Homepage = new HomepageFrame(this, committente);
 				Homepage.setVisible(true);
@@ -151,7 +149,7 @@ public class Controller {
 			return null;
 		}
 	}
-	public void aggiornaLabels(String cf, String finestra) {
+	public void aggiornaLabels(String cf, String finestra) { //aggiorna le labels nelle finestre di gestione del personale e dei clienti
 		try {
 			Persona p = PersonaDAO.getPersonaDaCF(cf);
 			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
@@ -171,19 +169,16 @@ public class Controller {
 		}
 	}
 	
-	public void aggiornaLabelsProdotti(String cf) {
+	public void aggiornaLabelsProdotti(String nome, String marca) { //aggiorna le labels nella finestra dei prodotti
 		try {
-			Persona p = PersonaDAO.getPersonaDaCF(cf);
-			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
-			if(p.getTipo().equals("Personale")) {
-				if(p.getRuolo().equals("Titolare")) Personale.setData(aggiornamento, 0);
-				else Personale.setData(aggiornamento, 1);
-			} else
-				Clienti.setData(aggiornamento);
+			Prodotto prod = ProdottoDAO.getProdottoDaNomeMarca(nome, marca);
+			Object[] aggiornamento = {prod.getNome(), prod.getPaeseDiProvenienza(), prod.getMarca(), prod.getDataScadenza(),
+									  prod.getQuantitaNegozio(), prod.getPrezzoUnitario(), prod.getScontoPercentuale(), prod.getQuantitaDeposito()};
+			Prodotti.setData(aggiornamento);
 		} catch (SQLException e) {
-			String[] aggiornamento = {"", "", "", "", "", "", "", ""};
-		} catch(ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la connessione al database.\nRiavviare il programma e controllare la connessione", "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch(NullPointerException e) {
+			
 		}
 	}
 	
@@ -257,14 +252,12 @@ public class Controller {
 					return true;
 				}
 			}
-			
-			
+
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona.\nRiavviare l'applicazione e verificare la connessione.", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
 			System.exit(-1);
 			return false;
 		}
-		
 	}
 	
 	public ArrayList<String> getProvince() {
@@ -317,9 +310,9 @@ public class Controller {
 		Clienti = new ClientiFrame(this, p);
 		Clienti.setVisible(true);
 	}
-	public void vaiProdotti() {
+	public void vaiProdotti(Persona p) {
 		Homepage.dispose();
-		Prodotti = new ProdottiFrame(this);
+		Prodotti = new ProdottiFrame(this, p);
 		Prodotti.setVisible(true);
 	}
 	
@@ -341,10 +334,23 @@ public class Controller {
 			}
 			return prodotti;
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Prodotti nel database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
-			Prodotti.dispose();
-			Homepage.dispose();
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Prodotti nel database.\nRiavviare il programma e controllare la connessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return null;
+		}
+	}
+	public void aggiornaScontoProdotto(String nomeProdotto, String marcaProdotto, int nuovoSconto) {
+		try {
+			Prodotto prodottoDaAggiornare = ProdottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
+			if(prodottoDaAggiornare.getScontoPercentuale() == nuovoSconto)
+				JOptionPane.showInternalMessageDialog(null, "Il prodotto ha già questo sconto.\nRiprovare con una nuova percentuale", "Errore", JOptionPane.ERROR_MESSAGE);
+			else {
+				ProdottoDAO.aggiornaScontoProdotto(prodottoDaAggiornare, nuovoSconto);
+				JOptionPane.showInternalMessageDialog(null, "Lo sconto è stato aggiornato", "Aggiornamento riuscito", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la connessione al database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 		}
 	}
 }

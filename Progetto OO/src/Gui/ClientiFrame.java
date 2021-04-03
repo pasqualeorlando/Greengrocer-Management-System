@@ -311,7 +311,7 @@ public class ClientiFrame extends JFrame {
 		ModificaMailButton = new JButton("Modifica");
 		ModificaMailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.vaiModificaAccount(attuale, p, controller.getPersonaDaCF(ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString()));
+				controller.vaiModificaAccount(attuale, p, ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString());
 			}
 		});
 		ModificaMailButton.setForeground(Color.BLACK);
@@ -338,22 +338,7 @@ public class ClientiFrame extends JFrame {
 		));
 		ClientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
 		ClientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(ClientiTab);
-		
-		/*JButton SalvaMailButton = new JButton("Salva Mail");
-		SalvaMailButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				controller.
-			}
-		});*/
-		/*SalvaMailButton.setForeground(Color.BLACK);
-		SalvaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		SalvaMailButton.setContentAreaFilled(false);
-		SalvaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		SalvaMailButton.setBounds(553, 518, 101, 42);
-		contentPane.add(SalvaMailButton);*/
-		
-		
+		scrollPane.setViewportView(ClientiTab);		
 	}
 	public void setData(String[] etichetteAggiornate) {
 		CFLabel.setText("CF: " + etichetteAggiornate[0]);

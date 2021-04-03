@@ -1,8 +1,5 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +9,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 
 import Classi.*;
@@ -97,7 +93,7 @@ public class HomepageFrame extends JFrame {
 		ModificaAccButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiModificaAccount(attuale, p, p);
+				controller.vaiModificaAccount(attuale, p, p.getCF());
 			}
 		});
 		ModificaAccButton.setForeground(Color.WHITE);
@@ -147,7 +143,7 @@ public class HomepageFrame extends JFrame {
 		ProdottiButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiProdotti();
+				controller.vaiProdotti(p);
 			}
 		});
 		ProdottiButton.setContentAreaFilled(false);

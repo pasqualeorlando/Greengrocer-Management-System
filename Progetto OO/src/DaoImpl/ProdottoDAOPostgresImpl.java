@@ -45,4 +45,32 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		}
 		return risultato;
 	}
+	
+	public Prodotto getProdottoDaNomeMarca(String nome, String marca) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto WHERE nome = ? AND marca = ?");
+		statement.setString(1, nome);
+		statement.setString(2, marca);
+		ResultSet ris = statement.executeQuery();
+		if(ris.next()) {
+			Prodotto prod = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getFloat("quantitanegozio"),
+					  ris.getFloat("prezzounitario"), ris.getInt("scontopercentuale"), 
+					  ris.getFloat("quantitadeposito"), null);
+			prod.setMarca(ris.getString("marca"));
+			try {
+				prod.setDataScadenza(ris.getDate("datascadenza").toLocalDate());
+			}catch(NullPointerException e) {
+				//prod.setDataScadenza(null);
+			}
+			return prod;
+		}
+		return null;
+	}
+	
+	public void aggiornaScontoProdotto(Prodotto P, int nuovoSconto) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET scontopercentuale = ? WHERE nome = ? AND marca = ?");
+		statement.setInt(1, nuovoSconto);
+		statement.setString(2, P.getNome());
+		statement.setString(3, P.getMarca());
+		statement.executeUpdate();
+	}
 }
