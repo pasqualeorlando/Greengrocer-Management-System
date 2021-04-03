@@ -33,6 +33,7 @@ public class HomepageFrame extends JFrame {
 	
 	public HomepageFrame(Controller c, Persona p) {
 		controller = c;
+		JFrame attuale = this;
 		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(HomepageFrame.class.getResource("/immagini/fruits.png")));
@@ -96,7 +97,7 @@ public class HomepageFrame extends JFrame {
 		ModificaAccButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiModificaAccount(p);
+				controller.vaiModificaAccount(attuale, p, p);
 			}
 		});
 		ModificaAccButton.setForeground(Color.WHITE);

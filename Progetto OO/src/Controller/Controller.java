@@ -37,11 +37,11 @@ public class Controller {
         }catch(SQLException e) {
         	//System.out.println("Impossibile connettersi al DB");
         	JOptionPane.showInternalMessageDialog(null, "Impossibile connettersi al Database.\nRiprova più tardi.", "Errore connessione", JOptionPane.ERROR_MESSAGE);
-        	System.exit(1);
+        	System.exit(-1);
         } catch (IOException e) {
 			//System.out.println("Impossibile trovare il file di configurazione del DB");
 			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare il file dbconf.properties.\nVerificare nelle directory del programma.", "File configurazione non trovato", JOptionPane.ERROR_MESSAGE);
-			System.exit(2);
+			System.exit(-1);
         }
 	}
 	
@@ -61,6 +61,7 @@ public class Controller {
 				}
 			} catch (SQLException e) {
 				JOptionPane.showInternalMessageDialog(null, "Non è possibile eseguire l'accesso. Controllare la connessione al database", "Errore connessione", JOptionPane.ERROR_MESSAGE);
+				System.exit(-1);
 			}
 		}
 	}
@@ -75,27 +76,43 @@ public class Controller {
 		Homepage.setVisible(true);
 		framePrecedente.dispose();
 	}
-	public void vaiModificaAccount(Persona p) {
-		ModificaAccount = new ModificaAccountFrame(this, p);
-		ModificaAccount.setVisible(true);
-		Homepage.dispose();
+	public Persona getPersonaDaCF(String CF) {
+		try {
+			return PersonaDAO.getPersonaDaCF(CF);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare questa persona", "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
 	}
-	public void salvaNuovaMail(String newMail, Persona p) {
-		if(newMail.equals(p.getEmail()))
+	public void vaiModificaAccount(JFrame provenienza, Persona committente, Persona daModificare) {
+		ModificaAccount = new ModificaAccountFrame(this, daModificare, committente);
+		ModificaAccount.setVisible(true);
+		provenienza.dispose();
+	}
+	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) {
+		if(newMail.equals(daModificare.getEmail()))
 			JOptionPane.showInternalMessageDialog(null, "La nuova mail deve essere diversa da quella attuale", "Errore", JOptionPane.ERROR_MESSAGE);
 		else if(!newMail.matches("^(.+)@(.+)$"))
 			JOptionPane.showInternalMessageDialog(null, "Inserire una mail valida", "Errore", JOptionPane.ERROR_MESSAGE);
 		else {
 			try {
-				PersonaDAO.aggiornaMail(newMail, p);
+				PersonaDAO.aggiornaMail(newMail, daModificare);
 				JOptionPane.showInternalMessageDialog(null, "Informazioni salvate con successo", "Aggiornamento riuscito", JOptionPane.INFORMATION_MESSAGE);
-				p.setEmail(newMail);
+				daModificare.setEmail(newMail);
 			} catch (SQLException e) {
-				JOptionPane.showInternalMessageDialog(null, "Non è stato possibile portare a termine l'operazione", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showInternalMessageDialog(null, "Non è stato possibile portare a termine l'operazione. Riavviare l'applicazione e verificare la connessione", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
+				System.exit(-1);
 			}
-			ModificaAccount.dispose();
-			Homepage = new HomepageFrame(this, p);
-			Homepage.setVisible(true);
+			if(daModificare == committente) {
+				ModificaAccount.dispose();
+				Homepage = new HomepageFrame(this, committente);
+				Homepage.setVisible(true);
+			}
+			else {
+				ModificaAccount.dispose();
+				Clienti = new ClientiFrame(this, committente);
+				Clienti.setVisible(true);
+			}
 		}
 	}
 	public void vaiPersonale(Persona p) {
@@ -128,8 +145,9 @@ public class Controller {
 			return personale;
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca del Personale nel database.\nRiavviare il programma.", "Errore", JOptionPane.ERROR_MESSAGE);
-			Personale.dispose();
-			Homepage.dispose();
+			//Personale.dispose();
+			//Homepage.dispose();
+			System.exit(-1);
 			return null;
 		}
 	}
@@ -181,7 +199,8 @@ public class Controller {
 				return true;
 			}
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante l'eliminazione", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Errore durante l'eliminazione.\nRiavviare l'applicazione e verificare la connessione.", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return false;
 		}
 	}
@@ -205,7 +224,8 @@ public class Controller {
 				return true;
 			}
 		}catch(SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la modifica.\nRiavviare l'applicazione e controllare la connessione", "Modifica fallita", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return false;
 		}
 	}
@@ -240,7 +260,8 @@ public class Controller {
 			
 			
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Impossibile inserire la persona.\nRiavviare l'applicazione e verificare la connessione.", "Inserimento fallito", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return false;
 		}
 		
@@ -250,7 +271,8 @@ public class Controller {
 		try {
 			return CittaItalianaDAO.getProvince();
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le province", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le province.\nVerificare la connessione e riavviare il programma!", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return null;
 		}
 	}
@@ -259,7 +281,8 @@ public class Controller {
 		try {
 			return CittaItalianaDAO.getCittaFromProvincia(provincia);
 		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le città", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showInternalMessageDialog(null, "Impossibile caricare le città.\nVerificare la connessione e riavviare il programma!", "Caricamento fallito", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
 			return null;
 		}
 	}

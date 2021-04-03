@@ -41,6 +41,7 @@ public class ClientiFrame extends JFrame {
 	private JTextField NuovoNomeTF, NuovoCognomeTF, NuovaDataNascitaTF, NuovaMailTF;
 	private JComboBox NuovoSessoCB, NuovaProvinciaCB, NuovaCittaCB;
 	private JButton AnnullaButton, EliminaButton;
+	private JButton ModificaMailButton;
 	
 	public ClientiFrame(Controller c, Persona p) {
 		controller = c;
@@ -307,11 +308,26 @@ public class ClientiFrame extends JFrame {
 		scrollPane.setBounds(10, 10, 400, 266);
 		contentPane.add(scrollPane);
 		
+		ModificaMailButton = new JButton("Modifica");
+		ModificaMailButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.vaiModificaAccount(attuale, p, controller.getPersonaDaCF(ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString()));
+			}
+		});
+		ModificaMailButton.setForeground(Color.BLACK);
+		ModificaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		ModificaMailButton.setEnabled(false);
+		ModificaMailButton.setContentAreaFilled(false);
+		ModificaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		ModificaMailButton.setBounds(552, 518, 101, 42);
+		contentPane.add(ModificaMailButton);
+		
 		ClientiTab = new JTable();
 		ClientiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				controller.aggiornaLabels(ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString(), "Clienti");
 				EliminaButton.setEnabled(true);
+				ModificaMailButton.setEnabled(true);
 			}
 		});
 		ClientiTab.setModel(new DefaultTableModel(

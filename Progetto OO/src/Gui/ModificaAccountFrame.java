@@ -32,7 +32,7 @@ public class ModificaAccountFrame extends JFrame {
 	
 
 	
-	public ModificaAccountFrame(Controller c, Persona p) {
+	public ModificaAccountFrame(Controller c, Persona p, Persona committente) {
 		controller = c;
 		JFrame attuale = this;
 		
@@ -76,7 +76,7 @@ public class ModificaAccountFrame extends JFrame {
 		AnnullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiHomepage(attuale, p);
+				controller.vaiHomepage(attuale, committente);
 			}
 		});
 		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(255, 255, 255)));
@@ -89,7 +89,7 @@ public class ModificaAccountFrame extends JFrame {
 		SalvaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.salvaNuovaMail(NuovaMailTF.getText(), p);
+				controller.salvaNuovaMail(NuovaMailTF.getText(), p, committente);
 			}
 		});
 		SalvaButton.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
