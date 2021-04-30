@@ -36,12 +36,12 @@ public class ClientiFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
-	private JTable ClientiTab;
-	private JLabel CFLabel, NomeLabel, CognomeLabel, DataNascitaLabel, EmailLabel, SessoLabel, Citt‡Label, ProvinciaLabel;
-	private JTextField NuovoNomeTF, NuovoCognomeTF, NuovaDataNascitaTF, NuovaMailTF;
-	private JComboBox NuovoSessoCB, NuovaProvinciaCB, NuovaCittaCB;
-	private JButton AnnullaButton, EliminaButton;
-	private JButton ModificaMailButton;
+	private JTable clientiTab;
+	private JLabel CFLabel, nomeLabel, cognomeLabel, dataNascitaLabel, emailLabel, sessoLabel, cittaLabel, provinciaLabel;
+	private JTextField nuovoNomeTF, nuovoCognomeTF, nuovaDataNascitaTF, nuovaMailTF;
+	private JComboBox nuovoSessoCB, nuovaProvinciaCB, nuovaCittaCB;
+	private JButton annullaButton, eliminaButton;
+	private JButton modificaMailButton;
 	
 	public ClientiFrame(Controller c, Persona p) {
 		controller = c;
@@ -58,34 +58,34 @@ public class ClientiFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel InserimentoClientiPanel = new JPanel();
-		InserimentoClientiPanel.setBackground(new Color(255, 255, 255));
-		InserimentoClientiPanel.setBounds(10, 286, 400, 274);
-		contentPane.add(InserimentoClientiPanel);
-		InserimentoClientiPanel.setLayout(null);
+		JPanel inserimentoClientiPanel = new JPanel();
+		inserimentoClientiPanel.setBackground(new Color(255, 255, 255));
+		inserimentoClientiPanel.setBounds(10, 286, 400, 274);
+		contentPane.add(inserimentoClientiPanel);
+		inserimentoClientiPanel.setLayout(null);
 		
-		JButton ResetButton = new JButton("Reset");
-		ResetButton.addMouseListener(new MouseAdapter() {
+		JButton resetButton = new JButton("Reset");
+		resetButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				resetForm();
 			}
 		});
-		ResetButton.setForeground(new Color(255, 255, 255));
-		ResetButton.setBorderPainted(false);
-		ResetButton.setBackground(new Color(165, 42, 42));
-		ResetButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		ResetButton.setBounds(28, 236, 102, 27);
-		InserimentoClientiPanel.add(ResetButton);
+		resetButton.setForeground(new Color(255, 255, 255));
+		resetButton.setBorderPainted(false);
+		resetButton.setBackground(new Color(165, 42, 42));
+		resetButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		resetButton.setBounds(28, 236, 102, 27);
+		inserimentoClientiPanel.add(resetButton);
 		
-		JButton InserisciButton = new JButton("Inserisci");
-		InserisciButton.setForeground(new Color(255, 255, 255));
-		InserisciButton.addMouseListener(new MouseAdapter() {
+		JButton inserisciButton = new JButton("Inserisci");
+		inserisciButton.setForeground(new Color(255, 255, 255));
+		inserisciButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				boolean inserito = controller.inserisciPersona(NuovoNomeTF.getText().toUpperCase(), NuovoCognomeTF.getText().toUpperCase(), 
-																NuovaDataNascitaTF.getText(), NuovaMailTF.getText(), NuovoSessoCB.getSelectedItem().toString(), 
-																"", "Cliente", NuovaCittaCB.getSelectedItem().toString(), 
-																NuovaProvinciaCB.getSelectedItem().toString());
-				ClientiTab.setModel(new DefaultTableModel(
+				boolean inserito = controller.inserisciPersona(nuovoNomeTF.getText().toUpperCase(), nuovoCognomeTF.getText().toUpperCase(), 
+																nuovaDataNascitaTF.getText(), nuovaMailTF.getText(), nuovoSessoCB.getSelectedItem().toString(), 
+																"", "Cliente", nuovaCittaCB.getSelectedItem().toString(), 
+																nuovaProvinciaCB.getSelectedItem().toString());
+				clientiTab.setModel(new DefaultTableModel(
 						controller.getClienti(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
@@ -97,135 +97,135 @@ public class ClientiFrame extends JFrame {
 				}
 			}
 		});
-		InserisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		InserisciButton.setBorderPainted(false);
-		InserisciButton.setBackground(new Color(165, 42, 42));
-		InserisciButton.setBounds(261, 236, 102, 27);
-		InserimentoClientiPanel.add(InserisciButton);
+		inserisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		inserisciButton.setBorderPainted(false);
+		inserisciButton.setBackground(new Color(165, 42, 42));
+		inserisciButton.setBounds(261, 236, 102, 27);
+		inserimentoClientiPanel.add(inserisciButton);
 		
-		JLabel NuovoClienteLabel = new JLabel("Inserimento nuovo cliente");
-		NuovoClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		NuovoClienteLabel.setFont(new Font("Georgia", Font.BOLD, 14));
-		NuovoClienteLabel.setIcon(null);
-		NuovoClienteLabel.setBounds(10, 11, 380, 27);
-		InserimentoClientiPanel.add(NuovoClienteLabel);
+		JLabel nuovoClienteLabel = new JLabel("Inserimento nuovo cliente");
+		nuovoClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nuovoClienteLabel.setFont(new Font("Georgia", Font.BOLD, 14));
+		nuovoClienteLabel.setIcon(null);
+		nuovoClienteLabel.setBounds(10, 11, 380, 27);
+		inserimentoClientiPanel.add(nuovoClienteLabel);
 		
-		JLabel NuovoNomeLabel = new JLabel("Nome:");
-		NuovoNomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NuovoNomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovoNomeLabel.setBounds(7, 65, 51, 14);
-		InserimentoClientiPanel.add(NuovoNomeLabel);
+		JLabel nuovoNomeLabel = new JLabel("Nome:");
+		nuovoNomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nuovoNomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovoNomeLabel.setBounds(7, 65, 51, 14);
+		inserimentoClientiPanel.add(nuovoNomeLabel);
 		
-		NuovoNomeTF = new JTextField();
-		NuovoNomeTF.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovoNomeTF.setBounds(60, 62, 149, 21);
-		InserimentoClientiPanel.add(NuovoNomeTF);
-		NuovoNomeTF.setColumns(10);
+		nuovoNomeTF = new JTextField();
+		nuovoNomeTF.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovoNomeTF.setBounds(60, 62, 149, 21);
+		inserimentoClientiPanel.add(nuovoNomeTF);
+		nuovoNomeTF.setColumns(10);
 		
-		JLabel NuovoCognomeLabel = new JLabel("Cognome:");
-		NuovoCognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NuovoCognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovoCognomeLabel.setBounds(7, 90, 79, 17);
-		InserimentoClientiPanel.add(NuovoCognomeLabel);
+		JLabel nuovoCognomeLabel = new JLabel("Cognome:");
+		nuovoCognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nuovoCognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovoCognomeLabel.setBounds(7, 90, 79, 17);
+		inserimentoClientiPanel.add(nuovoCognomeLabel);
 		
-		NuovoCognomeTF = new JTextField();
-		NuovoCognomeTF.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovoCognomeTF.setBounds(89, 88, 120, 21);
-		InserimentoClientiPanel.add(NuovoCognomeTF);
-		NuovoCognomeTF.setColumns(10);
+		nuovoCognomeTF = new JTextField();
+		nuovoCognomeTF.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovoCognomeTF.setBounds(89, 88, 120, 21);
+		inserimentoClientiPanel.add(nuovoCognomeTF);
+		nuovoCognomeTF.setColumns(10);
 		
-		JLabel NuovoSessoLabel = new JLabel("Sesso:");
-		NuovoSessoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		NuovoSessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovoSessoLabel.setBounds(224, 65, 61, 15);
-		InserimentoClientiPanel.add(NuovoSessoLabel);
+		JLabel nuovoSessoLabel = new JLabel("Sesso:");
+		nuovoSessoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nuovoSessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovoSessoLabel.setBounds(224, 65, 61, 15);
+		inserimentoClientiPanel.add(nuovoSessoLabel);
 		
-		NuovoSessoCB = new JComboBox();
-		NuovoSessoCB.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovoSessoCB.setModel(new DefaultComboBoxModel(TSesso.values()));
-		NuovoSessoCB.setBounds(298, 61, 44, 22);
-		InserimentoClientiPanel.add(NuovoSessoCB);
+		nuovoSessoCB = new JComboBox();
+		nuovoSessoCB.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovoSessoCB.setModel(new DefaultComboBoxModel(TSesso.values()));
+		nuovoSessoCB.setBounds(298, 61, 44, 22);
+		inserimentoClientiPanel.add(nuovoSessoCB);
 		
-		JLabel NuovaDataNascitaLabel = new JLabel("DataNascita:");
-		NuovaDataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NuovaDataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovaDataNascitaLabel.setBounds(7, 118, 102, 20);
-		InserimentoClientiPanel.add(NuovaDataNascitaLabel);
+		JLabel nuovaDataNascitaLabel = new JLabel("DataNascita:");
+		nuovaDataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nuovaDataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovaDataNascitaLabel.setBounds(7, 118, 102, 20);
+		inserimentoClientiPanel.add(nuovaDataNascitaLabel);
 		
-		NuovaDataNascitaTF = new JTextField();
-		NuovaDataNascitaTF.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovaDataNascitaTF.setBounds(108, 118, 282, 21);
-		InserimentoClientiPanel.add(NuovaDataNascitaTF);
-		NuovaDataNascitaTF.setColumns(10);
+		nuovaDataNascitaTF = new JTextField();
+		nuovaDataNascitaTF.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovaDataNascitaTF.setBounds(108, 118, 282, 21);
+		inserimentoClientiPanel.add(nuovaDataNascitaTF);
+		nuovaDataNascitaTF.setColumns(10);
 		
-		JLabel NuovaProvinciaLabel = new JLabel("Provincia:");
-		NuovaProvinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovaProvinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NuovaProvinciaLabel.setBounds(7, 153, 82, 14);
-		InserimentoClientiPanel.add(NuovaProvinciaLabel);
+		JLabel nuovaProvinciaLabel = new JLabel("Provincia:");
+		nuovaProvinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovaProvinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nuovaProvinciaLabel.setBounds(7, 153, 82, 14);
+		inserimentoClientiPanel.add(nuovaProvinciaLabel);
 		
 		String[] province = null;
 		province = controller.getProvince().toArray(new String[controller.getProvince().size()]);
-		NuovaProvinciaCB = new JComboBox(province);
-		NuovaProvinciaCB.addItemListener(new ItemListener() {
+		nuovaProvinciaCB = new JComboBox(province);
+		nuovaProvinciaCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				String provincia = NuovaProvinciaCB.getSelectedItem().toString();
+				String provincia = nuovaProvinciaCB.getSelectedItem().toString();
 				String[] citt‡ = controller.getCittaFromProvincia(provincia).toArray(new String[controller.getCittaFromProvincia(provincia).size()]);
-				NuovaCittaCB.setEnabled(true);
-				NuovaCittaCB.setModel(new DefaultComboBoxModel(citt‡));
+				nuovaCittaCB.setEnabled(true);
+				nuovaCittaCB.setModel(new DefaultComboBoxModel(citt‡));
 			}
 		});
-		NuovaProvinciaCB.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovaProvinciaCB.setBounds(87, 149, 111, 22);
-		InserimentoClientiPanel.add(NuovaProvinciaCB);
+		nuovaProvinciaCB.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovaProvinciaCB.setBounds(87, 149, 111, 22);
+		inserimentoClientiPanel.add(nuovaProvinciaCB);
 		
-		JLabel NuovaMailLabel = new JLabel("Email:");
-		NuovaMailLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NuovaMailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovaMailLabel.setBounds(10, 187, 51, 14);
-		InserimentoClientiPanel.add(NuovaMailLabel);
+		JLabel nuovaMailLabel = new JLabel("Email:");
+		nuovaMailLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nuovaMailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovaMailLabel.setBounds(10, 187, 51, 14);
+		inserimentoClientiPanel.add(nuovaMailLabel);
 		
-		NuovaMailTF = new JTextField();
-		NuovaMailTF.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovaMailTF.setBounds(71, 184, 319, 21);
-		InserimentoClientiPanel.add(NuovaMailTF);
-		NuovaMailTF.setColumns(10);
+		nuovaMailTF = new JTextField();
+		nuovaMailTF.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovaMailTF.setBounds(71, 184, 319, 21);
+		inserimentoClientiPanel.add(nuovaMailTF);
+		nuovaMailTF.setColumns(10);
 		
-		JLabel NuovaCittaLabel = new JLabel("Citt\u00E0:");
-		NuovaCittaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		NuovaCittaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
-		NuovaCittaLabel.setBounds(209, 154, 61, 14);
-		InserimentoClientiPanel.add(NuovaCittaLabel);
+		JLabel nuovaCittaLabel = new JLabel("Citt\u00E0:");
+		nuovaCittaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nuovaCittaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 14));
+		nuovaCittaLabel.setBounds(209, 154, 61, 14);
+		inserimentoClientiPanel.add(nuovaCittaLabel);
 		
-		NuovaCittaCB = new JComboBox();
-		NuovaCittaCB.setEnabled(true);
-		NuovaCittaCB.setFont(new Font("Georgia", Font.PLAIN, 14));
-		NuovaCittaCB.setSelectedIndex(-1);
-		NuovaCittaCB.setModel(new DefaultComboBoxModel(controller.getCittaFromProvincia(NuovaProvinciaCB.getSelectedItem().toString()).toArray(new String[controller.getCittaFromProvincia(NuovaProvinciaCB.getSelectedItem().toString()).size()])));
-		NuovaCittaCB.setBounds(280, 149, 110, 22);
-		InserimentoClientiPanel.add(NuovaCittaCB);
+		nuovaCittaCB = new JComboBox();
+		nuovaCittaCB.setEnabled(true);
+		nuovaCittaCB.setFont(new Font("Georgia", Font.PLAIN, 14));
+		nuovaCittaCB.setSelectedIndex(-1);
+		nuovaCittaCB.setModel(new DefaultComboBoxModel(controller.getCittaFromProvincia(nuovaProvinciaCB.getSelectedItem().toString()).toArray(new String[controller.getCittaFromProvincia(nuovaProvinciaCB.getSelectedItem().toString()).size()])));
+		nuovaCittaCB.setBounds(280, 149, 110, 22);
+		inserimentoClientiPanel.add(nuovaCittaCB);
 		
-		AnnullaButton = new JButton("Annulla");
-		AnnullaButton.addMouseListener(new MouseAdapter() {
+		annullaButton = new JButton("Annulla");
+		annullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controller.vaiHomepage(attuale, p);
 			}
 		});
-		AnnullaButton.setForeground(new Color(0, 0, 0));
-		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		AnnullaButton.setContentAreaFilled(false);
-		AnnullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		AnnullaButton.setBounds(420, 518, 101, 42);
-		contentPane.add(AnnullaButton);
+		annullaButton.setForeground(new Color(0, 0, 0));
+		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		annullaButton.setContentAreaFilled(false);
+		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		annullaButton.setBounds(420, 518, 101, 42);
+		contentPane.add(annullaButton);
 		
-		EliminaButton = new JButton("Elimina");
-		EliminaButton.setEnabled(false);
-		EliminaButton.addActionListener(new ActionListener() {
+		eliminaButton = new JButton("Elimina");
+		eliminaButton.setEnabled(false);
+		eliminaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int riga = ClientiTab.getSelectedRow();
-				boolean eliminato = controller.eliminaPersonaDaCF(ClientiTab.getValueAt(riga, 0).toString(), p);
-				ClientiTab.setModel(new DefaultTableModel(
+				int riga = clientiTab.getSelectedRow();
+				boolean eliminato = controller.eliminaPersonaDaCF(clientiTab.getValueAt(riga, 0).toString(), p);
+				clientiTab.setModel(new DefaultTableModel(
 						controller.getClienti(),
 						new String[] {
 								"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
@@ -233,18 +233,18 @@ public class ClientiFrame extends JFrame {
 					));
 				if(eliminato) {
 					controller.aggiornaLabels("", "Clienti");
-					EliminaButton.setEnabled(false);
+					eliminaButton.setEnabled(false);
 				}
 				else
-					ClientiTab.setRowSelectionInterval(riga, riga);
+					clientiTab.setRowSelectionInterval(riga, riga);
 			}
 		});
-		EliminaButton.setForeground(Color.BLACK);
-		EliminaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		EliminaButton.setContentAreaFilled(false);
-		EliminaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		EliminaButton.setBounds(683, 518, 101, 42);
-		contentPane.add(EliminaButton);
+		eliminaButton.setForeground(Color.BLACK);
+		eliminaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		eliminaButton.setContentAreaFilled(false);
+		eliminaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		eliminaButton.setBounds(683, 518, 101, 42);
+		contentPane.add(eliminaButton);
 		
 		CFLabel = new JLabel("CF:");
 		CFLabel.setForeground(Color.WHITE);
@@ -253,54 +253,54 @@ public class ClientiFrame extends JFrame {
 		CFLabel.setBounds(434, 57, 350, 23);
 		contentPane.add(CFLabel);
 		
-		NomeLabel = new JLabel("Nome:");
-		NomeLabel.setForeground(Color.WHITE);
-		NomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		NomeLabel.setBounds(434, 90, 350, 26);
-		contentPane.add(NomeLabel);
+		nomeLabel = new JLabel("Nome:");
+		nomeLabel.setForeground(Color.WHITE);
+		nomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		nomeLabel.setBounds(434, 90, 350, 26);
+		contentPane.add(nomeLabel);
 		
-		CognomeLabel = new JLabel("Cognome:");
-		CognomeLabel.setForeground(Color.WHITE);
-		CognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		CognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		CognomeLabel.setBounds(434, 126, 350, 26);
-		contentPane.add(CognomeLabel);
+		cognomeLabel = new JLabel("Cognome:");
+		cognomeLabel.setForeground(Color.WHITE);
+		cognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		cognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		cognomeLabel.setBounds(434, 126, 350, 26);
+		contentPane.add(cognomeLabel);
 		
-		DataNascitaLabel = new JLabel("DataNascita:");
-		DataNascitaLabel.setForeground(Color.WHITE);
-		DataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		DataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		DataNascitaLabel.setBounds(434, 162, 350, 25);
-		contentPane.add(DataNascitaLabel);
+		dataNascitaLabel = new JLabel("DataNascita:");
+		dataNascitaLabel.setForeground(Color.WHITE);
+		dataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		dataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		dataNascitaLabel.setBounds(434, 162, 350, 25);
+		contentPane.add(dataNascitaLabel);
 		
-		EmailLabel = new JLabel("Email:");
-		EmailLabel.setForeground(Color.WHITE);
-		EmailLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		EmailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		EmailLabel.setBounds(434, 314, 350, 26);
-		contentPane.add(EmailLabel);
+		emailLabel = new JLabel("Email:");
+		emailLabel.setForeground(Color.WHITE);
+		emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		emailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		emailLabel.setBounds(434, 314, 350, 26);
+		contentPane.add(emailLabel);
 		
-		SessoLabel = new JLabel("Sesso:");
-		SessoLabel.setForeground(Color.WHITE);
-		SessoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		SessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		SessoLabel.setBounds(434, 198, 350, 26);
-		contentPane.add(SessoLabel);
+		sessoLabel = new JLabel("Sesso:");
+		sessoLabel.setForeground(Color.WHITE);
+		sessoLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		sessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		sessoLabel.setBounds(434, 198, 350, 26);
+		contentPane.add(sessoLabel);
 		
-		Citt‡Label = new JLabel("Citt\u00E0:");
-		Citt‡Label.setForeground(Color.WHITE);
-		Citt‡Label.setHorizontalAlignment(SwingConstants.LEFT);
-		Citt‡Label.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		Citt‡Label.setBounds(434, 235, 350, 27);
-		contentPane.add(Citt‡Label);
+		cittaLabel = new JLabel("Citt\u00E0:");
+		cittaLabel.setForeground(Color.WHITE);
+		cittaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		cittaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		cittaLabel.setBounds(434, 235, 350, 27);
+		contentPane.add(cittaLabel);
 		
-		ProvinciaLabel = new JLabel("Provincia:");
-		ProvinciaLabel.setForeground(Color.WHITE);
-		ProvinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		ProvinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		ProvinciaLabel.setBounds(434, 273, 350, 31);
-		contentPane.add(ProvinciaLabel);
+		provinciaLabel = new JLabel("Provincia:");
+		provinciaLabel.setForeground(Color.WHITE);
+		provinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		provinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		provinciaLabel.setBounds(434, 273, 350, 31);
+		contentPane.add(provinciaLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -308,56 +308,56 @@ public class ClientiFrame extends JFrame {
 		scrollPane.setBounds(10, 10, 400, 266);
 		contentPane.add(scrollPane);
 		
-		ModificaMailButton = new JButton("Modifica");
-		ModificaMailButton.addActionListener(new ActionListener() {
+		modificaMailButton = new JButton("Modifica");
+		modificaMailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.vaiModificaAccount(attuale, p, ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString());
+				controller.vaiModificaAccount(attuale, p, clientiTab.getValueAt(clientiTab.getSelectedRow(), 0).toString());
 			}
 		});
-		ModificaMailButton.setForeground(Color.BLACK);
-		ModificaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		ModificaMailButton.setEnabled(false);
-		ModificaMailButton.setContentAreaFilled(false);
-		ModificaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		ModificaMailButton.setBounds(552, 518, 101, 42);
-		contentPane.add(ModificaMailButton);
+		modificaMailButton.setForeground(Color.BLACK);
+		modificaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		modificaMailButton.setEnabled(false);
+		modificaMailButton.setContentAreaFilled(false);
+		modificaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		modificaMailButton.setBounds(552, 518, 101, 42);
+		contentPane.add(modificaMailButton);
 		
-		ClientiTab = new JTable();
-		ClientiTab.addMouseListener(new MouseAdapter() {
+		clientiTab = new JTable();
+		clientiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabels(ClientiTab.getValueAt(ClientiTab.getSelectedRow(), 0).toString(), "Clienti");
-				EliminaButton.setEnabled(true);
-				ModificaMailButton.setEnabled(true);
+				controller.aggiornaLabels(clientiTab.getValueAt(clientiTab.getSelectedRow(), 0).toString(), "Clienti");
+				eliminaButton.setEnabled(true);
+				modificaMailButton.setEnabled(true);
 			}
 		});
-		ClientiTab.setModel(new DefaultTableModel(
+		clientiTab.setModel(new DefaultTableModel(
 			controller.getClienti(),
 			new String[] {
 					"CF", "Nome", "Cognome", "DataNascita", "Email", "Sesso", "Citta", "Provincia"
 			}
 		));
-		ClientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
-		ClientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(ClientiTab);		
+		clientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
+		clientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(clientiTab);		
 	}
 	public void setData(String[] etichetteAggiornate) {
 		CFLabel.setText("CF: " + etichetteAggiornate[0]);
-		NomeLabel.setText("Nome: " + etichetteAggiornate[1]);
-		CognomeLabel.setText("Cognome: " + etichetteAggiornate[2]);
-		DataNascitaLabel.setText("DataNascita: " + etichetteAggiornate[3]);
-		EmailLabel.setText("Email: " + etichetteAggiornate[4]);
-		SessoLabel.setText("Sesso: " + etichetteAggiornate[5]);
-		Citt‡Label.setText("Citt‡ nascita: " + etichetteAggiornate[6]);
-		ProvinciaLabel.setText("Provincia: " + etichetteAggiornate[7]);
+		nomeLabel.setText("Nome: " + etichetteAggiornate[1]);
+		cognomeLabel.setText("Cognome: " + etichetteAggiornate[2]);
+		dataNascitaLabel.setText("DataNascita: " + etichetteAggiornate[3]);
+		emailLabel.setText("Email: " + etichetteAggiornate[4]);
+		sessoLabel.setText("Sesso: " + etichetteAggiornate[5]);
+		cittaLabel.setText("Citt‡ nascita: " + etichetteAggiornate[6]);
+		provinciaLabel.setText("Provincia: " + etichetteAggiornate[7]);
 	}
 	
 	private void resetForm() {
-		NuovoNomeTF.setText("");
-		NuovoCognomeTF.setText("");
-		NuovaDataNascitaTF.setText("");
-		NuovaMailTF.setText("");
-		NuovoSessoCB.setSelectedIndex(0);
-		NuovaProvinciaCB.setSelectedIndex(0);
-		NuovaCittaCB.setSelectedIndex(0);
+		nuovoNomeTF.setText("");
+		nuovoCognomeTF.setText("");
+		nuovaDataNascitaTF.setText("");
+		nuovaMailTF.setText("");
+		nuovoSessoCB.setSelectedIndex(0);
+		nuovaProvinciaCB.setSelectedIndex(0);
+		nuovaCittaCB.setSelectedIndex(0);
 	}
 }

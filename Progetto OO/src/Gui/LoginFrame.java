@@ -44,17 +44,17 @@ public class LoginFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel usernameLab = new JLabel("Username:");
-		usernameLab.setHorizontalAlignment(SwingConstants.RIGHT);
-		usernameLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		usernameLab.setBounds(95, 192, 128, 30);
-		contentPane.add(usernameLab);
+		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		usernameLabel.setFont(new Font("Georgia", Font.BOLD, 17));
+		usernameLabel.setBounds(95, 192, 128, 30);
+		contentPane.add(usernameLabel);
 		
-		JLabel passwordLab = new JLabel("Password :");
-		passwordLab.setHorizontalAlignment(SwingConstants.RIGHT);
-		passwordLab.setFont(new Font("Georgia", Font.BOLD, 17));
-		passwordLab.setBounds(95, 232, 128, 30);
-		contentPane.add(passwordLab);
+		JLabel passwordLabel = new JLabel("Password :");
+		passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		passwordLabel.setFont(new Font("Georgia", Font.BOLD, 17));
+		passwordLabel.setBounds(95, 232, 128, 30);
+		contentPane.add(passwordLabel);
 		
 		usernameTF = new JTextField();
 		usernameTF.setFont(new Font("Georgia", Font.PLAIN, 17));
@@ -67,20 +67,20 @@ public class LoginFrame extends JFrame {
 		passPF.setBounds(239, 232, 239, 30);
 		contentPane.add(passPF);
 		
-		JButton entra = new JButton("Entra");
-		entra.addMouseListener(new MouseAdapter() {
+		JButton entraButton = new JButton("Entra");
+		entraButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controller.validaCredenziali(usernameTF.getText(), passPF.getText());
 			}
 		});
-		entra.setForeground(new Color(178, 34, 34));
-		entra.setFont(new Font("Georgia", Font.PLAIN, 16));
-		entra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		entra.setBorderPainted(false);
-		entra.setBackground(new Color(255, 255, 255));
-		entra.setBounds(453, 309, 116, 38);
-		contentPane.add(entra);
+		entraButton.setForeground(new Color(178, 34, 34));
+		entraButton.setFont(new Font("Georgia", Font.PLAIN, 16));
+		entraButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		entraButton.setBorderPainted(false);
+		entraButton.setBackground(new Color(255, 255, 255));
+		entraButton.setBounds(453, 309, 116, 38);
+		contentPane.add(entraButton);
 		
 		JLabel foto = new JLabel("");
 		foto.setIcon(new ImageIcon(LoginFrame.class.getResource("/immagini/profile.png")));

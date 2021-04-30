@@ -29,16 +29,16 @@ public class ProdottiFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Controller controller;
-	private JTable ProdottiTab;
-	private JLabel NomeLabel;
-	private JLabel PaeseDiProvenienzaLabel;
-	private JLabel MarcaLabel;
-	private JLabel DataScadenzaLabel;
-	private JLabel QuantitaNegozioLabel;
-	private JLabel PrezzoUnitarioLabel;
-	private JLabel QuantitaDepositoLabel;
-	private JSpinner spinner;
-	private JButton RifornisciButton;
+	private JTable prodottiTab;
+	private JLabel nomeLabel;
+	private JLabel paeseDiProvenienzaLabel;
+	private JLabel marcaLabel;
+	private JLabel dataScadenzaLabel;
+	private JLabel quantitaNegozioLabel;
+	private JLabel prezzoUnitarioLabel;
+	private JLabel quantitaDepositoLabel;
+	private JSpinner scontoSpinner;
+	private JButton rifornisciButton;
 	
 	public ProdottiFrame(Controller c, Persona p) {
 		controller = c;
@@ -61,33 +61,33 @@ public class ProdottiFrame extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scrollPane);
 		
-		JButton SalvaButton = new JButton("Salva");
-		SalvaButton.addActionListener(new ActionListener() {
+		JButton salvaButton = new JButton("Salva");
+		salvaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int riga = ProdottiTab.getSelectedRow();
-				controller.aggiornaScontoProdotto(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString(), (int)spinner.getValue());
-				ProdottiTab.setModel(new DefaultTableModel(
+				int riga = prodottiTab.getSelectedRow();
+				controller.aggiornaScontoProdotto(prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 0).toString(), prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 2).toString(), (int)scontoSpinner.getValue());
+				prodottiTab.setModel(new DefaultTableModel(
 						controller.getProdotti(),
 						new String[] {
 								"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
 						}
 					));
-				ProdottiTab.setRowSelectionInterval(riga, riga);
+				prodottiTab.setRowSelectionInterval(riga, riga);
 			}
 		});
-		SalvaButton.setEnabled(false);
-		SalvaButton.setForeground(Color.BLACK);
-		SalvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		SalvaButton.setContentAreaFilled(false);
-		SalvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		SalvaButton.setBounds(542, 497, 101, 42);
-		contentPane.add(SalvaButton);
+		salvaButton.setEnabled(false);
+		salvaButton.setForeground(Color.BLACK);
+		salvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		salvaButton.setContentAreaFilled(false);
+		salvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		salvaButton.setBounds(542, 497, 101, 42);
+		contentPane.add(salvaButton);
 		
-		RifornisciButton = new JButton("Rifornisci");
-		RifornisciButton.addActionListener(new ActionListener() {
+		rifornisciButton = new JButton("Rifornisci");
+		rifornisciButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.vaiRifornimento(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString(), p);
-				ProdottiTab.setModel(new DefaultTableModel(
+				controller.vaiRifornimento(prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 0).toString(), prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 2).toString(), p);
+				prodottiTab.setModel(new DefaultTableModel(
 						controller.getProdotti(),
 						new String[] {
 								"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
@@ -95,112 +95,112 @@ public class ProdottiFrame extends JFrame {
 					));
 			}
 		});
-		RifornisciButton.setForeground(Color.BLACK);
-		RifornisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		RifornisciButton.setEnabled(false);
-		RifornisciButton.setContentAreaFilled(false);
-		RifornisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		RifornisciButton.setBounds(330, 497, 101, 42);
-		contentPane.add(RifornisciButton);
+		rifornisciButton.setForeground(Color.BLACK);
+		rifornisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		rifornisciButton.setEnabled(false);
+		rifornisciButton.setContentAreaFilled(false);
+		rifornisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		rifornisciButton.setBounds(330, 497, 101, 42);
+		contentPane.add(rifornisciButton);
 		
-		ProdottiTab = new JTable();
-		ProdottiTab.addMouseListener(new MouseAdapter() {
+		prodottiTab = new JTable();
+		prodottiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				controller.aggiornaLabelsProdotti(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString());
-				SalvaButton.setEnabled(true);
-				RifornisciButton.setEnabled(true);
+				controller.aggiornaLabelsProdotti(prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 0).toString(), prodottiTab.getValueAt(prodottiTab.getSelectedRow(), 2).toString());
+				salvaButton.setEnabled(true);
+				rifornisciButton.setEnabled(true);
 			}
 		});
-		ProdottiTab.setModel(new DefaultTableModel(
+		prodottiTab.setModel(new DefaultTableModel(
 			controller.getProdotti(),
 			new String[] {
 					"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
 			}
 		));
-		ProdottiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
-		ProdottiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(ProdottiTab);
+		prodottiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
+		prodottiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(prodottiTab);
 		
-		NomeLabel = new JLabel("Nome:");
-		NomeLabel.setBounds(21, 308, 232, 17);
-		NomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		NomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(NomeLabel);
+		nomeLabel = new JLabel("Nome:");
+		nomeLabel.setBounds(21, 308, 232, 17);
+		nomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		nomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(nomeLabel);
 		
-		PaeseDiProvenienzaLabel = new JLabel("Paese Di Provenienza:");
-		PaeseDiProvenienzaLabel.setBounds(330, 308, 356, 17);
-		PaeseDiProvenienzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		PaeseDiProvenienzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(PaeseDiProvenienzaLabel);
+		paeseDiProvenienzaLabel = new JLabel("Paese Di Provenienza:");
+		paeseDiProvenienzaLabel.setBounds(330, 308, 356, 17);
+		paeseDiProvenienzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		paeseDiProvenienzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(paeseDiProvenienzaLabel);
 		
-		MarcaLabel = new JLabel("Marca:");
-		MarcaLabel.setBounds(21, 353, 232, 17);
-		MarcaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		MarcaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(MarcaLabel);
+		marcaLabel = new JLabel("Marca:");
+		marcaLabel.setBounds(21, 353, 232, 17);
+		marcaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		marcaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(marcaLabel);
 		
-		DataScadenzaLabel = new JLabel("Data Scadenza:");
-		DataScadenzaLabel.setBounds(330, 353, 354, 17);
-		DataScadenzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		DataScadenzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(DataScadenzaLabel);
+		dataScadenzaLabel = new JLabel("Data Scadenza:");
+		dataScadenzaLabel.setBounds(330, 353, 354, 17);
+		dataScadenzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		dataScadenzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(dataScadenzaLabel);
 		
-		QuantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio:");
-		QuantitaNegozioLabel.setBounds(21, 398, 232, 17);
-		QuantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		QuantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(QuantitaNegozioLabel);
+		quantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio:");
+		quantitaNegozioLabel.setBounds(21, 398, 232, 17);
+		quantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		quantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(quantitaNegozioLabel);
 		
-		PrezzoUnitarioLabel = new JLabel("Prezzo Unitario:");
-		PrezzoUnitarioLabel.setBounds(330, 398, 354, 17);
-		PrezzoUnitarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		PrezzoUnitarioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(PrezzoUnitarioLabel);
+		prezzoUnitarioLabel = new JLabel("Prezzo Unitario:");
+		prezzoUnitarioLabel.setBounds(330, 398, 354, 17);
+		prezzoUnitarioLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		prezzoUnitarioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(prezzoUnitarioLabel);
 		
-		JLabel ScontoPercentualeLabel = new JLabel("Sconto Percentuale:");
-		ScontoPercentualeLabel.setBounds(21, 444, 211, 17);
-		ScontoPercentualeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		ScontoPercentualeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(ScontoPercentualeLabel);
+		JLabel scontoPercentualeLabel = new JLabel("Sconto Percentuale:");
+		scontoPercentualeLabel.setBounds(21, 444, 211, 17);
+		scontoPercentualeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		scontoPercentualeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(scontoPercentualeLabel);
 		
-		QuantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito:");
-		QuantitaDepositoLabel.setBounds(330, 444, 354, 17);
-		QuantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		QuantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		contentPane.add(QuantitaDepositoLabel);
+		quantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito:");
+		quantitaDepositoLabel.setBounds(330, 444, 354, 17);
+		quantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		quantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		contentPane.add(quantitaDepositoLabel);
 		
-		spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		spinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		spinner.setBounds(202, 444, 51, 26);
-		contentPane.add(spinner);
+		scontoSpinner = new JSpinner();
+		scontoSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		scontoSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
+		scontoSpinner.setBounds(202, 444, 51, 26);
+		contentPane.add(scontoSpinner);
 		
-		JButton AnnullaButton = new JButton("Annulla");
-		AnnullaButton.addMouseListener(new MouseAdapter() {
+		JButton annullaButton = new JButton("Annulla");
+		annullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controller.vaiHomepage(attuale, p);
 			}
 		});
-		AnnullaButton.setForeground(Color.BLACK);
-		AnnullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		AnnullaButton.setContentAreaFilled(false);
-		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		AnnullaButton.setBounds(39, 497, 101, 42);
-		contentPane.add(AnnullaButton);
+		annullaButton.setForeground(Color.BLACK);
+		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		annullaButton.setContentAreaFilled(false);
+		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		annullaButton.setBounds(39, 497, 101, 42);
+		contentPane.add(annullaButton);
 		
 	}
 	
 	public void setData(Object aggiornamento[]) {
-		NomeLabel.setText("Nome: " + aggiornamento[0]);
-		PaeseDiProvenienzaLabel.setText("Paese Di Provenienza: " + aggiornamento[1]);
-		MarcaLabel.setText("Marca: " + aggiornamento[2]);
+		nomeLabel.setText("Nome: " + aggiornamento[0]);
+		paeseDiProvenienzaLabel.setText("Paese Di Provenienza: " + aggiornamento[1]);
+		marcaLabel.setText("Marca: " + aggiornamento[2]);
 		if(aggiornamento[3] == null)
 			aggiornamento[3] = "non disponibile";
-		DataScadenzaLabel.setText("Data Scadenza: " + aggiornamento[3]);
-		QuantitaNegozioLabel.setText("Quantità Negozio: " + aggiornamento[4]);
-		PrezzoUnitarioLabel.setText("Prezzo Unitario: " + aggiornamento[5]);
-		spinner.setValue((int)aggiornamento[6]);
-		QuantitaDepositoLabel.setText("Quantità Deposito: " + aggiornamento[7]);
+		dataScadenzaLabel.setText("Data Scadenza: " + aggiornamento[3]);
+		quantitaNegozioLabel.setText("Quantità Negozio: " + aggiornamento[4]);
+		prezzoUnitarioLabel.setText("Prezzo Unitario: " + aggiornamento[5]);
+		scontoSpinner.setValue((int)aggiornamento[6]);
+		quantitaDepositoLabel.setText("Quantità Deposito: " + aggiornamento[7]);
 	}
 }

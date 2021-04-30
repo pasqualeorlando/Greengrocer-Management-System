@@ -44,64 +44,64 @@ public class RifornimentoFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel QuantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio: " + p.getQuantitaNegozio());
-		QuantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		QuantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		QuantitaNegozioLabel.setBounds(55, 69, 327, 17);
-		contentPane.add(QuantitaNegozioLabel);
+		JLabel quantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio: " + p.getQuantitaNegozio());
+		quantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		quantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		quantitaNegozioLabel.setBounds(55, 69, 327, 17);
+		contentPane.add(quantitaNegozioLabel);
 		
-		JLabel QuantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito: " + p.getQuantitaDeposito());
-		QuantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		QuantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		QuantitaDepositoLabel.setBounds(55, 106, 354, 17);
-		contentPane.add(QuantitaDepositoLabel);
+		JLabel quantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito: " + p.getQuantitaDeposito());
+		quantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		quantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		quantitaDepositoLabel.setBounds(55, 106, 354, 17);
+		contentPane.add(quantitaDepositoLabel);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(0.0, 0.0, p.getQuantitaDeposito(), 0.01));
-		spinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		spinner.setBounds(187, 142, 53, 28);
-		contentPane.add(spinner);
+		JSpinner rifornimentoSpinner = new JSpinner();
+		rifornimentoSpinner.setModel(new SpinnerNumberModel(0.0, 0.0, p.getQuantitaDeposito(), 0.01));
+		rifornimentoSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
+		rifornimentoSpinner.setBounds(187, 142, 53, 28);
+		contentPane.add(rifornimentoSpinner);
 		
-		JButton SalvaButton = new JButton("Salva");
-		SalvaButton.addMouseListener(new MouseAdapter() {
+		JButton salvaButton = new JButton("Salva");
+		salvaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.rifornisciProdotto(p, (double)spinner.getValue(), committente);
+				controller.rifornisciProdotto(p, (double)rifornimentoSpinner.getValue(), committente);
 			}
 		});
-		SalvaButton.setForeground(Color.BLACK);
-		SalvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		SalvaButton.setEnabled(true);
-		SalvaButton.setContentAreaFilled(false);
-		SalvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		SalvaButton.setBounds(269, 208, 101, 42);
-		contentPane.add(SalvaButton);
+		salvaButton.setForeground(Color.BLACK);
+		salvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		salvaButton.setEnabled(true);
+		salvaButton.setContentAreaFilled(false);
+		salvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		salvaButton.setBounds(269, 208, 101, 42);
+		contentPane.add(salvaButton);
 		
-		JButton AnnullaButton = new JButton("Annulla");
-		AnnullaButton.addMouseListener(new MouseAdapter() {
+		JButton annullaButton = new JButton("Annulla");
+		annullaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				controller.vaiProdotti(committente, attuale);
 			}
 		});
-		AnnullaButton.setForeground(Color.BLACK);
-		AnnullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		AnnullaButton.setContentAreaFilled(false);
-		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		AnnullaButton.setBounds(39, 208, 101, 42);
-		contentPane.add(AnnullaButton);
+		annullaButton.setForeground(Color.BLACK);
+		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		annullaButton.setContentAreaFilled(false);
+		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		annullaButton.setBounds(39, 208, 101, 42);
+		contentPane.add(annullaButton);
 		
-		JLabel RifornimentoLabel = new JLabel("Rifornimento: ");
-		RifornimentoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		RifornimentoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		RifornimentoLabel.setBounds(55, 147, 122, 17);
-		contentPane.add(RifornimentoLabel);
+		JLabel rifornimentoLabel = new JLabel("Rifornimento: ");
+		rifornimentoLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		rifornimentoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		rifornimentoLabel.setBounds(55, 147, 122, 17);
+		contentPane.add(rifornimentoLabel);
 		
-		JLabel lblModificaQuantitPer = new JLabel("Modifica quantit\u00E0 per " + p.getNome());
-		lblModificaQuantitPer.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificaQuantitPer.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		lblModificaQuantitPer.setBounds(10, 21, 414, 37);
-		contentPane.add(lblModificaQuantitPer);
+		JLabel modificaQuantitaLabel = new JLabel("Modifica quantit\u00E0 per " + p.getNome());
+		modificaQuantitaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		modificaQuantitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
+		modificaQuantitaLabel.setBounds(10, 21, 414, 37);
+		contentPane.add(modificaQuantitaLabel);
 		
 	}
 }
