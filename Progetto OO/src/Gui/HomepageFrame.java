@@ -193,18 +193,6 @@ public class HomepageFrame extends JFrame {
 		FornitureButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		contentPane.add(FornitureButton);
 		
-		JButton RifornimentoButton = new JButton("<html><center>Rifornisci<br>Negozio</center></html>");
-		RifornimentoButton.setContentAreaFilled(false);
-		RifornimentoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/rifornimento.png")));
-		RifornimentoButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		RifornimentoButton.setForeground(new Color(178, 34, 34));
-		RifornimentoButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		RifornimentoButton.setBackground(new Color(153, 51, 51));
-		RifornimentoButton.setBounds(304, 199, 135, 165);
-		RifornimentoButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		RifornimentoButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		contentPane.add(RifornimentoButton);
-		
 		JButton NuovoAcquistoButton = new JButton("<html><center>Effettua<br>Acquisto</center></html>");
 		NuovoAcquistoButton.setContentAreaFilled(false);
 		NuovoAcquistoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/acquisto.png")));
@@ -228,7 +216,7 @@ public class HomepageFrame extends JFrame {
 		NuovaFornituraButton.setForeground(new Color(178, 34, 34));
 		NuovaFornituraButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		NuovaFornituraButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/piu.png")));
-		NuovaFornituraButton.setBounds(466, 199, 135, 165);
+		NuovaFornituraButton.setBounds(304, 199, 135, 165);
 		NuovaFornituraButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		NuovaFornituraButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		contentPane.add(NuovaFornituraButton);
