@@ -3,38 +3,38 @@ package Classi;
 public class SpecificaAcquisto {
 
 	//Attributi
-	private float QuantitaAcquistata;
-	private Acquisto Acq;
-	private Prodotto Prod;
+	private float quantitaAcquistata;
+	private Acquisto acq;
+	private Prodotto prod;
 
 	
 	//Costruttore
 	public SpecificaAcquisto(float quantitaAcquistata, Acquisto acq, Prodotto prod) {
 		super();
-		QuantitaAcquistata = quantitaAcquistata;
-		Acq = acq;
-		Prod = prod;
+		this.quantitaAcquistata = quantitaAcquistata;
+		this.acq = acq;
+		this.prod = prod;
 	}
 	
 	
 	//Getter e setter
 	public float getQuantitaAcquistata() {
-		return QuantitaAcquistata;
+		return quantitaAcquistata;
 	}
 	public void setQuantitaAcquistata(float quantitaAcquistata) {
-		QuantitaAcquistata = quantitaAcquistata;
+		this.quantitaAcquistata = quantitaAcquistata;
 	}
 	public Acquisto getAcq() {
-		return Acq;
+		return acq;
 	}
 	public void setAcq(Acquisto acq) {
-		Acq = acq;
+		this.acq = acq;
 	}
 	public Prodotto getProd() {
-		return Prod;
+		return prod;
 	}
 	public void setProd(Prodotto prod) {
-		Prod = prod;
+		this.prod = prod;
 	}
 	
 	

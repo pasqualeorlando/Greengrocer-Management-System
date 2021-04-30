@@ -38,6 +38,7 @@ public class ProdottiFrame extends JFrame {
 	private JLabel PrezzoUnitarioLabel;
 	private JLabel QuantitaDepositoLabel;
 	private JSpinner spinner;
+	private JButton RifornisciButton;
 	
 	public ProdottiFrame(Controller c, Persona p) {
 		controller = c;
@@ -82,11 +83,32 @@ public class ProdottiFrame extends JFrame {
 		SalvaButton.setBounds(542, 497, 101, 42);
 		contentPane.add(SalvaButton);
 		
+		RifornisciButton = new JButton("Rifornisci");
+		RifornisciButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.vaiRifornimento(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString(), p);
+				ProdottiTab.setModel(new DefaultTableModel(
+						controller.getProdotti(),
+						new String[] {
+								"Nome", "PaeseDiProvenienza", "Marca", "DataScadenza", "QuantitaNegozio", "PrezzoUnitario", "ScontoPercentuale", "QuantitaDeposito"
+						}
+					));
+			}
+		});
+		RifornisciButton.setForeground(Color.BLACK);
+		RifornisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		RifornisciButton.setEnabled(false);
+		RifornisciButton.setContentAreaFilled(false);
+		RifornisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		RifornisciButton.setBounds(330, 497, 101, 42);
+		contentPane.add(RifornisciButton);
+		
 		ProdottiTab = new JTable();
 		ProdottiTab.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				controller.aggiornaLabelsProdotti(ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 0).toString(), ProdottiTab.getValueAt(ProdottiTab.getSelectedRow(), 2).toString());
 				SalvaButton.setEnabled(true);
+				RifornisciButton.setEnabled(true);
 			}
 		});
 		ProdottiTab.setModel(new DefaultTableModel(
@@ -166,6 +188,7 @@ public class ProdottiFrame extends JFrame {
 		AnnullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		AnnullaButton.setBounds(39, 497, 101, 42);
 		contentPane.add(AnnullaButton);
+		
 	}
 	
 	public void setData(Object aggiornamento[]) {

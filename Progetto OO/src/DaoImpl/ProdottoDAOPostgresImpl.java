@@ -73,4 +73,13 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		statement.setString(3, P.getMarca());
 		statement.executeUpdate();
 	}
+	
+	public void aggiornaQuantita(Prodotto P, double quantitaDaRifornire) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ?");
+		statement.setDouble(1, quantitaDaRifornire);
+		statement.setDouble(2, quantitaDaRifornire);
+		statement.setString(3, P.getNome());
+		statement.setString(4, P.getMarca());
+		statement.executeUpdate();
+	}
 }

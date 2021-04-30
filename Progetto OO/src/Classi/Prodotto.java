@@ -6,16 +6,16 @@ import java.util.ArrayList;
 public class Prodotto {
 	
 	//Attributi
-	private String Nome;
-	private String PaeseDiProvenienza;
-	private String Marca;
-	private LocalDate DataScadenza;
-	private float QuantitaNegozio;
-	private float PrezzoUnitario;
-	private int ScontoPercentuale;
-	private float QuantitaDeposito;
-	private Fornitura Fornitura;
-	private ArrayList<SpecificaAcquisto> SpecificaAcquisto;
+	private String nome;
+	private String paeseDiProvenienza;
+	private String marca;
+	private LocalDate dataScadenza;
+	private float quantitaNegozio;
+	private float prezzoUnitario;
+	private int scontoPercentuale;
+	private float quantitaDeposito;
+	private Fornitura fornitura;
+	private ArrayList<SpecificaAcquisto> specificaAcquisto;
 	
 	//Costruttore
 	public Prodotto(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
@@ -31,65 +31,65 @@ public class Prodotto {
 	
 	//Getter e setter
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 	public String getPaeseDiProvenienza() {
-		return PaeseDiProvenienza;
+		return paeseDiProvenienza;
 	}
 	public void setPaeseDiProvenienza(String paeseDiProvenienza) {
-		PaeseDiProvenienza = paeseDiProvenienza;
+		this.paeseDiProvenienza = paeseDiProvenienza;
 	}
 	public String getMarca() {
-		return Marca;
+		return marca;
 	}
 	public void setMarca(String marca) {
-		Marca = marca;
+		this.marca = marca;
 	}
 	public LocalDate getDataScadenza() {
-		return DataScadenza;
+		return dataScadenza;
 	}
 	public void setDataScadenza(LocalDate dataScadenza) {
-		DataScadenza = dataScadenza;
+		this.dataScadenza = dataScadenza;
 	}
 	public float getQuantitaNegozio() {
-		return QuantitaNegozio;
+		return quantitaNegozio;
 	}
 	public void setQuantitaNegozio(float quantitaNegozio) {
-		QuantitaNegozio = quantitaNegozio;
+		this.quantitaNegozio = quantitaNegozio;
 	}
 	public float getPrezzoUnitario() {
-		return PrezzoUnitario;
+		return prezzoUnitario;
 	}
 	public void setPrezzoUnitario(float prezzoUnitario) {
-		PrezzoUnitario = prezzoUnitario;
+		this.prezzoUnitario = prezzoUnitario;
 	}
 	public int getScontoPercentuale() {
-		return ScontoPercentuale;
+		return scontoPercentuale;
 	}
 	public void setScontoPercentuale(int scontoPercentuale) {
-		ScontoPercentuale = scontoPercentuale;
+		this.scontoPercentuale = scontoPercentuale;
 	}
 	public float getQuantitaDeposito() {
-		return QuantitaDeposito;
+		return quantitaDeposito;
 	}
 	public void setQuantitaDeposito(float quantitaDeposito) {
-		QuantitaDeposito = quantitaDeposito;
+		this.quantitaDeposito = quantitaDeposito;
 	}
 	public Fornitura getFornitura() {
-		return Fornitura;
+		return fornitura;
 	}
 	public void setFornitura(Fornitura fornitura) {
-		Fornitura = fornitura;
+		this.fornitura = fornitura;
 	}
 
 	public ArrayList<SpecificaAcquisto> getSpecificaAcquisto() {
-		return SpecificaAcquisto;
+		return specificaAcquisto;
 	}
 
 	public void setSpecificaAcquisto(ArrayList<SpecificaAcquisto> specificaAcquisto) {
-		SpecificaAcquisto = specificaAcquisto;
+		this.specificaAcquisto = specificaAcquisto;
 	}
 }

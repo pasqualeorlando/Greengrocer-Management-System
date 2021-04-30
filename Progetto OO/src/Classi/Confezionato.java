@@ -3,23 +3,23 @@ package Classi;
 public class Confezionato extends Prodotto {
 	
 	//Attributi
-	private String TipoConfezione;
+	private String tipoConfezione;
 	
 	//Costruttore
 	public Confezionato(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, String tipoConfezione) {
 		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
-		TipoConfezione = tipoConfezione;
+		this.tipoConfezione = tipoConfezione;
 	}
 	
 	//Getter e setter
 	public String getTipoConfezione() {
-		return TipoConfezione;
+		return tipoConfezione;
 	}
 
 	public void setTipoConfezione(String tipoConfezione) {
-		TipoConfezione = tipoConfezione;
+		this.tipoConfezione = tipoConfezione;
 	}
 	
 }

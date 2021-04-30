@@ -143,7 +143,7 @@ public class HomepageFrame extends JFrame {
 		ProdottiButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.vaiProdotti(p);
+				controller.vaiProdotti(p, attuale);
 			}
 		});
 		ProdottiButton.setContentAreaFilled(false);

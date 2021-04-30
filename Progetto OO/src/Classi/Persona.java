@@ -12,17 +12,17 @@ import Enum.*;
 public class Persona {
 
 	//Attributi
-	private String Nome;
-	private String Cognome;
+	private String nome;
+	private String cognome;
 	private String CF;
-	private LocalDate DataNascita;
-	private String Email;
-	private TSesso Sesso;
-	private TRuolo Ruolo;
-	private TPersona Tipo;
-	private ArrayList<Acquisto>Acquisti;
-	private String CodiceBarre;
-	private CittaItaliana NatoIn;
+	private LocalDate dataNascita;
+	private String email;
+	private TSesso sesso;
+	private TRuolo ruolo;
+	private TPersona tipo;
+	private ArrayList<Acquisto> acquisti;
+	private String codiceBarre;
+	private CittaItaliana natoIn;
 	
 	//Costruttori
 	
@@ -81,7 +81,7 @@ public class Persona {
 
 	//Getter e setter
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 	public void setNome(String nome) {
 		if(nome.length()==0) System.out.println("Non puoi inserire un nome vuoto");
@@ -89,15 +89,15 @@ public class Persona {
 			for(char c:nome.toCharArray()) {
 				if(c=='0' || c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9') {
 					System.out.println("La stringa contiene caratteri non validi");
-					Nome = " ";
+					nome = " ";
 					return;
 				}
 			}
-			Nome = nome;
+			this.nome = nome;
 		}
 	}
 	public String getCognome() {
-		return Cognome;
+		return cognome;
 	}
 	public void setCognome(String cognome) {
 		if(cognome.length()==0) System.out.println("Non puoi inserire un cognome vuoto");
@@ -105,11 +105,11 @@ public class Persona {
 			for(char c:cognome.toCharArray()) {
 				if(c=='0' || c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9') {
 					System.out.println("La stringa contiene caratteri non validi");
-					Nome = " ";
+					nome = " ";
 					return;
 				}
 			}
-			Cognome = cognome;
+			this.cognome = cognome;
 		}
 	}
 	public String getCF() {
@@ -119,69 +119,69 @@ public class Persona {
 		CF = cF;
 	}
 	public LocalDate getDataNascita() {
-		return DataNascita;
+		return dataNascita;
 	}
 	public void setDataNascita(LocalDate dataNascita) {
-		DataNascita = dataNascita;
+		this.dataNascita = dataNascita;
 	}
 	public void setDataNascita(String dataNascita) {
-		DataNascita = LocalDate.parse(dataNascita, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
+		this.dataNascita = LocalDate.parse(dataNascita, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
 	}
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 	public void setEmail(String email) {
 		if(email.length()==0) System.out.println("Non puoi inserire una mail vuota");
 		else {
 			if(email.matches("^(.+)@(.+)$")) {
-				Email = email;
+				this.email = email;
 			}else {
-				Email = "mail@non.valida";
+				email = "mail@non.valida";
 			}
 		}
 	}
 	public TSesso getSesso() {
-		return Sesso;
+		return sesso;
 	}
 	public void setSesso(String sesso) {
-		if(sesso.equalsIgnoreCase("maschio") || sesso.equalsIgnoreCase("m")) Sesso = TSesso.M;
-		else Sesso = TSesso.F;
+		if(sesso.equalsIgnoreCase("maschio") || sesso.equalsIgnoreCase("m")) this.sesso = TSesso.M;
+		else this.sesso = TSesso.F;
 	}
 	public String getRuolo() {
-		if(Ruolo == null) return "";
-		return Ruolo.toString();
+		if(ruolo == null) return "";
+		return ruolo.toString();
 	}
 	public void setRuolo(String ruolo) {
-		if(ruolo==null) Ruolo=null;
-		else if(ruolo.equalsIgnoreCase("titolare")) Ruolo = TRuolo.Titolare;
-		else if(ruolo.equalsIgnoreCase("dipendente")) Ruolo = TRuolo.Dipendente;
-		else Ruolo=null;
+		if(ruolo==null) ruolo=null;
+		else if(ruolo.equalsIgnoreCase("titolare")) this.ruolo = TRuolo.Titolare;
+		else if(ruolo.equalsIgnoreCase("dipendente")) this.ruolo = TRuolo.Dipendente;
+		else ruolo=null;
 	}
 	public String getTipo() {
-		return Tipo.toString();
+		return tipo.toString();
 	}
 	public void setTipo(String tipo) {
 		//System.out.println(tipo);
-		if(tipo.equalsIgnoreCase("cliente")) Tipo = TPersona.Cliente;
-		else Tipo = TPersona.Personale;
+		if(tipo.equalsIgnoreCase("cliente")) this.tipo = TPersona.Cliente;
+		else this.tipo = TPersona.Personale;
 	}
 	public ArrayList<Acquisto> getAcquisti() {
-		return Acquisti;
+		return acquisti;
 	}
 	public void setAcquisti(ArrayList<Acquisto> acquisti) {
-		Acquisti = acquisti;
+		this.acquisti = acquisti;
 	}
 	public String getCodiceBarre() {
-		return CodiceBarre;
+		return codiceBarre;
 	}
 	public void setCodiceBarre(String codiceBarre) {
-		CodiceBarre = codiceBarre;
+		this.codiceBarre = codiceBarre;
 	}
 	public CittaItaliana getNatoIn() {
-		return NatoIn;
+		return natoIn;
 	}
 	public void setNatoIn(CittaItaliana natoIn) {
-		NatoIn = natoIn;
+		this.natoIn = natoIn;
 	}
 	
 }

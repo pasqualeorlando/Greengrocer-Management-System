@@ -5,20 +5,20 @@ import java.util.ArrayList;
 public class CittaItaliana {
 
 	//Attributi
-	private String CodiceCatastale;
-	private String Denominazione;
-	private String Provincia;
-	private String Regione;
-	private ArrayList<Persona>PersoneNate;
+	private String codiceCatastale;
+	private String denominazione;
+	private String provincia;
+	private String regione;
+	private ArrayList<Persona> personeNate;
 	
 	//Costruttore
 	public CittaItaliana(String codiceCatastale, String denominazione, String provincia, String regione,
 			ArrayList<Persona> personeNate) {
-		CodiceCatastale = codiceCatastale;
-		Denominazione = denominazione;
-		Provincia = provincia;
-		Regione = regione;
-		PersoneNate = personeNate;
+		this.codiceCatastale = codiceCatastale;
+		this.denominazione = denominazione;
+		this.provincia = provincia;
+		this.regione = regione;
+		this.personeNate = personeNate;
 	}
 	
 	public CittaItaliana(String denominazione, String provincia) {
@@ -28,33 +28,33 @@ public class CittaItaliana {
 	
 	//Getter e setter
 	public String getCodiceCatastale() {
-		return CodiceCatastale;
+		return codiceCatastale;
 	}
 	public void setCodiceCatastale(String codiceCatastale) {
-		CodiceCatastale = codiceCatastale;
+		this.codiceCatastale = codiceCatastale;
 	}
 	public String getDenominazione() {
-		return Denominazione;
+		return denominazione;
 	}
 	public void setDenominazione(String denominazione) {
-		Denominazione = denominazione;
+		this.denominazione = denominazione;
 	}
 	public String getProvincia() {
-		return Provincia;
+		return provincia;
 	}
 	public void setProvincia(String provincia) {
-		Provincia = provincia;
+		this.provincia = provincia;
 	}
 	public String getRegione() {
-		return Regione;
+		return regione;
 	}
 	public void setRegione(String regione) {
-		Regione = regione;
+		this.regione = regione;
 	}
 	public ArrayList<Persona> getPersoneNate() {
-		return PersoneNate;
+		return personeNate;
 	}
 	public void setPersoneNate(ArrayList<Persona> personeNate) {
-		PersoneNate = personeNate;
+		this.personeNate = personeNate;
 	}
 }

@@ -103,7 +103,7 @@ public class ClientiFrame extends JFrame {
 		InserisciButton.setBounds(261, 236, 102, 27);
 		InserimentoClientiPanel.add(InserisciButton);
 		
-		JLabel NuovoClienteLabel = new JLabel("Inserimento nuovo personale");
+		JLabel NuovoClienteLabel = new JLabel("Inserimento nuovo cliente");
 		NuovoClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		NuovoClienteLabel.setFont(new Font("Georgia", Font.BOLD, 14));
 		NuovoClienteLabel.setIcon(null);

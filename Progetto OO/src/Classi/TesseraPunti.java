@@ -5,64 +5,64 @@ import java.time.LocalDate;
 public class TesseraPunti {
 
 	//Attributi
-	private String CodiceBarre;
-	private LocalDate Scadenza;
-	private int PuntiFrutta;
-	private int PuntiVerdura;
-	private int PuntiFarinacei;
-	private int PuntiLatticini;
-	private int PuntiUova;
-	private int PuntiConfezionati;
+	private String codiceBarre;
+	private LocalDate scadenza;
+	private int puntiFrutta;
+	private int puntiVerdura;
+	private int puntiFarinacei;
+	private int puntiLatticini;
+	private int puntiUova;
+	private int puntiConfezionati;
 	private String CF;
 	
 	//Getter e setter
 	public String getCodiceBarre() {
-		return CodiceBarre;
+		return codiceBarre;
 	}
 	public void setCodiceBarre(String codiceBarre) {
-		CodiceBarre = codiceBarre;
+		this.codiceBarre = codiceBarre;
 	}
 	public LocalDate getScadenza() {
-		return Scadenza;
+		return scadenza;
 	}
 	public void setScadenza(LocalDate scadenza) {
-		Scadenza = scadenza;
+		this.scadenza = scadenza;
 	}
 	public int getPuntiFrutta() {
-		return PuntiFrutta;
+		return puntiFrutta;
 	}
 	public void setPuntiFrutta(int puntiFrutta) {
-		PuntiFrutta = puntiFrutta;
+		this.puntiFrutta = puntiFrutta;
 	}
 	public int getPuntiVerdura() {
-		return PuntiVerdura;
+		return puntiVerdura;
 	}
 	public void setPuntiVerdura(int puntiVerdura) {
-		PuntiVerdura = puntiVerdura;
+		this.puntiVerdura = puntiVerdura;
 	}
 	public int getPuntiFarinacei() {
-		return PuntiFarinacei;
+		return puntiFarinacei;
 	}
 	public void setPuntiFarinacei(int puntiFarinacei) {
-		PuntiFarinacei = puntiFarinacei;
+		this.puntiFarinacei = puntiFarinacei;
 	}
 	public int getPuntiLatticini() {
-		return PuntiLatticini;
+		return puntiLatticini;
 	}
 	public void setPuntiLatticini(int puntiLatticini) {
-		PuntiLatticini = puntiLatticini;
+		this.puntiLatticini = puntiLatticini;
 	}
 	public int getPuntiUova() {
-		return PuntiUova;
+		return puntiUova;
 	}
 	public void setPuntiUova(int puntiUova) {
-		PuntiUova = puntiUova;
+		this.puntiUova = puntiUova;
 	}
 	public int getPuntiConfezionati() {
-		return PuntiConfezionati;
+		return puntiConfezionati;
 	}
 	public void setPuntiConfezionati(int puntiConfezionati) {
-		PuntiConfezionati = puntiConfezionati;
+		this.puntiConfezionati = puntiConfezionati;
 	}
 	public String getCF() {
 		return CF;

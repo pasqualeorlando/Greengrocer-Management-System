@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public class Acquisto {
 	
 	//Attributi
-	private LocalDateTime DataOra;
-	private char Cassa;
-	private int ScontoPercentuale;
-	private float Totale;
-	private boolean Completato;
+	private LocalDateTime dataOra;
+	private char cassa;
+	private int scontoPercentuale;
+	private float totale;
+	private boolean completato;
 	private String CF;
-	private ArrayList<SpecificaAcquisto>SpecificaAcquisto;
+	private ArrayList<SpecificaAcquisto> specificaAcquisto;
 	
 	//Costruttore
 	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato) {
@@ -34,54 +34,54 @@ public class Acquisto {
 	
 	//Getter e setter
 	public LocalDateTime getDataOra() {
-		return DataOra;
+		return dataOra;
 	}
 	public void setDataOra(LocalDateTime dataOra) {
 		if(dataOra.isAfter(LocalDateTime.now())) {
 			System.out.println("Data e ora errati, sono stati automaticamente impostati ad oggi");
 			dataOra = LocalDateTime.now();
 		}else {
-			DataOra = dataOra;
+			this.dataOra = dataOra;
 		}
 	}
 	public char getCassa() {
-		return Cassa;
+		return cassa;
 	}
 	public void setCassa(char cassa) {
 		if(cassa-'0' < 0 || cassa-'0' > 10) {
 			System.out.println("La cassa deve essere compresa tra 0 o 9");
-			Cassa = '0';
+			cassa = '0';
 		}else {
-			Cassa = cassa;
+			this.cassa = cassa;
 		}
 	}
 	public int getScontoPercentuale() {
-		return ScontoPercentuale;
+		return scontoPercentuale;
 	}
 	public void setScontoPercentuale(int scontoPercentuale) {
 		if(scontoPercentuale < 0 || scontoPercentuale > 100) {
 			System.out.println("Non è possibile impostare uno sconto negativo, sarà impostato a 0");
-			ScontoPercentuale = 0;
+			scontoPercentuale = 0;
 		}else {
-			ScontoPercentuale = scontoPercentuale;
+			this.scontoPercentuale = scontoPercentuale;
 		}
 	}
 	public float getTotale() {
-		return Totale;
+		return totale;
 	}
 	public void setTotale(float totale) {
 		if(totale<0) {
 			System.out.println("Non è possibile impostare un totale negativo");
-			Totale = 0;
+			totale = 0;
 		}else {
-			Totale = totale;
+			this.totale = totale;
 		}
 	}
 	public boolean isCompletato() {
-		return Completato;
+		return completato;
 	}
 	public void setCompletato(boolean completato) {
-		Completato = completato;
+		this.completato = completato;
 	}
 	public String getCF() {
 		return CF;
@@ -95,10 +95,10 @@ public class Acquisto {
 		}
 	}
 	public ArrayList<SpecificaAcquisto> getSpecificaAcquisto() {
-		return SpecificaAcquisto;
+		return specificaAcquisto;
 	}
 	public void setSpecificaAcquisto(ArrayList<SpecificaAcquisto> specificaAcquisto) {
-		SpecificaAcquisto = specificaAcquisto;
+		this.specificaAcquisto = specificaAcquisto;
 	}
 	
 }

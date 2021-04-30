@@ -5,52 +5,52 @@ import java.time.LocalDate;
 public class Fornitura {
 	
 	//Attributi
-	private float QuantitaFornita;
-	private LocalDate DataFornitura;
-	private float PrezzoFornitura;
-	private Prodotto Prodotto;
-	private Fornitore Fornitore;
+	private float quantitaFornita;
+	private LocalDate dataFornitura;
+	private float prezzoFornitura;
+	private Prodotto prodotto;
+	private Fornitore fornitore;
 	
 	//Costruttore
 	public Fornitura(float quantitaFornita, LocalDate dataFornitura, float prezzoFornitura, Classi.Prodotto prodotto,
 			Classi.Fornitore fornitore) {
-		QuantitaFornita = quantitaFornita;
-		DataFornitura = dataFornitura;
-		PrezzoFornitura = prezzoFornitura;
-		Prodotto = prodotto;
-		Fornitore = fornitore;
+		this.quantitaFornita = quantitaFornita;
+		this.dataFornitura = dataFornitura;
+		this.prezzoFornitura = prezzoFornitura;
+		this.prodotto = prodotto;
+		this.fornitore = fornitore;
 	}
 	
 	//Getter e setter
 	public float getQuantitaFornita() {
-		return QuantitaFornita;
+		return quantitaFornita;
 	}
 	public void setQuantitaFornita(float quantitaFornita) {
-		QuantitaFornita = quantitaFornita;
+		this.quantitaFornita = quantitaFornita;
 	}
 	public LocalDate getDataFornitura() {
-		return DataFornitura;
+		return dataFornitura;
 	}
 	public void setDataFornitura(LocalDate dataFornitura) {
-		DataFornitura = dataFornitura;
+		this.dataFornitura = dataFornitura;
 	}
 	public float getPrezzoFornitura() {
-		return PrezzoFornitura;
+		return prezzoFornitura;
 	}
 	public void setPrezzoFornitura(float prezzoFornitura) {
-		PrezzoFornitura = prezzoFornitura;
+		this.prezzoFornitura = prezzoFornitura;
 	}
 	public Prodotto getProdotto() {
-		return Prodotto;
+		return prodotto;
 	}
 	public void setProdotto(Prodotto prodotto) {
-		Prodotto = prodotto;
+		this.prodotto = prodotto;
 	}
 	public Fornitore getFornitore() {
-		return Fornitore;
+		return fornitore;
 	}
 	public void setFornitore(Fornitore fornitore) {
-		Fornitore = fornitore;
+		this.fornitore = fornitore;
 	}
 	
 }

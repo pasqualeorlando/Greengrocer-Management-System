@@ -6,17 +6,17 @@ public class Fornitore {
 	
 	//Attributi
 	private String PIva; 
-	private String NomeSocieta;
-	private String NomeTitolare;
-	private String CognomeTitolare;
-	private ArrayList<Fornitura>Forniture;
+	private String nomeSocieta;
+	private String nomeTitolare;
+	private String cognomeTitolare;
+	private ArrayList<Fornitura> forniture;
 	
 	//Costruttore
 	public Fornitore(String pIva, String nomeSocieta, String nomeTitolare, String cognomeTitolare) {
 		PIva = pIva;
-		NomeSocieta = nomeSocieta;
-		NomeTitolare = nomeTitolare;
-		CognomeTitolare = cognomeTitolare;
+		this.nomeSocieta = nomeSocieta;
+		this.nomeTitolare = nomeTitolare;
+		this.cognomeTitolare = cognomeTitolare;
 	}
 	
 	//Getter e setter
@@ -27,22 +27,22 @@ public class Fornitore {
 		PIva = pIVa;
 	}
 	public String getNomeSocieta() {
-		return NomeSocieta;
+		return nomeSocieta;
 	}
 	public void setNomeSocieta(String nomeSocieta) {
-		NomeSocieta = nomeSocieta;
+		this.nomeSocieta = nomeSocieta;
 	}
 	public String getNomeTitolare() {
-		return NomeTitolare;
+		return nomeTitolare;
 	}
 	public void setNomeTitolare(String nomeTitolare) {
-		NomeTitolare = nomeTitolare;
+		this.nomeTitolare = nomeTitolare;
 	}
 	public String getCognomeTitolare() {
-		return CognomeTitolare;
+		return cognomeTitolare;
 	}
 	public void setCognomeTitolare(String cognomeTitolare) {
-		CognomeTitolare = cognomeTitolare;
+		this.cognomeTitolare = cognomeTitolare;
 	}
 	public String getPIva() {
 		return PIva;
@@ -51,10 +51,10 @@ public class Fornitore {
 		PIva = pIva;
 	}
 	public ArrayList<Fornitura> getForniture() {
-		return Forniture;
+		return forniture;
 	}
 	public void setForniture(ArrayList<Fornitura> forniture) {
-		Forniture = forniture;
+		this.forniture = forniture;
 	}
 	
 }

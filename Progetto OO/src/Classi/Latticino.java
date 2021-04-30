@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class Latticino extends Prodotto {
 
 	//Attributi
-	private LocalDate DataProduzione;
-	private LocalDate DataMungitura;
+	private LocalDate dataProduzione;
+	private LocalDate dataMungitura;
 	
 	//Costruttore
 	public Latticino(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
@@ -14,22 +14,22 @@ public class Latticino extends Prodotto {
 			LocalDate dataMungitura) {
 		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
-		DataProduzione = dataProduzione;
-		DataMungitura = dataMungitura;
+		this.dataProduzione = dataProduzione;
+		this.dataMungitura = dataMungitura;
 	}
 	
 	//Getter e setter
 	public LocalDate getDataProduzione() {
-		return DataProduzione;
+		return dataProduzione;
 	}
 	public void setDataProduzione(LocalDate dataProduzione) {
-		DataProduzione = dataProduzione;
+		this.dataProduzione = dataProduzione;
 	}
 	public LocalDate getDataMungitura() {
-		return DataMungitura;
+		return dataMungitura;
 	}
 	public void setDataMungitura(LocalDate dataMungitura) {
-		DataMungitura = dataMungitura;
+		this.dataMungitura = dataMungitura;
 	}
 	
 	
