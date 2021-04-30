@@ -216,9 +216,21 @@ public class HomepageFrame extends JFrame {
 		nuovaFornituraButton.setForeground(new Color(178, 34, 34));
 		nuovaFornituraButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		nuovaFornituraButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/piu.png")));
-		nuovaFornituraButton.setBounds(304, 199, 135, 165);
+		nuovaFornituraButton.setBounds(466, 199, 135, 165);
 		nuovaFornituraButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		nuovaFornituraButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		contentPane.add(nuovaFornituraButton);
+		
+		JButton NuovoFornitoreButton = new JButton("<html><center>Nuovo<br>Fornitore</center></html>");
+		NuovoFornitoreButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/inventario.png")));
+		NuovoFornitoreButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		NuovoFornitoreButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		NuovoFornitoreButton.setForeground(new Color(178, 34, 34));
+		NuovoFornitoreButton.setFont(new Font("Georgia", Font.BOLD, 15));
+		NuovoFornitoreButton.setContentAreaFilled(false);
+		NuovoFornitoreButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
+		NuovoFornitoreButton.setBackground(new Color(178, 34, 34));
+		NuovoFornitoreButton.setBounds(304, 199, 135, 165);
+		contentPane.add(NuovoFornitoreButton);
 	}
 }
