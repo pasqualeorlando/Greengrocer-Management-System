@@ -1,7 +1,9 @@
 package Classi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Prodotto {
 	
@@ -53,6 +55,9 @@ public class Prodotto {
 	}
 	public void setDataScadenza(LocalDate dataScadenza) {
 		this.dataScadenza = dataScadenza;
+	}
+	public void setDataScadenza(String dataScadenza) {
+		this.dataScadenza = LocalDate.parse(dataScadenza, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
 	}
 	public float getQuantitaNegozio() {
 		return quantitaNegozio;

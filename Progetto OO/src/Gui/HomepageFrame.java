@@ -206,11 +206,13 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(nuovoAcquistoButton);
 		
 		JButton nuovaFornituraButton = new JButton("<html><center>Nuova<br>Fornitura</center></html>");
-		nuovaFornituraButton.setContentAreaFilled(false);
-		nuovaFornituraButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		nuovaFornituraButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiNuovaFornitura(p);
 			}
 		});
+		nuovaFornituraButton.setContentAreaFilled(false);
 		nuovaFornituraButton.setBackground(new Color(178, 34, 34));
 		nuovaFornituraButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
 		nuovaFornituraButton.setForeground(new Color(178, 34, 34));

@@ -1,6 +1,8 @@
 package Classi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Fornitura {
 	
@@ -8,16 +10,20 @@ public class Fornitura {
 	private float quantitaFornita;
 	private LocalDate dataFornitura;
 	private float prezzoFornitura;
-	private Prodotto prodotto;
 	private Fornitore fornitore;
 	
 	//Costruttore
-	public Fornitura(float quantitaFornita, LocalDate dataFornitura, float prezzoFornitura, Classi.Prodotto prodotto,
-			Classi.Fornitore fornitore) {
+	public Fornitura(float quantitaFornita, LocalDate dataFornitura, float prezzoFornitura, Classi.Fornitore fornitore) {
 		this.quantitaFornita = quantitaFornita;
 		this.dataFornitura = dataFornitura;
 		this.prezzoFornitura = prezzoFornitura;
-		this.prodotto = prodotto;
+		this.fornitore = fornitore;
+	}
+	
+	public Fornitura(float quantitaFornita, String dataFornitura, float prezzoFornitura, Classi.Fornitore fornitore) {
+		this.quantitaFornita = quantitaFornita;
+		this.setDataFornitura(dataFornitura);
+		this.prezzoFornitura = prezzoFornitura;
 		this.fornitore = fornitore;
 	}
 	
@@ -34,17 +40,14 @@ public class Fornitura {
 	public void setDataFornitura(LocalDate dataFornitura) {
 		this.dataFornitura = dataFornitura;
 	}
+	public void setDataFornitura(String dataFornitura) {
+		this.dataFornitura = LocalDate.parse(dataFornitura, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
+	}
 	public float getPrezzoFornitura() {
 		return prezzoFornitura;
 	}
 	public void setPrezzoFornitura(float prezzoFornitura) {
 		this.prezzoFornitura = prezzoFornitura;
-	}
-	public Prodotto getProdotto() {
-		return prodotto;
-	}
-	public void setProdotto(Prodotto prodotto) {
-		this.prodotto = prodotto;
 	}
 	public Fornitore getFornitore() {
 		return fornitore;

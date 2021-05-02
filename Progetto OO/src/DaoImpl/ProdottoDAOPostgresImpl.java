@@ -1,13 +1,12 @@
 package DaoImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Classi.CittaItaliana;
-import Classi.Persona;
 import Classi.Prodotto;
 import Dao.ProdottoDAO;
 
@@ -80,6 +79,31 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		statement.setDouble(2, quantitaDaRifornire);
 		statement.setString(3, P.getNome());
 		statement.setString(4, P.getMarca());
+		statement.executeUpdate();
+	}
+	
+	public int getUltimoCodiceProdotto() throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT last_value FROM nCodProdotto");
+		ResultSet risultato = statement.executeQuery();
+		risultato.next();
+		return risultato.getInt(1);
+	}
+	
+	public void inserisciProdotto(Prodotto P, String tipo, int codFornitura) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("INSERT INTO prodotto(nome, paesediprovenienza, marca, datascadenza, quantitanegozio, prezzounitario, tipo, "
+																	+ "quantitadeposito, scontopercentuale, codfornitura) VALUES (?, ? , ?, ?, ?, ?, ?, ?, ?, ?)");
+		
+		statement.setString(1, P.getNome());
+		statement.setString(2, P.getPaeseDiProvenienza());
+		statement.setString(3, P.getMarca());
+		statement.setDate(4, (tipo.equals("Frutta") || tipo.equals("Verdura"))? null : Date.valueOf(P.getDataScadenza()));
+		statement.setFloat(5, P.getQuantitaNegozio());
+		statement.setFloat(6, P.getPrezzoUnitario());
+		statement.setString(7, tipo);
+		statement.setFloat(8, P.getQuantitaDeposito());
+		statement.setInt(9, P.getScontoPercentuale());
+		statement.setInt(10, codFornitura);
+		
 		statement.executeUpdate();
 	}
 }

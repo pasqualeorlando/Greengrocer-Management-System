@@ -2,6 +2,7 @@ package Controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import Gui.*;
 import Classi.*;
 
 public class Controller {
+	private Connection connection;
 	private LoginFrame login;
 	private HomepageFrame homepage;
 	private ModificaAccountFrame modificaAccount;
@@ -22,10 +24,19 @@ public class Controller {
 	private ProdottiFrame prodotti;
 	private ProdottoDAOPostgresImpl prodottoDAO;
 	private RifornimentoFrame rifornimento;
+	private NuovaFornituraFrame nuovaFornitura;
+	private FornitoreDAOPostgresImpl fornitoreDAO;
+	private FornituraDAOPostgresImpl fornituraDAO;
+	private FruttaDAOPostgresImpl fruttaDAO;
+	private VerduraDAOPostgresImpl verduraDAO;
+	private FarinaceoDAOPostgresImpl farinaceoDAO;
+	private LatticinoDAOPostgresImpl latticinoDAO;
+	private UovaDAOPostgresImpl uovaDAO;
+	private ConfezionatoDAOPostgresImpl confezionatoDAO;
 	
 	public Controller() {
 		DBConnection dbconn = null;
-        Connection connection = null;
+        connection = null;
 
         try{
             dbconn = DBConnection.getInstance();
@@ -33,6 +44,14 @@ public class Controller {
             personaDAO = new PersonaDAOPostgresImpl(connection);
             cittaItalianaDAO = new CittaItalianaDAOPostgresImpl(connection);
             prodottoDAO = new ProdottoDAOPostgresImpl(connection);
+            fornitoreDAO = new FornitoreDAOPostgresImpl(connection);
+            fornituraDAO = new FornituraDAOPostgresImpl(connection);
+            fruttaDAO = new FruttaDAOPostgresImpl(connection);
+            verduraDAO = new VerduraDAOPostgresImpl(connection);
+            farinaceoDAO = new FarinaceoDAOPostgresImpl(connection);
+            latticinoDAO = new LatticinoDAOPostgresImpl(connection);
+            uovaDAO = new UovaDAOPostgresImpl(connection);
+            confezionatoDAO = new ConfezionatoDAOPostgresImpl(connection);
             login = new LoginFrame(this);
             login.setVisible(true);
         }catch(SQLException e) {
@@ -383,5 +402,227 @@ public class Controller {
 				System.exit(-1);
 			}
 		}
+	}
+	
+	public void vaiNuovaFornitura(Persona p) {
+		homepage.dispose();
+		nuovaFornitura = new NuovaFornituraFrame(this, p);
+		nuovaFornitura.setVisible(true);
+	}
+	
+	public ArrayList<String> getFornitori(){
+		try {
+			return fornitoreDAO.getFornitori();
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile recuperare i fornitori dal database", "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public void inserisciProdotto(String pIvaFornitore, float prezzoFornitura, String dataFornitura, String tipoProdotto, String nomeProdotto, String dataScadenza, String marca, String paese, float quantitaNegozio, float quantitaDeposito, float prezzo, String jolly1, String jolly2, Object jolly3) {
+		if(pIvaFornitore.equals("") || prezzoFornitura == 0 || dataFornitura.equals(""))
+			JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi relativi alla fornitura", "Errore", JOptionPane.ERROR_MESSAGE);
+		else if(nomeProdotto.equals("") || paese.equals("") || quantitaNegozio == 0 || quantitaDeposito == 0 || prezzo == 0)
+			JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi base del prodotto", "Errore", JOptionPane.ERROR_MESSAGE);
+		else {
+			Fornitura forn = new Fornitura(quantitaNegozio + quantitaDeposito, dataFornitura, prezzoFornitura, new Fornitore(pIvaFornitore, "", "", ""));
+			if(tipoProdotto.equals("Frutta") || tipoProdotto.equals("Verdura")) {
+				if(jolly1.equals(""))
+					JOptionPane.showInternalMessageDialog(null, "Compilare la data di raccolta del prodotto", "Errore", JOptionPane.ERROR_MESSAGE);
+				else {
+					//Inserire prodotto frutta o verdura
+					try {
+						Frutta f = new Frutta(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
+						Verdura v = new Verdura(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
+						if(!marca.equals(""))
+							f.setMarca(marca);
+						
+						connection.setAutoCommit(false);
+						int idFornitura = fornituraDAO.inserisciFornitura(forn);
+						prodottoDAO.inserisciProdotto(f, tipoProdotto, idFornitura);
+						int codProdotto = prodottoDAO.getUltimoCodiceProdotto();
+						if(tipoProdotto.equals("Frutta"))
+							fruttaDAO.inserisciFrutta(codProdotto, f.getDataRaccolta().toString());
+							
+						else 
+							verduraDAO.inserisciVerdura(codProdotto, v.getDataRaccolta().toString());
+						
+						connection.commit();
+						connection.setAutoCommit(true);
+						JOptionPane.showInternalMessageDialog(null, "Il prodotto è stato inserito con successo.", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					}catch(DateTimeParseException e) {
+						JOptionPane.showInternalMessageDialog(null, "Inserire delle date valide!", "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}catch (SQLException e) {
+						JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}
+				}
+			} else if(tipoProdotto.equals("Farinaceo")) {
+				if(jolly3 == null)
+					JOptionPane.showInternalMessageDialog(null, "Scegliere il tipo del farinaceo", "Errore", JOptionPane.ERROR_MESSAGE);
+				else {
+					//Inserire prodotto farinaceo
+					try {
+						Farinaceo f = new Farinaceo(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
+						if(!marca.equals(""))
+							f.setMarca(marca);
+						
+						connection.setAutoCommit(false);
+						
+						int idFornitura = fornituraDAO.inserisciFornitura(forn);
+						prodottoDAO.inserisciProdotto(f, "Farinaceo", idFornitura);
+						int codProdotto = prodottoDAO.getUltimoCodiceProdotto();
+						farinaceoDAO.inserisciFarinaceo(codProdotto, f.getTipoFarinaceo().toString());
+						connection.commit();
+						connection.setAutoCommit(true);
+						JOptionPane.showInternalMessageDialog(null, "Il prodotto è stato inserito con successo.", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e) {
+						JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					} catch(DateTimeParseException e) {
+						JOptionPane.showInternalMessageDialog(null, "Inserire delle date valide\n", "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}
+					
+				}
+			} else if(tipoProdotto.equals("Latticino")) {
+				if(jolly1.equals("") || jolly2.equals(""))
+					JOptionPane.showInternalMessageDialog(null, "Compilare i dati aggiuntivi del prodotto latticino", "Errore", JOptionPane.ERROR_MESSAGE);
+				else {
+					//Inserire prodotto latticino
+					try {
+						Latticino l = new Latticino(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString(), jolly2.toString());
+					
+						if(!marca.equals(""))
+							l.setMarca(marca);
+					
+						connection.setAutoCommit(false);
+					
+						int idFornitura = fornituraDAO.inserisciFornitura(forn);
+						prodottoDAO.inserisciProdotto(l, "Latticino", idFornitura);
+						int codProdotto = prodottoDAO.getUltimoCodiceProdotto();
+						latticinoDAO.inserisciLatticino(codProdotto, l.getDataMungitura().toString(), l.getDataProduzione().toString());
+						connection.commit();
+						connection.setAutoCommit(true);
+						JOptionPane.showInternalMessageDialog(null, "Il prodotto è stato inserito con successo.", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e) {
+						JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					} catch(DateTimeParseException e) {
+						JOptionPane.showInternalMessageDialog(null, "Inserire delle date valide\n", "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}
+				}
+			} else if(tipoProdotto.equals("Uova")) {
+				if(jolly3 == null)
+					JOptionPane.showInternalMessageDialog(null, "Compilare il tipo di allevamento delle uova", "Errore", JOptionPane.ERROR_MESSAGE);
+				else {
+					//Inserire prodotto uova
+					try {
+						Uova u = new Uova(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
+					
+						if(!marca.equals(""))
+							u.setMarca(marca);
+					
+						connection.setAutoCommit(false);
+					
+						int idFornitura = fornituraDAO.inserisciFornitura(forn);
+						prodottoDAO.inserisciProdotto(u, "Uova", idFornitura);
+						int codProdotto = prodottoDAO.getUltimoCodiceProdotto();
+						uovaDAO.inserisciUova(codProdotto, u.getTipoAllevamento());
+						connection.commit();
+						connection.setAutoCommit(true);
+						JOptionPane.showInternalMessageDialog(null, "Il prodotto è stato inserito con successo.", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e) {
+						JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					} catch(DateTimeParseException e) {
+						JOptionPane.showInternalMessageDialog(null, "Inserire delle date valide\n", "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}
+
+				}
+			} else {
+				if(jolly1.equals(""))
+					JOptionPane.showInternalMessageDialog(null, "Compilare il tipo confezione", "Errore", JOptionPane.ERROR_MESSAGE);
+				else {
+					//Inserire prodotto confezionato
+					try {
+						Confezionato c = new Confezionato(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString());
+					
+						if(!marca.equals(""))
+							c.setMarca(marca);
+					
+						connection.setAutoCommit(false);
+					
+						int idFornitura = fornituraDAO.inserisciFornitura(forn);
+						prodottoDAO.inserisciProdotto(c, "Confezionato", idFornitura);
+						int codProdotto = prodottoDAO.getUltimoCodiceProdotto();
+						confezionatoDAO.inserisciConfezionato(codProdotto, c.getTipoConfezione());
+						connection.commit();
+						connection.setAutoCommit(true);
+						JOptionPane.showInternalMessageDialog(null, "Il prodotto è stato inserito con successo.", "Inserimento riuscito", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e) {
+						JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					} catch(DateTimeParseException e) {
+						JOptionPane.showInternalMessageDialog(null, "Inserire delle date valide\n", "Errore", JOptionPane.ERROR_MESSAGE);
+						try {
+							connection.setAutoCommit(true);
+						} catch (SQLException e1) {
+							JOptionPane.showInternalMessageDialog(null, "Errore connessione. Uscita dal programma\n", "Errore", JOptionPane.ERROR_MESSAGE);
+							System.exit(-1);
+						}
+					}
+				}
+			}
+		}
+		nuovaFornitura.resetForm();
 	}
 }
