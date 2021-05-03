@@ -10,7 +10,8 @@ import Classi.Fornitore;
 import Dao.*;
 
 public class FornitoreDAOPostgresImpl implements FornitoreDAO{
-private Connection connessione;
+	
+	private Connection connessione;
 	
 	public FornitoreDAOPostgresImpl(Connection conn) {
 		connessione = conn;
@@ -25,13 +26,22 @@ private Connection connessione;
 		return f;
 	}
 	
-	public ArrayList<String> getFornitori() throws SQLException{
+	public ArrayList<String> getFornitoriPIvaNomeSocieta() throws SQLException{
 		ArrayList<String> result = new ArrayList<String>();
-		PreparedStatement statement = connessione.prepareStatement("SELECT piva FROM fornitore");
+		PreparedStatement statement = connessione.prepareStatement("SELECT piva, nomesocieta FROM fornitore");
 		ResultSet rs = statement.executeQuery();
 		while(rs.next()) {
-			result.add(rs.getString("piva"));
+			result.add(rs.getString("piva") + " - " + rs.getString("nomesocieta"));
 		}
 		return result;
+	}
+	
+	public void inserisciFornitore(Fornitore f) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("INSERT INTO fornitore VALUES (?, ?, ?, ?)");
+		statement.setString(1, f.getPIva());
+		statement.setString(2, f.getNomeSocieta());
+		statement.setString(3, f.getNomeTitolare());
+		statement.setString(4, f.getCognomeTitolare());
+		statement.executeUpdate();
 	}
 }

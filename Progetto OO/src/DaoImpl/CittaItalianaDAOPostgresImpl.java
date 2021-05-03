@@ -17,6 +17,7 @@ public class CittaItalianaDAOPostgresImpl implements CittaItalianaDAO{
 	}
 
 	public ArrayList<String> getProvince() throws SQLException {
+		
 		ArrayList<String> result = new ArrayList<String>();
 		PreparedStatement statement = connessione.prepareStatement("SELECT DISTINCT provincia FROM cittaitaliana ORDER BY provincia");
 		ResultSet rs = statement.executeQuery();
@@ -27,6 +28,7 @@ public class CittaItalianaDAOPostgresImpl implements CittaItalianaDAO{
 	}
 	
 	public ArrayList<String> getCittaFromProvincia(String provincia) throws SQLException{
+		
 		ArrayList<String> result = new ArrayList<String>();
 		PreparedStatement statement = connessione.prepareStatement("SELECT denominazione FROM cittaitaliana WHERE provincia = ? ORDER BY denominazione");
 		statement.setString(1, provincia);

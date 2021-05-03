@@ -8,6 +8,7 @@ import Dao.UovaDAO;
 import Enum.TAllevamento;
 
 public class UovaDAOPostgresImpl implements UovaDAO{
+	
 	private Connection connessione;
 	
 	public UovaDAOPostgresImpl(Connection conn) {
@@ -15,6 +16,7 @@ public class UovaDAOPostgresImpl implements UovaDAO{
 	}
 	
 	public void inserisciUova(int codProdotto, TAllevamento tipoAllevamento) throws SQLException {
+		
 		PreparedStatement statement = connessione.prepareStatement("INSERT INTO uova VALUES (?, ?)");
 		
 		statement.setInt(1, tipoAllevamento.getNumber());

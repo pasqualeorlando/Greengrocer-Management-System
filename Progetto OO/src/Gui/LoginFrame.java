@@ -18,6 +18,8 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginFrame extends JFrame {
 
@@ -57,12 +59,27 @@ public class LoginFrame extends JFrame {
 		contentPane.add(passwordLabel);
 		
 		usernameTF = new JTextField();
+		usernameTF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					controller.validaCredenziali(usernameTF.getText(), passPF.getText());
+
+			}
+		});
 		usernameTF.setFont(new Font("Georgia", Font.PLAIN, 17));
 		usernameTF.setBounds(239, 192, 239, 30);
 		contentPane.add(usernameTF);
 		usernameTF.setColumns(10);
 		
 		passPF = new JPasswordField();
+		passPF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					controller.validaCredenziali(usernameTF.getText(), passPF.getText());
+			}
+		});
 		passPF.setFont(new Font("Georgia", Font.PLAIN, 17));
 		passPF.setBounds(239, 232, 239, 30);
 		contentPane.add(passPF);

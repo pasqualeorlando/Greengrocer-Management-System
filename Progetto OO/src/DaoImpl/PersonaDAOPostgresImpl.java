@@ -18,6 +18,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public boolean controlloCredenzialiDipendente(String user, String password) throws SQLException {
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona WHERE email = ? AND cf = ? AND Tipo = 'Personale'");
 		statement.setString(1, user);
 		statement.setString(2, password);
@@ -26,6 +27,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public Persona getPersonaDaCF(String CF) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona WHERE cf = ?");
 		statement.setString(1, CF);
 		ResultSet risultato = statement.executeQuery();
@@ -38,6 +40,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public Persona getPersonaDaEmail(String email) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona WHERE email = ?");
 		statement.setString(1, email);
 		ResultSet risultato = statement.executeQuery();
@@ -50,6 +53,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public void aggiornaMail(String nuovaMail, Persona p) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("UPDATE persona SET email = ? WHERE email = ?");
 		statement.setString(1, nuovaMail);
 		statement.setString(2, p.getEmail());
@@ -57,6 +61,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public ArrayList<Persona> getPersonale() throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona WHERE Tipo = 'Personale' ORDER BY cf");
 		ResultSet risultato = statement.executeQuery();
 		ArrayList<Persona> ret = new ArrayList<Persona>();
@@ -71,12 +76,14 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public void eliminaPersonaDaCF(String CF) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("DELETE FROM persona WHERE cf = ?");
 		statement.setString(1, CF);
 		statement.executeUpdate();
 	}
 	
 	public void modificaRuolo(String nuovoRuolo, String CF) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("UPDATE persona SET ruolo = ? WHERE cf = ?");
 		statement.setString(1, nuovoRuolo);
 		statement.setString(2, CF);
@@ -84,6 +91,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public void inserirePersona(Persona p) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("INSERT INTO persona VALUES(' ', ?, ?, ?, ?, ?, ?, ?, null, ?, ?)");
 		statement.setString(1, p.getNome());
 		statement.setString(2, p.getCognome());
@@ -105,6 +113,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 	}
 	
 	public ArrayList<Persona> getClienti() throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona WHERE Tipo = 'Cliente' ORDER BY cf");
 		ResultSet risultato = statement.executeQuery();
 		ArrayList<Persona> ret = new ArrayList<Persona>();

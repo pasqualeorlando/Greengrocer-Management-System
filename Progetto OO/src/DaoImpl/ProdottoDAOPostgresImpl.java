@@ -11,6 +11,7 @@ import Classi.Prodotto;
 import Dao.ProdottoDAO;
 
 public class ProdottoDAOPostgresImpl implements ProdottoDAO {
+	
 	private Connection connessione;
 	
 	public ProdottoDAOPostgresImpl(Connection conn) {
@@ -18,6 +19,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public ArrayList<Prodotto> getProdotti() throws SQLException{
+		
 		ArrayList<Prodotto> risultato = new ArrayList<Prodotto>();
 		String[] queries = {
 				"SELECT * FROM prodotto NATURAL JOIN Frutta ORDER BY nome",
@@ -46,6 +48,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public Prodotto getProdottoDaNomeMarca(String nome, String marca) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto WHERE nome = ? AND marca = ?");
 		statement.setString(1, nome);
 		statement.setString(2, marca);
@@ -66,6 +69,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public void aggiornaScontoProdotto(Prodotto P, int nuovoSconto) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET scontopercentuale = ? WHERE nome = ? AND marca = ?");
 		statement.setInt(1, nuovoSconto);
 		statement.setString(2, P.getNome());
@@ -74,6 +78,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public void aggiornaQuantita(Prodotto P, double quantitaDaRifornire) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ?");
 		statement.setDouble(1, quantitaDaRifornire);
 		statement.setDouble(2, quantitaDaRifornire);
@@ -83,6 +88,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public int getUltimoCodiceProdotto() throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("SELECT last_value FROM nCodProdotto");
 		ResultSet risultato = statement.executeQuery();
 		risultato.next();
@@ -90,6 +96,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	}
 	
 	public void inserisciProdotto(Prodotto P, String tipo, int codFornitura) throws SQLException{
+		
 		PreparedStatement statement = connessione.prepareStatement("INSERT INTO prodotto(nome, paesediprovenienza, marca, datascadenza, quantitanegozio, prezzounitario, tipo, "
 																	+ "quantitadeposito, scontopercentuale, codfornitura) VALUES (?, ? , ?, ?, ?, ?, ?, ?, ?, ?)");
 		

@@ -224,6 +224,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(nuovaFornituraButton);
 		
 		JButton NuovoFornitoreButton = new JButton("<html><center>Nuovo<br>Fornitore</center></html>");
+		NuovoFornitoreButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiNuovoFornitore(p);
+			}
+		});
 		NuovoFornitoreButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/inventario.png")));
 		NuovoFornitoreButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		NuovoFornitoreButton.setHorizontalTextPosition(SwingConstants.CENTER);

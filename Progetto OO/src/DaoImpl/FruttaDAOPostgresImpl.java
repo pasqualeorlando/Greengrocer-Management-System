@@ -11,6 +11,7 @@ import java.util.Locale;
 import Dao.FruttaDAO;
 
 public class FruttaDAOPostgresImpl implements FruttaDAO{
+	
 	private Connection connessione;
 	
 	public FruttaDAOPostgresImpl(Connection conn) {
@@ -18,6 +19,7 @@ public class FruttaDAOPostgresImpl implements FruttaDAO{
 	}
 	
 	public void inserisciFrutta(int codProdotto, String dataRaccolta) throws SQLException {
+		
 		PreparedStatement statement = connessione.prepareStatement("INSERT INTO frutta VALUES (?, ?)");
 		statement.setDate(1, Date.valueOf(LocalDate.parse(dataRaccolta, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN))));
 		statement.setInt(2, codProdotto);

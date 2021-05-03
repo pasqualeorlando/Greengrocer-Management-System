@@ -33,8 +33,11 @@ public class Controller {
 	private LatticinoDAOPostgresImpl latticinoDAO;
 	private UovaDAOPostgresImpl uovaDAO;
 	private ConfezionatoDAOPostgresImpl confezionatoDAO;
+	private NuovoFornitoreFrame nuovoFornitore;
+	
 	
 	public Controller() {
+		
 		DBConnection dbconn = null;
         connection = null;
 
@@ -66,6 +69,7 @@ public class Controller {
 	}
 	
 	public void validaCredenziali(String user, String password) {
+		
 		if(user.length() == 0 || password.length() == 0) {
 			JOptionPane.showInternalMessageDialog(null, "Inserire entrambe le informazioni!", "Errore durante l'accesso", JOptionPane.ERROR_MESSAGE);
 		}else {
@@ -87,16 +91,21 @@ public class Controller {
 	}
 	
 	public void exit() {
+		
 		//Homepage.setVisible(false);
 		homepage.dispose();
 		login.setVisible(true);
 	}
+	
 	public void vaiHomepage(JFrame framePrecedente, Persona p) {
+		
 		homepage = new HomepageFrame(this, p);
 		homepage.setVisible(true);
 		framePrecedente.dispose();
 	}
+	
 	public void vaiModificaAccount(JFrame provenienza, Persona committente, String CFPersonaDaModificare) {
+	
 		try {
 			Persona daModificare = personaDAO.getPersonaDaCF(CFPersonaDaModificare);
 			modificaAccount = new ModificaAccountFrame(this, daModificare, committente);
@@ -107,7 +116,10 @@ public class Controller {
 			System.exit(-1);
 		}
 	}
+	
+	
 	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) {
+		
 		if(newMail.equals(daModificare.getEmail()))
 			JOptionPane.showInternalMessageDialog(null, "La nuova mail deve essere diversa da quella attuale", "Errore", JOptionPane.ERROR_MESSAGE);
 		else if(!newMail.matches("^(.+)@(.+)$"))
@@ -133,7 +145,9 @@ public class Controller {
 			}
 		}
 	}
+	
 	public void vaiPersonale(Persona p) {
+		
 		if(p.getRuolo().equals(TRuolo.Dipendente.toString())) {
 			JOptionPane.showInternalMessageDialog(null, "Questa operazione non è consentita ai dipendenti", "Accesso non consentito", JOptionPane.ERROR_MESSAGE);
 		}else {
@@ -144,6 +158,7 @@ public class Controller {
 	}
 	
 	public Object[][] getPersonale(){
+		
 		int i = 0;
 		try {
 			int len = personaDAO.getPersonale().size();
@@ -169,7 +184,9 @@ public class Controller {
 			return null;
 		}
 	}
-	public void aggiornaLabels(String cf, String finestra) { //aggiorna le labels nelle finestre di gestione del personale e dei clienti
+	
+	public void aggiornaLabels(String cf, String finestra) { 
+		//aggiorna le labels nelle finestre di gestione del personale e dei clienti
 		try {
 			Persona p = personaDAO.getPersonaDaCF(cf);
 			String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
@@ -189,7 +206,8 @@ public class Controller {
 		}
 	}
 	
-	public void aggiornaLabelsProdotti(String nome, String marca) { //aggiorna le labels nella finestra dei prodotti
+	public void aggiornaLabelsProdotti(String nome, String marca) { 
+		//aggiorna le labels nella finestra dei prodotti
 		try {
 			Prodotto prod = prodottoDAO.getProdottoDaNomeMarca(nome, marca);
 			Object[] aggiornamento = {prod.getNome(), prod.getPaeseDiProvenienza(), prod.getMarca(), prod.getDataScadenza(),
@@ -203,6 +221,7 @@ public class Controller {
 	}
 	
 	public boolean eliminaPersonaDaCF(String cfPersonaDaEliminare, Persona committente) {
+		
 		try {
 			if(cfPersonaDaEliminare.equals(committente.getCF())) {
 				JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare il profilo corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
@@ -221,6 +240,7 @@ public class Controller {
 	}
 	
 	public boolean modificaRuoloDaCF(String nuovoRuolo, Persona committente, String cfPersonaDaModificare) {
+		
 		try{
 			Persona personaDaModificare = personaDAO.getPersonaDaCF(cfPersonaDaModificare);
 			if(personaDaModificare.getCF().equals(committente.getCF())) {
@@ -246,6 +266,7 @@ public class Controller {
 	}
 	
 	public boolean inserisciPersona(String nuovoNome, String nuovoCognome, String nuovaDataNascita, String nuovaMail, String nuovoSesso, String nuovoRuolo, String Tipo, String nuovaCitta, String nuovaProvincia) {
+		
 		try {
 			if(Tipo.equals(TPersona.Personale.toString())) {
 				if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
@@ -281,6 +302,7 @@ public class Controller {
 	}
 	
 	public ArrayList<String> getProvince() {
+		
 		try {
 			return cittaItalianaDAO.getProvince();
 		} catch (SQLException e) {
@@ -291,6 +313,7 @@ public class Controller {
 	}
 	
 	public ArrayList<String> getCittaFromProvincia(String provincia){
+		
 		try {
 			return cittaItalianaDAO.getCittaFromProvincia(provincia);
 		} catch (SQLException e) {
@@ -301,6 +324,7 @@ public class Controller {
 	}
 	
 	public Object[][] getClienti(){
+		
 		int i = 0;
 		try {
 			int len = personaDAO.getClienti().size();
@@ -326,17 +350,21 @@ public class Controller {
 	}
 	
 	public void vaiClienti(Persona p) {
+		
 		homepage.dispose();
 		clienti = new ClientiFrame(this, p);
 		clienti.setVisible(true);
 	}
+	
 	public void vaiProdotti(Persona p, JFrame framePrecedente) {
+		
 		framePrecedente.dispose();
 		prodotti = new ProdottiFrame(this, p);
 		prodotti.setVisible(true);
 	}
 	
 	public Object[][] getProdotti(){
+		
 		int i = 0;
 		try {
 			int len = prodottoDAO.getProdotti().size();
@@ -359,7 +387,9 @@ public class Controller {
 			return null;
 		}
 	}
+	
 	public void aggiornaScontoProdotto(String nomeProdotto, String marcaProdotto, int nuovoSconto) {
+		
 		try {
 			Prodotto prodottoDaAggiornare = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
 			if(prodottoDaAggiornare.getScontoPercentuale() == nuovoSconto)
@@ -375,6 +405,7 @@ public class Controller {
 	}
 	
 	public void vaiRifornimento(String nomeProdotto, String marcaProdotto, Persona committente) {
+		
 		try {
 			Prodotto p = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
 			rifornimento = new RifornimentoFrame(this, p, committente);
@@ -388,6 +419,7 @@ public class Controller {
 	}
 	
 	public void rifornisciProdotto(Prodotto p, double quantitaDaRifornire, Persona committente) {
+		
 		if(quantitaDaRifornire == 0)
 			JOptionPane.showInternalMessageDialog(null, "Non puoi rifornire di 0 unità.", "Errore", JOptionPane.ERROR_MESSAGE);
 		else {
@@ -405,14 +437,16 @@ public class Controller {
 	}
 	
 	public void vaiNuovaFornitura(Persona p) {
+		
 		homepage.dispose();
 		nuovaFornitura = new NuovaFornituraFrame(this, p);
 		nuovaFornitura.setVisible(true);
 	}
 	
-	public ArrayList<String> getFornitori(){
+	public ArrayList<String> getFornitoriPIvaNomeSocieta(){
+		
 		try {
-			return fornitoreDAO.getFornitori();
+			return fornitoreDAO.getFornitoriPIvaNomeSocieta();
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, "Impossibile recuperare i fornitori dal database", "Errore", JOptionPane.ERROR_MESSAGE);
 			return null;
@@ -420,6 +454,8 @@ public class Controller {
 	}
 	
 	public void inserisciProdotto(String pIvaFornitore, float prezzoFornitura, String dataFornitura, String tipoProdotto, String nomeProdotto, String dataScadenza, String marca, String paese, float quantitaNegozio, float quantitaDeposito, float prezzo, String jolly1, String jolly2, Object jolly3) {
+		
+		pIvaFornitore = pIvaFornitore.substring(0, 11);
 		if(pIvaFornitore.equals("") || prezzoFornitura == 0 || dataFornitura.equals(""))
 			JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi relativi alla fornitura", "Errore", JOptionPane.ERROR_MESSAGE);
 		else if(nomeProdotto.equals("") || paese.equals("") || quantitaNegozio == 0 || quantitaDeposito == 0 || prezzo == 0)
@@ -624,5 +660,28 @@ public class Controller {
 			}
 		}
 		nuovaFornitura.resetForm();
+	}
+	
+	public void vaiNuovoFornitore(Persona p) {
+		homepage.dispose();
+		nuovoFornitore = new NuovoFornitoreFrame(this, p);
+		nuovoFornitore.setVisible(true);
+	}
+
+	public void inserisciFornitore(String pIva, String nomeSocieta, String nomeTitolare, String cognomeTitolare) {
+		
+		if(pIva.equals("") || nomeSocieta.equals("") || nomeTitolare.equals("") || cognomeTitolare.equals("")) 
+			JOptionPane.showInternalMessageDialog(null, "Inserire tutti i campi richiesti.", "Errore", JOptionPane.ERROR_MESSAGE);
+		else {
+			Fornitore f = new Fornitore(pIva, nomeSocieta, nomeTitolare, cognomeTitolare);
+			try {
+				fornitoreDAO.inserisciFornitore(f);
+				JOptionPane.showInternalMessageDialog(null, "Fornitore inserito con successo", "Operazione riuscita", JOptionPane.INFORMATION_MESSAGE);
+			} catch (SQLException e) {
+				JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		
 	}
 }

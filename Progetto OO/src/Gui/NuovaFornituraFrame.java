@@ -73,10 +73,10 @@ public class NuovaFornituraFrame extends JFrame {
 		contentPane.add(fornitoreLabel);
 		
 		String[] fornitori = null;
-		fornitori = controller.getFornitori().toArray(new String[controller.getFornitori().size()]);
+		fornitori = controller.getFornitoriPIvaNomeSocieta().toArray(new String[controller.getFornitoriPIvaNomeSocieta().size()]);
 		fornitoreCB = new JComboBox(fornitori);
 		fornitoreCB.setFont(new Font("Georgia", Font.PLAIN, 15));
-		fornitoreCB.setBounds(118, 43, 192, 29);
+		fornitoreCB.setBounds(118, 43, 210, 29);
 		contentPane.add(fornitoreCB);
 		
 		JLabel dataFornituraLabel = new JLabel("Data Fornitura*: ");
@@ -88,7 +88,7 @@ public class NuovaFornituraFrame extends JFrame {
 		
 		dataFornituraTF = new JTextField();
 		dataFornituraTF.setFont(new Font("Georgia", Font.PLAIN, 15));
-		dataFornituraTF.setBounds(165, 119, 145, 29);
+		dataFornituraTF.setBounds(165, 119, 163, 29);
 		contentPane.add(dataFornituraTF);
 		dataFornituraTF.setColumns(10);
 		
@@ -96,68 +96,68 @@ public class NuovaFornituraFrame extends JFrame {
 		nomeProdottoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		nomeProdottoLabel.setForeground(Color.BLACK);
 		nomeProdottoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		nomeProdottoLabel.setBounds(342, 86, 156, 24);
+		nomeProdottoLabel.setBounds(360, 87, 156, 24);
 		contentPane.add(nomeProdottoLabel);
 		
 		nomeProdottoTF = new JTextField();
 		nomeProdottoTF.setBackground(new Color(255, 255, 255));
 		nomeProdottoTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		nomeProdottoTF.setColumns(10);
-		nomeProdottoTF.setBounds(507, 88, 192, 29);
+		nomeProdottoTF.setBounds(525, 89, 192, 29);
 		contentPane.add(nomeProdottoTF);
 		
 		JLabel paeseLabel = new JLabel("Paese*: ");
 		paeseLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		paeseLabel.setForeground(Color.BLACK);
 		paeseLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		paeseLabel.setBounds(342, 204, 70, 24);
+		paeseLabel.setBounds(360, 205, 70, 24);
 		contentPane.add(paeseLabel);
 		
 		JLabel prezzoFornituraLabel = new JLabel("Prezzo Fornitura*:");
 		prezzoFornituraLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		prezzoFornituraLabel.setForeground(Color.BLACK);
 		prezzoFornituraLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		prezzoFornituraLabel.setBounds(20, 85, 156, 24);
+		prezzoFornituraLabel.setBounds(20, 85, 167, 24);
 		contentPane.add(prezzoFornituraLabel);
 		
 		prezzoFornituraSpinner = new JSpinner();
 		prezzoFornituraSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0.01)));
 		prezzoFornituraSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		prezzoFornituraSpinner.setBounds(178, 81, 132, 29);
+		prezzoFornituraSpinner.setBounds(178, 81, 150, 29);
 		contentPane.add(prezzoFornituraSpinner);
 		
 		paeseTF = new JTextField();
 		paeseTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		paeseTF.setColumns(10);
 		paeseTF.setBackground(Color.WHITE);
-		paeseTF.setBounds(434, 202, 265, 29);
+		paeseTF.setBounds(452, 203, 265, 29);
 		contentPane.add(paeseTF);
 		
 		JLabel marcaLabel = new JLabel("Marca:");
 		marcaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		marcaLabel.setForeground(Color.BLACK);
 		marcaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		marcaLabel.setBounds(342, 165, 70, 24);
+		marcaLabel.setBounds(360, 166, 70, 24);
 		contentPane.add(marcaLabel);
 		
 		marcaTF = new JTextField();
 		marcaTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		marcaTF.setColumns(10);
 		marcaTF.setBackground(Color.WHITE);
-		marcaTF.setBounds(434, 164, 265, 29);
+		marcaTF.setBounds(452, 165, 265, 29);
 		contentPane.add(marcaTF);
 		
 		dataScadenzaLabel = new JLabel("Data Scadenza:");
 		dataScadenzaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		dataScadenzaLabel.setForeground(Color.BLACK);
 		dataScadenzaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		dataScadenzaLabel.setBounds(342, 127, 145, 24);
+		dataScadenzaLabel.setBounds(360, 128, 145, 24);
 		contentPane.add(dataScadenzaLabel);
 		
 		dataScadenzaTF = new JTextField();
 		dataScadenzaTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		dataScadenzaTF.setColumns(10);
-		dataScadenzaTF.setBounds(507, 126, 192, 29);
+		dataScadenzaTF.setBounds(525, 127, 192, 29);
 		dataScadenzaTF.setEnabled(false);
 		contentPane.add(dataScadenzaTF);
 		
@@ -165,39 +165,39 @@ public class NuovaFornituraFrame extends JFrame {
 		quantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		quantitaNegozioLabel.setForeground(Color.BLACK);
 		quantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		quantitaNegozioLabel.setBounds(342, 239, 167, 24);
+		quantitaNegozioLabel.setBounds(360, 240, 167, 24);
 		contentPane.add(quantitaNegozioLabel);
 		
 		quantitaNegozioSpinner = new JSpinner();
 		quantitaNegozioSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0.01)));
 		quantitaNegozioSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		quantitaNegozioSpinner.setBounds(543, 241, 156, 28);
+		quantitaNegozioSpinner.setBounds(561, 242, 156, 28);
 		contentPane.add(quantitaNegozioSpinner);
 		
 		JLabel prezzoLabel = new JLabel("Prezzo*:");
 		prezzoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		prezzoLabel.setForeground(Color.BLACK);
 		prezzoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		prezzoLabel.setBounds(342, 315, 70, 24);
+		prezzoLabel.setBounds(360, 316, 70, 24);
 		contentPane.add(prezzoLabel);
 		
 		prezzoSpinner = new JSpinner();
 		prezzoSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0.01)));
 		prezzoSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		prezzoSpinner.setBounds(442, 317, 257, 28);
+		prezzoSpinner.setBounds(460, 318, 257, 28);
 		contentPane.add(prezzoSpinner);
 		
 		JLabel quantitaDepositoLabel = new JLabel("Quantit\u00E0 deposito*:");
 		quantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		quantitaDepositoLabel.setForeground(Color.BLACK);
 		quantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		quantitaDepositoLabel.setBounds(342, 277, 179, 24);
+		quantitaDepositoLabel.setBounds(360, 278, 179, 24);
 		contentPane.add(quantitaDepositoLabel);
 		
 		quantitaDepositoSpinner = new JSpinner();
 		quantitaDepositoSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0.01)));
 		quantitaDepositoSpinner.setFont(new Font("Georgia", Font.PLAIN, 16));
-		quantitaDepositoSpinner.setBounds(542, 279, 157, 28);
+		quantitaDepositoSpinner.setBounds(560, 280, 157, 28);
 		contentPane.add(quantitaDepositoSpinner);
 		
 		JButton annullaButton = new JButton("Annulla");
@@ -231,7 +231,7 @@ public class NuovaFornituraFrame extends JFrame {
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(330, 36, 2, 382);
+		separator.setBounds(338, 36, 2, 382);
 		contentPane.add(separator);
 		
 		JLabel notaLabel = new JLabel("NB: i campi contrassegnati con * sono obbligatori");
@@ -246,28 +246,28 @@ public class NuovaFornituraFrame extends JFrame {
 		tipoProdottoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		tipoProdottoLabel.setForeground(Color.BLACK);
 		tipoProdottoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		tipoProdottoLabel.setBounds(342, 44, 156, 24);
+		tipoProdottoLabel.setBounds(360, 45, 156, 24);
 		contentPane.add(tipoProdottoLabel);
 		
 		jollyLabel2 = new JLabel("");
 		jollyLabel2.setHorizontalAlignment(SwingConstants.LEFT);
 		jollyLabel2.setForeground(Color.BLACK);
 		jollyLabel2.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		jollyLabel2.setBounds(342, 391, 179, 24);
+		jollyLabel2.setBounds(360, 392, 179, 24);
 		contentPane.add(jollyLabel2);
 		
 		jollyTF2 = new JTextField();
 		jollyTF2.setVisible(false);
 		jollyTF2.setFont(new Font("Georgia", Font.PLAIN, 15));
 		jollyTF2.setColumns(10);
-		jollyTF2.setBounds(507, 386, 192, 29);
+		jollyTF2.setBounds(525, 387, 192, 29);
 		contentPane.add(jollyTF2);
 		
 		jollyLabel1 = new JLabel("Data Raccolta*:");
 		jollyLabel1.setHorizontalAlignment(SwingConstants.LEFT);
 		jollyLabel1.setForeground(Color.BLACK);
 		jollyLabel1.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		jollyLabel1.setBounds(342, 350, 179, 24);
+		jollyLabel1.setBounds(360, 351, 179, 24);
 		contentPane.add(jollyLabel1);
 		
 		jollyTF1 = new JTextField();
@@ -275,7 +275,7 @@ public class NuovaFornituraFrame extends JFrame {
 		jollyTF1.setFont(new Font("Georgia", Font.PLAIN, 15));
 		jollyTF1.setColumns(10);
 		jollyTF1.setBackground(Color.WHITE);
-		jollyTF1.setBounds(507, 352, 192, 29);
+		jollyTF1.setBounds(525, 353, 192, 29);
 		contentPane.add(jollyTF1);
 		
 		jollyCB = new JComboBox();
@@ -336,7 +336,7 @@ public class NuovaFornituraFrame extends JFrame {
 		});
 		tipoProdottoCB.setModel(new DefaultComboBoxModel(new String[] {"Frutta", "Verdura", "Farinaceo", "Latticino", "Uova", "Confezionato"}));
 		tipoProdottoCB.setFont(new Font("Georgia", Font.PLAIN, 15));
-		tipoProdottoCB.setBounds(507, 42, 192, 29);
+		tipoProdottoCB.setBounds(525, 43, 192, 29);
 		contentPane.add(tipoProdottoCB);
 		
 		JButton inserisciButton = new JButton("Inserisci");
