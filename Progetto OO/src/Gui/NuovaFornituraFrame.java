@@ -133,7 +133,7 @@ public class NuovaFornituraFrame extends JFrame {
 		paeseTF.setBounds(452, 203, 265, 29);
 		contentPane.add(paeseTF);
 		
-		JLabel marcaLabel = new JLabel("Marca:");
+		JLabel marcaLabel = new JLabel("Marca*:");
 		marcaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		marcaLabel.setForeground(Color.BLACK);
 		marcaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));

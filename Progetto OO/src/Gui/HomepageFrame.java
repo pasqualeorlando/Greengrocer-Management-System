@@ -182,6 +182,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(acquistiButton);
 		
 		JButton fornitureButton = new JButton("<html><center>Visualizza<br>Forniture</center></html>");
+		fornitureButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiForniture(p);
+			}
+		});
 		fornitureButton.setContentAreaFilled(false);
 		fornitureButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzaforniture.png")));
 		fornitureButton.setFont(new Font("Georgia", Font.BOLD, 15));

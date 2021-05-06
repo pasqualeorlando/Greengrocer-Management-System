@@ -10,16 +10,16 @@ public class Uova extends Prodotto {
 	private TAllevamento tipoAllevamento;
 	
 	//Costruttore
-	public Uova(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Uova(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, LocalDate dataScadenza, TAllevamento tipoAllevamento) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.tipoAllevamento = tipoAllevamento;
 		this.setDataScadenza(dataScadenza);
 	}
-	public Uova(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Uova(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, String dataScadenza, String tipoAllevamento) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.setTipoAllevamento(tipoAllevamento);
 		this.setDataScadenza(dataScadenza);

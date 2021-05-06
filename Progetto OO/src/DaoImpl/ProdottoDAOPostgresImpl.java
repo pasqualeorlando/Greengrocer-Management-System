@@ -22,23 +22,22 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		
 		ArrayList<Prodotto> risultato = new ArrayList<Prodotto>();
 		String[] queries = {
-				"SELECT * FROM prodotto NATURAL JOIN Frutta ORDER BY nome",
-				"SELECT * FROM prodotto NATURAL JOIN Verdura ORDER BY nome",
-				"SELECT * FROM prodotto NATURAL JOIN Farinaceo ORDER BY nome",
-				"SELECT * FROM prodotto NATURAL JOIN Latticino ORDER BY nome",
-				"SELECT * FROM prodotto NATURAL JOIN Uova ORDER BY nome",
-				"SELECT * FROM prodotto NATURAL JOIN Confezionato ORDER BY nome"
+				"SELECT * FROM prodotto NATURAL JOIN Frutta WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Verdura WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Farinaceo WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Latticino WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Uova WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome",
+				"SELECT * FROM prodotto NATURAL JOIN Confezionato WHERE quantitanegozio <> 0 OR quantitadeposito <> 0 ORDER BY nome"
 		};
 		
 		for(int i=0; i<6; i++) {
 			PreparedStatement statement = connessione.prepareStatement(queries[i]);
 			ResultSet ris = statement.executeQuery();
 			while(ris.next()) {
-				Prodotto p = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getFloat("quantitanegozio"),
+				Prodotto p = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getString("marca"), ris.getFloat("quantitanegozio"),
 										  ris.getFloat("prezzounitario"), ris.getInt("scontopercentuale"), 
 										  ris.getFloat("quantitadeposito"), null);
-				p.setMarca(ris.getString("marca"));
-				
+			
 				if(i>1)
 					p.setDataScadenza(ris.getDate("datascadenza").toLocalDate());
 				risultato.add(p);
@@ -49,15 +48,15 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	
 	public Prodotto getProdottoDaNomeMarca(String nome, String marca) throws SQLException{
 		
-		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto WHERE nome = ? AND marca = ?");
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 OR quantitadeposito <> 0)");
+	
 		statement.setString(1, nome);
 		statement.setString(2, marca);
 		ResultSet ris = statement.executeQuery();
 		if(ris.next()) {
-			Prodotto prod = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getFloat("quantitanegozio"),
+			Prodotto prod = new Prodotto(ris.getString("nome"), ris.getString("paesediprovenienza"), ris.getString("marca"), ris.getFloat("quantitanegozio"),
 					  ris.getFloat("prezzounitario"), ris.getInt("scontopercentuale"), 
 					  ris.getFloat("quantitadeposito"), null);
-			prod.setMarca(ris.getString("marca"));
 			try {
 				prod.setDataScadenza(ris.getDate("datascadenza").toLocalDate());
 			}catch(NullPointerException e) {
@@ -70,7 +69,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	
 	public void aggiornaScontoProdotto(Prodotto P, int nuovoSconto) throws SQLException{
 		
-		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET scontopercentuale = ? WHERE nome = ? AND marca = ?");
+		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET scontopercentuale = ? WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 OR quantitadeposito <> 0)");
 		statement.setInt(1, nuovoSconto);
 		statement.setString(2, P.getNome());
 		statement.setString(3, P.getMarca());
@@ -79,7 +78,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	
 	public void aggiornaQuantita(Prodotto P, double quantitaDaRifornire) throws SQLException{
 		
-		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ?");
+		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 || quantitadeposito <> 0)");
 		statement.setDouble(1, quantitaDaRifornire);
 		statement.setDouble(2, quantitaDaRifornire);
 		statement.setString(3, P.getNome());
@@ -111,6 +110,10 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		statement.setInt(9, P.getScontoPercentuale());
 		statement.setInt(10, codFornitura);
 		
-		statement.executeUpdate();
+		Prodotto q = getProdottoDaNomeMarca(P.getNome(), P.getMarca());
+		if(q == null)
+			statement.executeUpdate();
+		else
+			throw new SQLException("Il prodotto già esiste all'interno del database. Per favore vendere prima questo prodotto.");
 	}
 }

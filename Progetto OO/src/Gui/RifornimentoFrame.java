@@ -91,10 +91,10 @@ public class RifornimentoFrame extends JFrame {
 		annullaButton.setBounds(39, 208, 101, 42);
 		contentPane.add(annullaButton);
 		
-		JLabel rifornimentoLabel = new JLabel("Rifornimento: ");
+		JLabel rifornimentoLabel = new JLabel("Rifornimento:");
 		rifornimentoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		rifornimentoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		rifornimentoLabel.setBounds(55, 147, 122, 17);
+		rifornimentoLabel.setBounds(55, 147, 137, 17);
 		contentPane.add(rifornimentoLabel);
 		
 		JLabel modificaQuantitaLabel = new JLabel("Modifica quantit\u00E0 per " + p.getNome());

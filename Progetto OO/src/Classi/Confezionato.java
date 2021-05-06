@@ -8,17 +8,17 @@ public class Confezionato extends Prodotto {
 	private String tipoConfezione;
 	
 	//Costruttore
-	public Confezionato(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Confezionato(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, LocalDate dataScadenza, String tipoConfezione) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.tipoConfezione = tipoConfezione;
 		this.setDataScadenza(dataScadenza);
 	}
 	
-	public Confezionato(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Confezionato(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, String dataScadenza, String tipoConfezione) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.tipoConfezione = tipoConfezione;
 		this.setDataScadenza(dataScadenza);

@@ -34,6 +34,7 @@ public class Controller {
 	private UovaDAOPostgresImpl uovaDAO;
 	private ConfezionatoDAOPostgresImpl confezionatoDAO;
 	private NuovoFornitoreFrame nuovoFornitore;
+	private VisualizzaFornitureFrame visualizzaForniture;
 	
 	
 	public Controller() {
@@ -458,7 +459,7 @@ public class Controller {
 		pIvaFornitore = pIvaFornitore.substring(0, 11);
 		if(pIvaFornitore.equals("") || prezzoFornitura == 0 || dataFornitura.equals(""))
 			JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi relativi alla fornitura", "Errore", JOptionPane.ERROR_MESSAGE);
-		else if(nomeProdotto.equals("") || paese.equals("") || quantitaNegozio == 0 || quantitaDeposito == 0 || prezzo == 0)
+		else if(nomeProdotto.equals("") || paese.equals("") || marca.equals("") || (quantitaNegozio == 0 && quantitaDeposito == 0) || prezzo == 0)
 			JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi base del prodotto", "Errore", JOptionPane.ERROR_MESSAGE);
 		else {
 			Fornitura forn = new Fornitura(quantitaNegozio + quantitaDeposito, dataFornitura, prezzoFornitura, new Fornitore(pIvaFornitore, "", "", ""));
@@ -468,10 +469,9 @@ public class Controller {
 				else {
 					//Inserire prodotto frutta o verdura
 					try {
-						Frutta f = new Frutta(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
-						Verdura v = new Verdura(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
-						if(!marca.equals(""))
-							f.setMarca(marca);
+						Frutta f = new Frutta(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
+						Verdura v = new Verdura(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, jolly1);
+						
 						
 						connection.setAutoCommit(false);
 						int idFornitura = fornituraDAO.inserisciFornitura(forn);
@@ -510,7 +510,7 @@ public class Controller {
 				else {
 					//Inserire prodotto farinaceo
 					try {
-						Farinaceo f = new Farinaceo(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
+						Farinaceo f = new Farinaceo(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
 						if(!marca.equals(""))
 							f.setMarca(marca);
 						
@@ -548,7 +548,7 @@ public class Controller {
 				else {
 					//Inserire prodotto latticino
 					try {
-						Latticino l = new Latticino(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString(), jolly2.toString());
+						Latticino l = new Latticino(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString(), jolly2.toString());
 					
 						if(!marca.equals(""))
 							l.setMarca(marca);
@@ -586,7 +586,7 @@ public class Controller {
 				else {
 					//Inserire prodotto uova
 					try {
-						Uova u = new Uova(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
+						Uova u = new Uova(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly3.toString());
 					
 						if(!marca.equals(""))
 							u.setMarca(marca);
@@ -625,7 +625,7 @@ public class Controller {
 				else {
 					//Inserire prodotto confezionato
 					try {
-						Confezionato c = new Confezionato(nomeProdotto, paese, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString());
+						Confezionato c = new Confezionato(nomeProdotto, paese, marca, quantitaNegozio, prezzo, 0, quantitaDeposito, forn, dataScadenza, jolly1.toString());
 					
 						if(!marca.equals(""))
 							c.setMarca(marca);
@@ -683,5 +683,30 @@ public class Controller {
 			
 		}
 		
+	}
+
+	public void vaiForniture(Persona p) {
+		homepage.dispose();
+		visualizzaForniture = new VisualizzaFornitureFrame(this, p);
+		visualizzaForniture.setVisible(true);
+	}
+	
+	public ArrayList<Object[]> getForniture(String dataInizio, String dataFine) {
+		try {
+			if(dataInizio.equals("") || dataFine.equals(""))
+				return fornituraDAO.getForniture();
+			else
+				return fornituraDAO.getFornitureDataInizioDataFine(dataInizio, dataFine);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		} catch (DateTimeParseException e) {
+			JOptionPane.showInternalMessageDialog(null, "Inserire delle date corrette.", "Errore", JOptionPane.ERROR_MESSAGE);
+			try {
+				return fornituraDAO.getForniture();
+			} catch (SQLException e1) {
+				return null;
+			}
+		}
 	}
 }

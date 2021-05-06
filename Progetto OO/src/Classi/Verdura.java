@@ -10,15 +10,15 @@ public class Verdura extends Prodotto {
 	private LocalDate dataRaccolta;
 	
 	//Costruttore
-	public Verdura(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Verdura(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, LocalDate dataRaccolta) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.dataRaccolta = dataRaccolta;
 	}
-	public Verdura(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Verdura(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura, String dataRaccolta) {
-		super(nome, paeseDiProvenienza, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
+		super(nome, paeseDiProvenienza, marca, quantitaNegozio, prezzoUnitario, scontoPercentuale, quantitaDeposito,
 				fornitura);
 		this.setDataRaccolta(dataRaccolta);
 	}

@@ -20,7 +20,7 @@ public class Prodotto {
 	private ArrayList<SpecificaAcquisto> specificaAcquisto;
 	
 	//Costruttore
-	public Prodotto(String nome, String paeseDiProvenienza, float quantitaNegozio, float prezzoUnitario,
+	public Prodotto(String nome, String paeseDiProvenienza, String marca, float quantitaNegozio, float prezzoUnitario,
 			int scontoPercentuale, float quantitaDeposito, Classi.Fornitura fornitura) {
 		this.setNome(nome);
 		this.setPaeseDiProvenienza(paeseDiProvenienza);
@@ -29,6 +29,7 @@ public class Prodotto {
 		this.setScontoPercentuale(scontoPercentuale);
 		this.setQuantitaDeposito(quantitaDeposito);
 		this.setFornitura(fornitura);
+		this.setMarca(marca);
 	}
 	
 	//Getter e setter

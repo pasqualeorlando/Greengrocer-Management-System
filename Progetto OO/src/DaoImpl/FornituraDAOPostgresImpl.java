@@ -5,6 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Locale;
 
 import Classi.Fornitura;
 import Dao.FornituraDAO;
@@ -38,10 +42,46 @@ public class FornituraDAOPostgresImpl implements FornituraDAO{
 		return (getMaxIdFornitura() == actualID)? 0 : getMaxIdFornitura();
 	}
 	
-	public void cancellaUltimaFornitura() throws SQLException{
-		PreparedStatement statement = connessione.prepareStatement("DELETE FROM fornitura WHERE codFornitura = (SELECT last_value FROM nCodFornitura)");
+	public ArrayList<Object[]> getFornitureDataInizioDataFine(String dataInizio, String dataFine) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM fornitura AS f LEFT JOIN prodotto AS p ON f.codFornitura = p.codFornitura WHERE datafornitura>=? AND datafornitura<=?");
+		statement.setDate(1, Date.valueOf(LocalDate.parse(dataInizio, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN))));
+		statement.setDate(2, Date.valueOf(LocalDate.parse(dataFine, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN))));
 		
-		statement.executeUpdate();
+		ResultSet risultato = statement.executeQuery();
+		ArrayList<Object[]> daRestituire = new ArrayList<Object[]>();
+		while(risultato.next()) {
+			Object[] temp = new Object[5];
+			temp[0] = risultato.getString("pIva");
+			temp[1] = risultato.getString("datafornitura");
+			temp[2] = risultato.getString("prezzofornitura");
+			temp[3] = risultato.getString("quantitafornita");
+			temp[4] = risultato.getString("nome");
+			daRestituire.add(temp);
+		}
+		
+		return daRestituire;
+	}
+	
+	public ArrayList<Object[]> getForniture() throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM fornitura AS f LEFT JOIN prodotto AS p ON f.codfornitura = p.codfornitura ORDER BY f.codFornitura");
+		
+		ResultSet risultato = statement.executeQuery();
+		ArrayList<Object[]> daRestituire = new ArrayList<Object[]>();
+		while(risultato.next()) {
+			Object[] temp = new Object[5];
+			temp[0] = risultato.getString("pIva");
+			temp[1] = risultato.getString("datafornitura");
+			temp[2] = risultato.getString("prezzofornitura");
+			temp[3] = risultato.getString("quantitafornita");
+			temp[4] = risultato.getString("nome");
+			daRestituire.add(temp);
+			/*for(Object[] p : daRestituire) {
+				System.out.println(p[0] + " " + p[1] + " " + p[2] + " " + p[3] + " " + p[4]);
+			}
+			System.out.println();*/
+		}
+		
+		return daRestituire;
 	}
 	
 }
