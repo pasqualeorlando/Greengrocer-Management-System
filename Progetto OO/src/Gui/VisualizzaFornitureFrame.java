@@ -104,8 +104,8 @@ public class VisualizzaFornitureFrame extends JFrame {
 		indietroButton.setBounds(36, 428, 101, 42);
 		contentPane.add(indietroButton);
 		
-		JButton ResetButton = new JButton("Reset");
-		ResetButton.addMouseListener(new MouseAdapter() {
+		JButton resetButton = new JButton("Reset");
+		resetButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				fornitureTab.setModel(new DefaultTableModel(
@@ -118,15 +118,15 @@ public class VisualizzaFornitureFrame extends JFrame {
 				dataFineTF.setText("");
 			}
 		});
-		ResetButton.setForeground(Color.BLACK);
-		ResetButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		ResetButton.setContentAreaFilled(false);
-		ResetButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		ResetButton.setBounds(641, 428, 101, 42);
-		contentPane.add(ResetButton);
+		resetButton.setForeground(Color.BLACK);
+		resetButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		resetButton.setContentAreaFilled(false);
+		resetButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		resetButton.setBounds(641, 428, 101, 42);
+		contentPane.add(resetButton);
 		
-		JButton btnCerca = new JButton("Cerca");
-		btnCerca.addMouseListener(new MouseAdapter() {
+		JButton cercaButton = new JButton("Cerca");
+		cercaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				fornitureTab.setModel(new DefaultTableModel(
@@ -137,12 +137,12 @@ public class VisualizzaFornitureFrame extends JFrame {
 				));
 			}
 		});
-		btnCerca.setForeground(Color.BLACK);
-		btnCerca.setFont(new Font("Georgia", Font.ITALIC, 15));
-		btnCerca.setContentAreaFilled(false);
-		btnCerca.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		btnCerca.setBounds(540, 40, 78, 24);
-		contentPane.add(btnCerca);
+		cercaButton.setForeground(Color.BLACK);
+		cercaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		cercaButton.setContentAreaFilled(false);
+		cercaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		cercaButton.setBounds(540, 40, 78, 24);
+		contentPane.add(cercaButton);
 		
 	}
 }

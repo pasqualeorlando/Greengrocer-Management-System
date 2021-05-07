@@ -1,6 +1,7 @@
 package Classi;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Acquisto {
@@ -15,7 +16,7 @@ public class Acquisto {
 	private ArrayList<SpecificaAcquisto> specificaAcquisto;
 	
 	//Costruttore
-	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato) {
+	public Acquisto(String dataOra, char cassa, int scontoPercentuale, float totale, boolean completato) {
 		setDataOra(dataOra);
 		setCassa(cassa);
 		setScontoPercentuale(scontoPercentuale);
@@ -23,7 +24,7 @@ public class Acquisto {
 		setCompletato(completato);
 	}
 	
-	public Acquisto(LocalDateTime dataOra, char cassa, int scontoPercentuale, float totale, boolean completato, String cf) {
+	public Acquisto(String dataOra, char cassa, int scontoPercentuale, float totale, boolean completato, String cf) {
 		setDataOra(dataOra);
 		setCassa(cassa);
 		setScontoPercentuale(scontoPercentuale);
@@ -36,6 +37,7 @@ public class Acquisto {
 	public LocalDateTime getDataOra() {
 		return dataOra;
 	}
+	
 	public void setDataOra(LocalDateTime dataOra) {
 		if(dataOra.isAfter(LocalDateTime.now())) {
 			System.out.println("Data e ora errati, sono stati automaticamente impostati ad oggi");
@@ -43,6 +45,10 @@ public class Acquisto {
 		}else {
 			this.dataOra = dataOra;
 		}
+	}
+	
+	public void setDataOra(String dataOra) {
+		this.dataOra = LocalDateTime.parse(dataOra, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
 	public char getCassa() {
 		return cassa;
@@ -87,7 +93,9 @@ public class Acquisto {
 		return CF;
 	}
 	public void setCF(String cF) {
-		if(cF.length()!=16) {
+		if(cF == null)
+			this.CF = null;
+		else if(cF.length()!=16) {
 			System.out.println("CF malformato, sarà impostato a null");
 			CF = null;
 		}else {

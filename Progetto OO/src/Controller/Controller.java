@@ -35,7 +35,10 @@ public class Controller {
 	private ConfezionatoDAOPostgresImpl confezionatoDAO;
 	private NuovoFornitoreFrame nuovoFornitore;
 	private VisualizzaFornitureFrame visualizzaForniture;
-	
+	private VisualizzaAcquistiFrame visualizzaAcquisti;
+	private AcquistoDAOPostgresImpl acquistoDAO;
+	private SpecificaAcquistoDAOPostgresImpl specAcquistoDAO;
+	private RicercaClientiFrame ricercaClienti;
 	
 	public Controller() {
 		
@@ -56,6 +59,8 @@ public class Controller {
             latticinoDAO = new LatticinoDAOPostgresImpl(connection);
             uovaDAO = new UovaDAOPostgresImpl(connection);
             confezionatoDAO = new ConfezionatoDAOPostgresImpl(connection);
+            acquistoDAO = new AcquistoDAOPostgresImpl(connection);
+            specAcquistoDAO = new SpecificaAcquistoDAOPostgresImpl(connection);
             login = new LoginFrame(this);
             login.setVisible(true);
         }catch(SQLException e) {
@@ -708,5 +713,48 @@ public class Controller {
 				return null;
 			}
 		}
+	}
+	
+	public void vaiAcquisti(Persona p) {
+		homepage.dispose();
+		visualizzaAcquisti = new VisualizzaAcquistiFrame(this, p);
+		visualizzaAcquisti.setVisible(true);
+	}
+
+	public ArrayList<Object[]> getAcquisti(String dataInizio, String dataFine) {
+		try {
+			if(dataInizio.equals("") || dataFine.equals(""))
+				return acquistoDAO.getAcquistiCompletati();
+			else
+				return acquistoDAO.getAcquistiDataInizioDataFineCompletati(dataInizio, dataFine);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		} catch (DateTimeParseException e) {
+			JOptionPane.showInternalMessageDialog(null, "Inserire delle date corrette.", "Errore", JOptionPane.ERROR_MESSAGE);
+			try {
+				return acquistoDAO.getAcquistiCompletati();
+			} catch (SQLException e1) {
+				return null;
+			}
+		}
+	}
+	
+	public ArrayList<Object[]> getProdottiAcquisto(String dataOra, char cassa){
+		int idAcquisto;
+		
+		try {
+			idAcquisto = acquistoDAO.getCodAcquistoDaDataOraCassa(dataOra, cassa);
+			return specAcquistoDAO.getProdottiDaIdAcquisto(idAcquisto);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public void vaiRicercaClienti(Persona p) {
+		homepage.dispose();
+		ricercaClienti = new RicercaClientiFrame(this, p);
+		ricercaClienti.setVisible(true);
 	}
 }

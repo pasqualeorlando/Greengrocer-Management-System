@@ -158,6 +158,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(prodottiButton);
 		
 		JButton ricercaClientiButton = new JButton("<html><center>Ricerca<br>Clienti</center></html>");
+		ricercaClientiButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiRicercaClienti(p);
+			}
+		});
 		ricercaClientiButton.setContentAreaFilled(false);
 		ricercaClientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/ricercaclienti.png")));
 		ricercaClientiButton.setFont(new Font("Georgia", Font.BOLD, 15));
@@ -170,6 +176,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(ricercaClientiButton);
 		
 		JButton acquistiButton = new JButton("<html><center>Visualizza<br>Acquisti</center></html>");
+		acquistiButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiAcquisti(p);
+			}
+		});
 		acquistiButton.setContentAreaFilled(false);
 		acquistiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzacquisto.png")));
 		acquistiButton.setFont(new Font("Georgia", Font.BOLD, 15));
