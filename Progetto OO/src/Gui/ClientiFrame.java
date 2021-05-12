@@ -11,7 +11,6 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Classi.CittaItaliana;
 import Classi.Persona;
 
 import javax.swing.JButton;
@@ -338,7 +337,7 @@ public class ClientiFrame extends JFrame {
 		));
 		clientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
 		clientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane.setViewportView(clientiTab);		
+		scrollPane.setViewportView(clientiTab);
 	}
 	public void setData(String[] etichetteAggiornate) {
 		CFLabel.setText("CF: " + etichetteAggiornate[0]);

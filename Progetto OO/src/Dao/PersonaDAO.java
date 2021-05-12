@@ -16,4 +16,6 @@ public interface PersonaDAO {
 	public void modificaRuolo(String nuovoRuolo, String CF) throws SQLException;
 	public void inserirePersona(Persona p) throws SQLException;
 	public ArrayList<Persona> getClienti() throws SQLException;
+	public ArrayList<Object[]> getClientiPerTipologiaProdotto() throws SQLException;
+	public ArrayList<Object[]> getClientiPerPunti() throws SQLException;
 }

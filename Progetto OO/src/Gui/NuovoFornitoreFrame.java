@@ -32,6 +32,7 @@ public class NuovoFornitoreFrame extends JFrame {
 
 	
 	public NuovoFornitoreFrame(Controller c, Persona p) {
+		setResizable(false);
 		controller = c;
 		JFrame attuale = this; 
 		

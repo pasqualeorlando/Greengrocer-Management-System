@@ -212,6 +212,12 @@ public class HomepageFrame extends JFrame {
 		contentPane.add(fornitureButton);
 		
 		JButton nuovoAcquistoButton = new JButton("<html><center>Effettua<br>Acquisto</center></html>");
+		nuovoAcquistoButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.vaiEffettuaAcquisto(p);
+			}
+		});
 		nuovoAcquistoButton.setContentAreaFilled(false);
 		nuovoAcquistoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/acquisto.png")));
 		nuovoAcquistoButton.setFont(new Font("Georgia", Font.BOLD, 15));

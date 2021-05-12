@@ -2,6 +2,7 @@ package Controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
@@ -14,17 +15,26 @@ import Classi.*;
 
 public class Controller {
 	private Connection connection;
+	
+	//Frame
 	private LoginFrame login;
 	private HomepageFrame homepage;
 	private ModificaAccountFrame modificaAccount;
 	private PersonaleFrame personale;
-	private ClientiFrame clienti;
-	private PersonaDAOPostgresImpl personaDAO;
-	private CittaItalianaDAOPostgresImpl cittaItalianaDAO;
 	private ProdottiFrame prodotti;
-	private ProdottoDAOPostgresImpl prodottoDAO;
+	private ClientiFrame clienti;
 	private RifornimentoFrame rifornimento;
 	private NuovaFornituraFrame nuovaFornitura;
+	private NuovoFornitoreFrame nuovoFornitore;
+	private VisualizzaFornitureFrame visualizzaForniture;
+	private VisualizzaAcquistiFrame visualizzaAcquisti;
+	private RicercaClientiFrame ricercaClienti;
+	private EffettuaAcquistoFrame effettuaAcquisto;
+	
+	//DAO
+	private PersonaDAOPostgresImpl personaDAO;
+	private CittaItalianaDAOPostgresImpl cittaItalianaDAO;
+	private ProdottoDAOPostgresImpl prodottoDAO;
 	private FornitoreDAOPostgresImpl fornitoreDAO;
 	private FornituraDAOPostgresImpl fornituraDAO;
 	private FruttaDAOPostgresImpl fruttaDAO;
@@ -33,12 +43,9 @@ public class Controller {
 	private LatticinoDAOPostgresImpl latticinoDAO;
 	private UovaDAOPostgresImpl uovaDAO;
 	private ConfezionatoDAOPostgresImpl confezionatoDAO;
-	private NuovoFornitoreFrame nuovoFornitore;
-	private VisualizzaFornitureFrame visualizzaForniture;
-	private VisualizzaAcquistiFrame visualizzaAcquisti;
 	private AcquistoDAOPostgresImpl acquistoDAO;
 	private SpecificaAcquistoDAOPostgresImpl specAcquistoDAO;
-	private RicercaClientiFrame ricercaClienti;
+	
 	
 	public Controller() {
 		
@@ -122,7 +129,6 @@ public class Controller {
 			System.exit(-1);
 		}
 	}
-	
 	
 	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) {
 		
@@ -756,5 +762,85 @@ public class Controller {
 		homepage.dispose();
 		ricercaClienti = new RicercaClientiFrame(this, p);
 		ricercaClienti.setVisible(true);
+	}
+	
+	public ArrayList<Object[]> getClientiPerTipologiaProdotto(){
+		try {
+			return personaDAO.getClientiPerTipologiaProdotto();
+		}catch(SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public ArrayList<Object[]> getClientiPerPunti(){
+		try {
+			return personaDAO.getClientiPerPunti();
+		}catch(SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public void vaiEffettuaAcquisto(Persona p) {
+		homepage.dispose();
+		effettuaAcquisto = new EffettuaAcquistoFrame(this, p);
+		effettuaAcquisto.setVisible(true);
+	}
+
+	public ArrayList<String> getProdottiAcquistabili(){
+		ArrayList<String> daRestituire = new ArrayList<String>();
+		for(Object[] prodotto : getProdotti()) {
+			Prodotto p = new Prodotto(prodotto[0].toString(), prodotto[1].toString(), prodotto[2].toString(), Float.valueOf(prodotto[4].toString()), Float.valueOf(prodotto[5].toString()), Integer.valueOf(prodotto[6].toString()), Float.valueOf(prodotto[7].toString()), null);
+			if(prodotto[3] != null) {
+				p.setDataScadenza(prodotto[3].toString());
+				if(p.getQuantitaNegozio() != 0 && p.getDataScadenza().isAfter(LocalDate.now()))
+					daRestituire.add(p.getNome() + " - " + p.getMarca());
+			}else {
+				if(p.getQuantitaNegozio() != 0)
+					daRestituire.add(p.getNome() + " - " + p.getMarca());
+			}
+		}
+		return daRestituire;
+	}
+	
+	public int creaAcquisto(char cassa, String cf) {
+		if(cassa == '\0') {
+			JOptionPane.showInternalMessageDialog(null, "Inserire il numero di cassa", "Errore", JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}else {
+			try {
+				int idAcquisto = acquistoDAO.inizializzaAcquisto(cassa, cf);
+				JOptionPane.showInternalMessageDialog(null, "Acquisto inserito", "Successo", JOptionPane.INFORMATION_MESSAGE);
+				return idAcquisto;
+			} catch (SQLException e) {
+				JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+				return -1;
+			}
+		}
+	}
+	
+	public ArrayList<String> getClientiPerComboBox(){
+		ArrayList<String> risultato = new ArrayList<String>();
+		
+		try {
+			for(Persona cliente : personaDAO.getClienti())
+				risultato.add(cliente.getCF() + " - " + cliente.getNome() + " " + cliente.getCognome());
+
+			return risultato;
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile prendere i clienti dal database", "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public void inserisciSpecificaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto) {
+		
+		try {
+			int idProdotto = prodottoDAO.getIdProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
+			
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

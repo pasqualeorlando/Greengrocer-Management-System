@@ -125,4 +125,48 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 		}
 		return ret;
 	}
+	
+	public ArrayList<Object[]> getClientiPerTipologiaProdotto() throws SQLException{
+		
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona AS P JOIN differenziazionecategorie AS DIFF ON DIFF.persona = P.cf");
+		ResultSet risultato = statement.executeQuery();
+		
+		ArrayList<Object[]> daRestituire = new ArrayList<Object[]>();
+		while(risultato.next()) {
+			Object[] tmp = new Object[8];
+			tmp[0] = risultato.getString("nome");
+			tmp[1] = risultato.getString("cognome");
+			tmp[2] = risultato.getString("nprodfrutta");
+			tmp[3] = risultato.getString("nprodverdura");
+			tmp[4] = risultato.getString("nprodfarinacei");
+			tmp[5] = risultato.getString("nprodlatticini");
+			tmp[6] = risultato.getString("nproduova");
+			tmp[7] = risultato.getString("nprodconfezionati");
+			
+			daRestituire.add(tmp);
+		}
+		return daRestituire;
+	}
+	
+public ArrayList<Object[]> getClientiPerPunti() throws SQLException{
+		
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona AS P JOIN differenziazionepunti AS DIFF ON DIFF.persona = P.cf");
+		ResultSet risultato = statement.executeQuery();
+		
+		ArrayList<Object[]> daRestituire = new ArrayList<Object[]>();
+		while(risultato.next()) {
+			Object[] tmp = new Object[8];
+			tmp[0] = risultato.getString("nome");
+			tmp[1] = risultato.getString("cognome");
+			tmp[2] = risultato.getString("numpuntifrutta");
+			tmp[3] = risultato.getString("numpuntiverdura");
+			tmp[4] = risultato.getString("numpuntifarinacei");
+			tmp[5] = risultato.getString("numpuntilatticini");
+			tmp[6] = risultato.getString("numpuntiuova");
+			tmp[7] = risultato.getString("numpunticonfezionati");
+			
+			daRestituire.add(tmp);
+		}
+		return daRestituire;
+	}
 }

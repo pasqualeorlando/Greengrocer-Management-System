@@ -12,4 +12,5 @@ public interface ProdottoDAO {
 	public void aggiornaQuantita(Prodotto P, double quantitaDaRifornire) throws SQLException;
 	public void inserisciProdotto(Prodotto P, String tipo, int codFornitura) throws SQLException;
 	public int getUltimoCodiceProdotto() throws SQLException;
+	public int getIdProdottoDaNomeMarca(String nome, String marca) throws SQLException;
 }

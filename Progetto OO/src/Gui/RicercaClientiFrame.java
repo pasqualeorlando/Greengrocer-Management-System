@@ -1,7 +1,5 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class RicercaClientiFrame extends JFrame {
 
@@ -52,16 +52,45 @@ public class RicercaClientiFrame extends JFrame {
 		contentPane.add(ricercaClienteLabel);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(comboBox.getSelectedItem().toString().equals("Tipologia prodotto"))
+					clientiTab.setModel(new DefaultTableModel(
+							controller.getClientiPerTipologiaProdotto().toArray(new Object[controller.getClientiPerTipologiaProdotto().size()][]),
+							new String[] {
+									"Nome", "Cognome", "Prodotti frutta", "Prodotti verdura", "Prodotti farinaceo", "Prodotti latticino", "Prodotti uova", "Prodotti confezionato"
+							}
+					));
+				else
+					clientiTab.setModel(new DefaultTableModel(
+							controller.getClientiPerPunti().toArray(new Object[controller.getClientiPerPunti().size()][]),
+							new String[] {
+									"Nome", "Cognome", "Punti frutta", "Punti verdura", "Punti farinaceo", "Punti latticino", "Punti uova", "Punti confezionato"
+							}
+					));
+			}
+		});
 		comboBox.setFont(new Font("Georgia", Font.PLAIN, 16));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tipologia prodotto", "Punti "}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tipologia prodotto", "Punti"}));
 		comboBox.setBounds(321, 25, 160, 25);
 		contentPane.add(comboBox);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(22, 72, 316, 255);
+		scrollPane.setBounds(22, 72, 620, 252);
 		contentPane.add(scrollPane);
+		
+		clientiTab = new JTable();
+		clientiTab.setModel(new DefaultTableModel(
+			controller.getClientiPerTipologiaProdotto().toArray(new Object[controller.getClientiPerTipologiaProdotto().size()][]),
+			new String[] {
+					"Nome", "Cognome", "Prodotti frutta", "Prodotti verdura", "Prodotti farinaceo", "Prodotti latticino", "Prodotti uova", "Prodotti confezionato"
+			}
+		));
+		clientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
+		clientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(clientiTab);
 		
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.addMouseListener(new MouseAdapter() {

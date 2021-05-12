@@ -116,4 +116,17 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 		else
 			throw new SQLException("Il prodotto già esiste all'interno del database. Per favore vendere prima questo prodotto.");
 	}
+	
+	public int getIdProdottoDaNomeMarca(String nome, String marca) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM prodotto WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 OR quantitadeposito <> 0)");
+		
+		statement.setString(1, nome);
+		statement.setString(2, marca);
+		ResultSet ris = statement.executeQuery();
+		if(ris.next()) {
+			return ris.getInt("codProdotto");
+		} else {
+			throw new SQLException("Prodotto non trovato");
+		}
+	}
 }
