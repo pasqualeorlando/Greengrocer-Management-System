@@ -810,7 +810,11 @@ public class Controller {
 			return -1;
 		}else {
 			try {
-				int idAcquisto = acquistoDAO.inizializzaAcquisto(cassa, cf);
+				int idAcquisto;
+				if(cf.length() != 0)
+					cf = cf.substring(0, 16);
+				
+				idAcquisto = acquistoDAO.inizializzaAcquisto(cassa, cf);
 				JOptionPane.showInternalMessageDialog(null, "Acquisto inserito", "Successo", JOptionPane.INFORMATION_MESSAGE);
 				return idAcquisto;
 			} catch (SQLException e) {
@@ -834,13 +838,70 @@ public class Controller {
 		}
 	}
 	
-	public void inserisciSpecificaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto) {
+	public void inserisciSpecificaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto, float quantitaAcquistata) {
 		
 		try {
 			int idProdotto = prodottoDAO.getIdProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
-			
+			specAcquistoDAO.inserisciSpecificaAcquisto(idAcquisto, idProdotto, quantitaAcquistata);
+			JOptionPane.showInternalMessageDialog(null, "Prodotto inserito con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	public Prodotto getProdottoDaNomeMarca(String nome, String marca) {
+		try {
+			return prodottoDAO.getProdottoDaNomeMarca(nome, marca);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public ArrayList<Object[]> getProdottiAcquistoDaCod(int idAcquisto){
+		
+		try {
+			return specAcquistoDAO.getProdottiDaIdAcquisto(idAcquisto);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+	}
+	
+	public void rimuoviProdottoDaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto) {
+		try {
+			int codProdotto = prodottoDAO.getIdProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
+			specAcquistoDAO.rimuoviProdotto(idAcquisto, codProdotto);
+			JOptionPane.showInternalMessageDialog(null, "Prodotto eliminato dalla lista", "Successo", JOptionPane.INFORMATION_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public float ricalcolaTotaleAcquisto(int idAcquisto, int scontoPercentuale) {
+		float totale = 0.0f;
+		
+		try {
+			for(Object[] p : specAcquistoDAO.getProdottiDaIdAcquisto(idAcquisto)) {
+				Prodotto prodotto = prodottoDAO.getProdottoDaNomeMarca(p[0].toString(), p[1].toString());
+				
+				totale += (prodotto.getPrezzoUnitario() * Float.parseFloat(p[2].toString())) - (prodotto.getPrezzoUnitario() * Float.parseFloat(p[2].toString()))*prodotto.getScontoPercentuale()/100;
+			}
+			acquistoDAO.impostaScontoPercentuale(idAcquisto, scontoPercentuale);
+			return totale - (totale * scontoPercentuale)/100;
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return 0.0f;
+		}
+	}
+	
+	public void impostaAcquistoCompletato(int idAcquisto) {
+		try {
+			acquistoDAO.impostaCompletato(idAcquisto);
+			JOptionPane.showInternalMessageDialog(null, "L'acquisto è andato a buon fine", "Successo", JOptionPane.INFORMATION_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 }

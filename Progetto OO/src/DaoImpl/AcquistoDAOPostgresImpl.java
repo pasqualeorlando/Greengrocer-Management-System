@@ -65,7 +65,8 @@ public class AcquistoDAOPostgresImpl implements AcquistoDAO {
 		//PreparedStatement statement = connessione.prepareStatement("SELECT * FROM acquisto WHERE dataOra=? AND cassa=? AND completato = true");
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM acquisto WHERE dataOra=? AND cassa=?");
 		statement.setTimestamp(1, Timestamp.valueOf(dataOra));
-		statement.setString(2, new Character(cassa).toString());
+		//statement.setString(2, new Character(cassa).toString());
+		statement.setString(2, String.valueOf(cassa));
 		
 		ResultSet risultato = statement.executeQuery();
 		if(risultato.next())
@@ -86,13 +87,33 @@ public class AcquistoDAOPostgresImpl implements AcquistoDAO {
 		statement.setString(2, String.valueOf(cassa));
 		statement.setInt(3, 0);
 		statement.setFloat(4, 0.0F);
-		if(cf != null || !cf.equals(""))
+		
+		if(cf == null || cf.equals(""))
+			statement.setNull(5, java.sql.Types.VARCHAR);
+		else
 			statement.setString(5, cf);
+		
 		statement.setBoolean(6, false);
 		
 		statement.executeUpdate();
 		
 		//System.out.println(dataOra.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString());
 		return getCodAcquistoDaDataOraCassa(dataOra.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString(), cassa);
+	}
+	
+	public void impostaScontoPercentuale(int idAcquisto, int scontoPercentuale) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("UPDATE acquisto SET scontopercentuale = ? WHERE codAcquisto = ?");
+		
+		statement.setInt(1, scontoPercentuale);
+		statement.setInt(2, idAcquisto);
+		
+		statement.executeUpdate();
+	}
+	
+	public void impostaCompletato(int idAcquisto) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("UPDATE acquisto SET completato = true WHERE codAcquisto = ?");
+		
+		statement.setInt(1, idAcquisto);
+		statement.executeUpdate();
 	}
 }

@@ -11,4 +11,6 @@ public interface AcquistoDAO {
 	public ArrayList<Object[]> getAcquistiCompletati() throws SQLException;
 	public int getCodAcquistoDaDataOraCassa(String dataOra, char cassa) throws SQLException;
 	public int inizializzaAcquisto(char cassa, String cf) throws SQLException;
+	public void impostaScontoPercentuale(int idAcquisto, int scontoPercentuale) throws SQLException;
+	public void impostaCompletato(int idAcquisto) throws SQLException;
 }
