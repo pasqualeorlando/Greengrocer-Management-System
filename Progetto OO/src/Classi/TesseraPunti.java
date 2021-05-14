@@ -1,6 +1,8 @@
 package Classi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TesseraPunti {
 
@@ -13,8 +15,20 @@ public class TesseraPunti {
 	private int puntiLatticini;
 	private int puntiUova;
 	private int puntiConfezionati;
-	private String CF;
 	
+	//Costruttore
+	public TesseraPunti(String codiceBarre, String scadenza, int puntiFrutta, int puntiVerdura, int puntiFarinacei,
+			int puntiLatticini, int puntiUova, int puntiConfezionati) {
+		super();
+		this.codiceBarre = codiceBarre;
+		this.setScadenza(scadenza);
+		this.puntiFrutta = puntiFrutta;
+		this.puntiVerdura = puntiVerdura;
+		this.puntiFarinacei = puntiFarinacei;
+		this.puntiLatticini = puntiLatticini;
+		this.puntiUova = puntiUova;
+		this.puntiConfezionati = puntiConfezionati;
+	}
 	//Getter e setter
 	public String getCodiceBarre() {
 		return codiceBarre;
@@ -27,6 +41,9 @@ public class TesseraPunti {
 	}
 	public void setScadenza(LocalDate scadenza) {
 		this.scadenza = scadenza;
+	}
+	public void setScadenza(String scadenza) {
+		this.scadenza = LocalDate.parse(scadenza, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
 	}
 	public int getPuntiFrutta() {
 		return puntiFrutta;
@@ -64,12 +81,4 @@ public class TesseraPunti {
 	public void setPuntiConfezionati(int puntiConfezionati) {
 		this.puntiConfezionati = puntiConfezionati;
 	}
-	public String getCF() {
-		return CF;
-	}
-	public void setCF(String cF) {
-		CF = cF;
-	}
-	
-
 }

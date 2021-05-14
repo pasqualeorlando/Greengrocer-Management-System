@@ -17,7 +17,7 @@ public class SpecificaAcquistoDAOPostgresImpl implements SpecificaAcquistoDAO {
 	}
 	
 	public ArrayList<Object[]> getProdottiDaIdAcquisto(int idAcquisto) throws SQLException{
-		PreparedStatement statement = connessione.prepareStatement("SELECT P.nome AS nome, P.marca AS marca, SA.quantitaacquistata AS quantita FROM specificaacquisto AS SA JOIN prodotto AS P ON SA.codProdotto = P.codProdotto WHERE SA.codAcquisto = ?");
+		PreparedStatement statement = connessione.prepareStatement("SELECT P.nome AS nome, P.marca AS marca, SA.quantitaacquistata AS quantita, P.prezzounitario AS prezzo FROM specificaacquisto AS SA JOIN prodotto AS P ON SA.codProdotto = P.codProdotto WHERE SA.codAcquisto = ?");
 		
 		statement.setInt(1, idAcquisto);
 		
@@ -25,10 +25,11 @@ public class SpecificaAcquistoDAOPostgresImpl implements SpecificaAcquistoDAO {
 		ArrayList<Object[]> daRestituire = new ArrayList<Object[]>();
 		
 		while(risultato.next()) {
-			Object[] temp = new Object[3];
+			Object[] temp = new Object[4];
 			temp[0] = risultato.getString("nome");
 			temp[1] = risultato.getString("marca");
 			temp[2] = risultato.getFloat("quantita");
+			temp[3] = risultato.getFloat("prezzo");
 			daRestituire.add(temp);
 		}
 		

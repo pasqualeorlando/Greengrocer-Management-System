@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import Classi.Acquisto;
 import Dao.AcquistoDAO;
 
 public class AcquistoDAOPostgresImpl implements AcquistoDAO {
@@ -115,5 +116,22 @@ public class AcquistoDAOPostgresImpl implements AcquistoDAO {
 		
 		statement.setInt(1, idAcquisto);
 		statement.executeUpdate();
+	}
+	
+	public Acquisto getAcquistoDaCod(int idAcquisto) throws SQLException{
+		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM acquisto WHERE codAcquisto = ?");
+		
+		statement.setInt(1, idAcquisto);
+		ResultSet risultato = statement.executeQuery();
+		
+		if(risultato.next()) {
+			Acquisto a = new Acquisto(risultato.getString("dataOra"), risultato.getString("cassa").charAt(0), risultato.getInt("scontopercentuale"), risultato.getFloat("totale"), risultato.getBoolean("completato"));
+			if(risultato.getString("cf") != null)
+				a.setCF(risultato.getString("cf"));
+			return a;
+		}
+		else
+			return null;
+			
 	}
 }

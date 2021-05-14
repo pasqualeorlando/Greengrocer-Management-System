@@ -151,7 +151,6 @@ public class EffettuaAcquistoFrame extends JFrame {
 				float resto = Float.parseFloat(totalePagatoSpinner.getValue().toString()) - Float.parseFloat(totaleDaPagareTF.getText());
 				if(resto<0)
 					resto = 0.0f;
-				System.out.println(resto);
 				restoDovutoTF.setText(String.format("%.2f", resto).replaceAll(",", "."));
 			}
 		});
@@ -225,6 +224,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 		completaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.impostaAcquistoCompletato(codAcquistoAttuale);
+				controller.vaiVisualizzaScontrino(p, codAcquistoAttuale, attuale);
 			}
 		});
 		completaButton.setEnabled(false);

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class Controller {
 	private VisualizzaAcquistiFrame visualizzaAcquisti;
 	private RicercaClientiFrame ricercaClienti;
 	private EffettuaAcquistoFrame effettuaAcquisto;
+	private VisualizzaScontrinoFrame visualizzaScontrino;
 	
 	//DAO
 	private PersonaDAOPostgresImpl personaDAO;
@@ -45,6 +47,7 @@ public class Controller {
 	private ConfezionatoDAOPostgresImpl confezionatoDAO;
 	private AcquistoDAOPostgresImpl acquistoDAO;
 	private SpecificaAcquistoDAOPostgresImpl specAcquistoDAO;
+	private TesseraPuntiDAOPostgresImpl tesseraPuntiDAO;
 	
 	
 	public Controller() {
@@ -68,6 +71,7 @@ public class Controller {
             confezionatoDAO = new ConfezionatoDAOPostgresImpl(connection);
             acquistoDAO = new AcquistoDAOPostgresImpl(connection);
             specAcquistoDAO = new SpecificaAcquistoDAOPostgresImpl(connection);
+            tesseraPuntiDAO = new TesseraPuntiDAOPostgresImpl(connection);
             login = new LoginFrame(this);
             login.setVisible(true);
         }catch(SQLException e) {
@@ -901,6 +905,100 @@ public class Controller {
 			JOptionPane.showInternalMessageDialog(null, "L'acquisto è andato a buon fine", "Successo", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void vaiVisualizzaScontrino(Persona p, int idAcquisto, JFrame precedente) {
+		visualizzaScontrino = new VisualizzaScontrinoFrame(this, p, idAcquisto);
+		visualizzaScontrino.setVisible(true);
+		precedente.dispose();
+	}
+	
+	public String generaScontrino(int idAcquisto) {
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			Acquisto acquisto = acquistoDAO.getAcquistoDaCod(idAcquisto);
+			sb.append("<html>"
+		            + "<style type='text/css'>"
+		            + "body, h1, th, td {"
+		            + "  font-family: Serif;"
+		            + "  font-size: 12pt;"
+		            + "}"
+		            + "h1 {"
+		            + "  font-size: 20pt;"
+		            + "}"
+		            + "table {"
+		            //+ "  border-collapse: collapse;"
+		            //+ "  border-style: none;"
+		            + "}"
+		            + "td, th {"
+		            //+ "  border: thin solid gray;"
+		            + "}"
+		            + "th {"
+		            + "  border-bottom: thin solid gray;"
+		            + "}"
+		            + ".overline td {"
+		            + "  border-top: thin solid gray;"
+		            + "}"
+		            + "</style>"
+		            + "<body>");
+		    sb.append("<center><h1>ORTOFRUTTA PER TUTTI</h1><h3>" + acquisto.getDataOra().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +"</h3><h3>Cassa: " + acquisto.getCassa() + "</h3></center><br>");
+		    sb.append("<center><h3>Via Cintia 21, Università degli studi di Napoli - 80126 Napoli</h3></center>");
+		    sb.append("<table width='420' cellspacing='0'>"
+		    		+ "<tr>"
+	                + "<th width='50%' align='left'>Prodotto</th>"
+	                + "<th width='20%' align='right'>Quantita</th>"
+	                + "<th width='30%' align='right'>Prezzo</th>"
+	                + "</tr>");
+		    for(Object[] prodotto : getProdottiAcquistoDaCod(idAcquisto)) {
+		    	sb.append("<tr>"
+                        + "<td>")
+                    .append(prodotto[0].toString())
+                    .append("</td>"
+                        + "<td align='right'>")
+                    .append(prodotto[2].toString())
+                    .append("</td>"
+                        + "<td align='right'>")
+                    .append(String.format("%.2f", Float.parseFloat(prodotto[3].toString()) * Float.parseFloat(prodotto[2].toString())))
+                    .append("</td>"
+                        + "</tr>");
+		    }
+		    sb.append("<tr class='overline'>"
+                    + "<td>&nbsp;")
+                .append("</td>"
+                    + "<td align='right'>")
+                .append("Totale")
+                .append("</td>"
+                    + "<td align='right'>")
+                .append(String.format("%.2f", acquisto.getTotale()))
+                .append("</td></tr><tr>"
+                	+ "<td>&nbsp;</td>")
+                .append("<td align='right'>Sconto</td><td align='right'>-")
+                .append(acquisto.getScontoPercentuale()+"%</td>")
+                .append("</tr><tr><td>&nbsp;</td><td align='right'>Totale calcolato</td><td align='right'>")
+                .append(String.format("%.2f", acquisto.getTotale() - (acquisto.getTotale()*acquisto.getScontoPercentuale()/100)))
+                .append("</td></tr>");
+		    sb.append("</table>");
+		    if(acquisto.getCF() != null) {
+		    	TesseraPunti tp = tesseraPuntiDAO.getTesseraPuntiDaCF(acquisto.getCF());
+		    	
+		    	sb.append("<br><hr><center><h2>Informazioni tessera punti</h2><br>Tessera n°:" + tp.getCodiceBarre() + "<br></center><table width='420' cellspacing='0'>"
+			    		+ "<tr>"
+		                + "<th width='50%' align='left'>Tipologia</th>"
+		                + "<th width='50%' align='left'>Punti</th>"
+		                + "</tr>");
+		    	sb.append("<tr><td align='left'>Punti frutta</td><td align='left'>" + tp.getPuntiFrutta() + "</td></tr>");
+		    	sb.append("<tr><td align='left'>Punti verdura</td><td align='left'>" + tp.getPuntiVerdura() + "</td></tr>");
+		    	sb.append("<tr><td align='left'>Punti farinacei</td><td align='left'>" + tp.getPuntiFarinacei() + "</td></tr>");
+		    	sb.append("<tr><td align='left'>Punti latticini</td><td align='left'>" + tp.getPuntiLatticini() + "</td></tr>");
+		    	sb.append("<tr><td align='left'>Punti uova</td><td align='left'>" + tp.getPuntiUova() + "</td></tr>");
+		    	sb.append("<tr><td align='left'>Punti confezionati</td><td align='left'>" + tp.getPuntiConfezionati() + "</td></tr>");
+		    }
+		    return sb.toString();
+		} catch(SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
 	}
 	
