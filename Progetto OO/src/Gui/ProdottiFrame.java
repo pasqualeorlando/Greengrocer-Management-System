@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class ProdottiFrame extends JFrame {
 
@@ -39,6 +40,7 @@ public class ProdottiFrame extends JFrame {
 	private JLabel quantitaDepositoLabel;
 	private JSpinner scontoSpinner;
 	private JButton rifornisciButton;
+	private JLabel fruttaLabel;
 	
 	public ProdottiFrame(Controller c, Persona p) {
 		controller = c;
@@ -50,7 +52,7 @@ public class ProdottiFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -80,7 +82,7 @@ public class ProdottiFrame extends JFrame {
 		salvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		salvaButton.setContentAreaFilled(false);
 		salvaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		salvaButton.setBounds(542, 497, 101, 42);
+		salvaButton.setBounds(427, 497, 101, 42);
 		contentPane.add(salvaButton);
 		
 		rifornisciButton = new JButton("Rifornisci");
@@ -100,7 +102,7 @@ public class ProdottiFrame extends JFrame {
 		rifornisciButton.setEnabled(false);
 		rifornisciButton.setContentAreaFilled(false);
 		rifornisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		rifornisciButton.setBounds(330, 497, 101, 42);
+		rifornisciButton.setBounds(242, 497, 101, 42);
 		contentPane.add(rifornisciButton);
 		
 		prodottiTab = new JTable();
@@ -188,6 +190,11 @@ public class ProdottiFrame extends JFrame {
 		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		annullaButton.setBounds(39, 497, 101, 42);
 		contentPane.add(annullaButton);
+		
+		fruttaLabel = new JLabel("");
+		fruttaLabel.setIcon(new ImageIcon(ProdottiFrame.class.getResource("/immagini/frutta a caso.png")));
+		fruttaLabel.setBounds(517, 417, 207, 191);
+		contentPane.add(fruttaLabel);
 		
 	}
 	

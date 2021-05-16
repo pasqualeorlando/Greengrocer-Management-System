@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.ImageIcon;
 
 public class RicercaClientiFrame extends JFrame {
 
@@ -41,7 +42,7 @@ public class RicercaClientiFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 440);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -105,6 +106,11 @@ public class RicercaClientiFrame extends JFrame {
 		indietroButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		indietroButton.setBounds(553, 348, 101, 42);
 		contentPane.add(indietroButton);
+		
+		JLabel clientiLabel = new JLabel("");
+		clientiLabel.setIcon(new ImageIcon(RicercaClientiFrame.class.getResource("/immagini/loro.png")));
+		clientiLabel.setBounds(88, 0, 101, 80);
+		contentPane.add(clientiLabel);
 		
 		
 	}

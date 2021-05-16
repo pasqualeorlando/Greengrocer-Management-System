@@ -85,6 +85,118 @@ public class Controller {
         }
 	}
 	
+	//Sezione dedicata ai metodi applicati per passare da un frame all'altro
+
+	public void exit() {    //questa funzione chiude la homepage e torna nella schermata di login 
+		homepage.dispose();
+		login.setVisible(true);
+	}
+	
+	public void vaiHomepage(JFrame framePrecedente, Persona p) {
+		homepage = new HomepageFrame(this, p);
+		homepage.setVisible(true);
+		framePrecedente.dispose();
+	}
+	
+	public void vaiModificaAccount(JFrame provenienza, Persona committente, String CFPersonaDaModificare) {
+		try {
+			Persona daModificare = personaDAO.getPersonaDaCF(CFPersonaDaModificare);
+			modificaAccount = new ModificaAccountFrame(this, daModificare, committente);
+			modificaAccount.setVisible(true);
+			provenienza.dispose();
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare la persona selezionata.\nRiavviare l'applicazione e verificare la connessione", "Errore", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
+		}
+	}
+	
+	public void vaiPersonale(Persona p) {
+		if(p.getRuolo().equals(TRuolo.Dipendente.toString())) {
+			JOptionPane.showInternalMessageDialog(null, "Questa operazione non è consentita ai dipendenti", "Accesso non consentito", JOptionPane.ERROR_MESSAGE);
+		}else {
+			homepage.dispose();
+			personale = new PersonaleFrame(this, p);
+			personale.setVisible(true);
+		}
+	}
+	
+	public void vaiClienti(Persona p) {
+		
+		homepage.dispose();
+		clienti = new ClientiFrame(this, p);
+		clienti.setVisible(true);
+	}
+	
+	public void vaiProdotti(Persona p, JFrame framePrecedente) {
+		
+		framePrecedente.dispose();
+		prodotti = new ProdottiFrame(this, p);
+		prodotti.setVisible(true);
+	}
+	
+	public void vaiRifornimento(String nomeProdotto, String marcaProdotto, Persona committente) {
+		
+		try {
+			Prodotto p = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
+			rifornimento = new RifornimentoFrame(this, p, committente);
+			rifornimento.setVisible(true);
+			prodotti.dispose();
+		} catch (SQLException e) {
+			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Prodotti nel database.\nRiavviare il programma e controllare la connessione.", "Errore", JOptionPane.ERROR_MESSAGE);
+			System.exit(-1);
+		}
+	}
+
+	public void vaiNuovoFornitore(Persona p) {
+		homepage.dispose();
+		nuovoFornitore = new NuovoFornitoreFrame(this, p);
+		nuovoFornitore.setVisible(true);
+	}
+	
+	public void vaiNuovaFornitura(Persona p) {
+		
+		homepage.dispose();
+		nuovaFornitura = new NuovaFornituraFrame(this, p);
+		nuovaFornitura.setVisible(true);
+	}
+	
+	public void vaiEffettuaAcquisto(Persona p) {
+		homepage.dispose();
+		effettuaAcquisto = new EffettuaAcquistoFrame(this, p);
+		effettuaAcquisto.setVisible(true);
+	}
+
+	public void vaiVisualizzaScontrino(Persona p, int idAcquisto, float pagato, float resto) {
+		visualizzaScontrino = new VisualizzaScontrinoFrame(this, p, idAcquisto, pagato, resto);
+		visualizzaScontrino.setVisible(true);
+		effettuaAcquisto.dispose();
+	}
+	
+	public void vaiRicercaClienti(Persona p) {
+		homepage.dispose();
+		ricercaClienti = new RicercaClientiFrame(this, p);
+		ricercaClienti.setVisible(true);
+	}
+	
+	public void vaiAcquisti(Persona p) {
+		homepage.dispose();
+		visualizzaAcquisti = new VisualizzaAcquistiFrame(this, p);
+		visualizzaAcquisti.setVisible(true);
+	}
+	
+	public void vaiForniture(Persona p) {
+		homepage.dispose();
+		visualizzaForniture = new VisualizzaFornitureFrame(this, p);
+		visualizzaForniture.setVisible(true);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public void validaCredenziali(String user, String password) {
 		
 		if(user.length() == 0 || password.length() == 0) {
@@ -104,33 +216,6 @@ public class Controller {
 				JOptionPane.showInternalMessageDialog(null, "Non è possibile eseguire l'accesso. Controllare la connessione al database", "Errore connessione", JOptionPane.ERROR_MESSAGE);
 				System.exit(-1);
 			}
-		}
-	}
-	
-	public void exit() {
-		
-		//Homepage.setVisible(false);
-		homepage.dispose();
-		login.setVisible(true);
-	}
-	
-	public void vaiHomepage(JFrame framePrecedente, Persona p) {
-		
-		homepage = new HomepageFrame(this, p);
-		homepage.setVisible(true);
-		framePrecedente.dispose();
-	}
-	
-	public void vaiModificaAccount(JFrame provenienza, Persona committente, String CFPersonaDaModificare) {
-	
-		try {
-			Persona daModificare = personaDAO.getPersonaDaCF(CFPersonaDaModificare);
-			modificaAccount = new ModificaAccountFrame(this, daModificare, committente);
-			modificaAccount.setVisible(true);
-			provenienza.dispose();
-		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Impossibile trovare la persona selezionata.\nRiavviare l'applicazione e verificare la connessione", "Errore", JOptionPane.ERROR_MESSAGE);
-			System.exit(-1);
 		}
 	}
 	
@@ -161,18 +246,7 @@ public class Controller {
 			}
 		}
 	}
-	
-	public void vaiPersonale(Persona p) {
-		
-		if(p.getRuolo().equals(TRuolo.Dipendente.toString())) {
-			JOptionPane.showInternalMessageDialog(null, "Questa operazione non è consentita ai dipendenti", "Accesso non consentito", JOptionPane.ERROR_MESSAGE);
-		}else {
-			homepage.dispose();
-			personale = new PersonaleFrame(this, p);
-			personale.setVisible(true);
-		}
-	}
-	
+
 	public Object[][] getPersonale(){
 		
 		int i = 0;
@@ -365,19 +439,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiClienti(Persona p) {
-		
-		homepage.dispose();
-		clienti = new ClientiFrame(this, p);
-		clienti.setVisible(true);
-	}
-	
-	public void vaiProdotti(Persona p, JFrame framePrecedente) {
-		
-		framePrecedente.dispose();
-		prodotti = new ProdottiFrame(this, p);
-		prodotti.setVisible(true);
-	}
+
 	
 	public Object[][] getProdotti(){
 		
@@ -420,19 +482,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiRifornimento(String nomeProdotto, String marcaProdotto, Persona committente) {
-		
-		try {
-			Prodotto p = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
-			rifornimento = new RifornimentoFrame(this, p, committente);
-			rifornimento.setVisible(true);
-			prodotti.dispose();
-		} catch (SQLException e) {
-			JOptionPane.showInternalMessageDialog(null, "Errore durante la ricerca dei Prodotti nel database.\nRiavviare il programma e controllare la connessione.", "Errore", JOptionPane.ERROR_MESSAGE);
-			System.exit(-1);
-		}
-		
-	}
+	
 	
 	public void rifornisciProdotto(Prodotto p, double quantitaDaRifornire, Persona committente) {
 		
@@ -452,12 +502,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiNuovaFornitura(Persona p) {
-		
-		homepage.dispose();
-		nuovaFornitura = new NuovaFornituraFrame(this, p);
-		nuovaFornitura.setVisible(true);
-	}
+	
 	
 	public ArrayList<String> getFornitoriPIvaNomeSocieta(){
 		
@@ -677,11 +722,7 @@ public class Controller {
 		nuovaFornitura.resetForm();
 	}
 	
-	public void vaiNuovoFornitore(Persona p) {
-		homepage.dispose();
-		nuovoFornitore = new NuovoFornitoreFrame(this, p);
-		nuovoFornitore.setVisible(true);
-	}
+	
 
 	public void inserisciFornitore(String pIva, String nomeSocieta, String nomeTitolare, String cognomeTitolare) {
 		
@@ -700,11 +741,7 @@ public class Controller {
 		
 	}
 
-	public void vaiForniture(Persona p) {
-		homepage.dispose();
-		visualizzaForniture = new VisualizzaFornitureFrame(this, p);
-		visualizzaForniture.setVisible(true);
-	}
+	
 	
 	public ArrayList<Object[]> getForniture(String dataInizio, String dataFine) {
 		try {
@@ -725,11 +762,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiAcquisti(Persona p) {
-		homepage.dispose();
-		visualizzaAcquisti = new VisualizzaAcquistiFrame(this, p);
-		visualizzaAcquisti.setVisible(true);
-	}
+	
 
 	public ArrayList<Object[]> getAcquisti(String dataInizio, String dataFine) {
 		try {
@@ -762,11 +795,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiRicercaClienti(Persona p) {
-		homepage.dispose();
-		ricercaClienti = new RicercaClientiFrame(this, p);
-		ricercaClienti.setVisible(true);
-	}
+	
 	
 	public ArrayList<Object[]> getClientiPerTipologiaProdotto(){
 		try {
@@ -786,11 +815,7 @@ public class Controller {
 		}
 	}
 	
-	public void vaiEffettuaAcquisto(Persona p) {
-		homepage.dispose();
-		effettuaAcquisto = new EffettuaAcquistoFrame(this, p);
-		effettuaAcquisto.setVisible(true);
-	}
+	
 
 	public ArrayList<String> getProdottiAcquistabili(){
 		ArrayList<String> daRestituire = new ArrayList<String>();
@@ -887,9 +912,9 @@ public class Controller {
 		
 		try {
 			for(Object[] p : specAcquistoDAO.getProdottiDaIdAcquisto(idAcquisto)) {
-				Prodotto prodotto = prodottoDAO.getProdottoDaNomeMarca(p[0].toString(), p[1].toString());
+				Prodotto prodotto = prodottoDAO.getProdottoDaNomeMarca(p[0].toString(), p[2].toString());
 				
-				totale += (prodotto.getPrezzoUnitario() * Float.parseFloat(p[2].toString())) - (prodotto.getPrezzoUnitario() * Float.parseFloat(p[2].toString()))*prodotto.getScontoPercentuale()/100;
+				totale += (prodotto.getPrezzoUnitario() * Float.parseFloat(p[1].toString())) - (prodotto.getPrezzoUnitario() * Float.parseFloat(p[1].toString()))*prodotto.getScontoPercentuale()/100;
 			}
 			acquistoDAO.impostaScontoPercentuale(idAcquisto, scontoPercentuale);
 			return totale - (totale * scontoPercentuale)/100;
@@ -899,22 +924,25 @@ public class Controller {
 		}
 	}
 	
-	public void impostaAcquistoCompletato(int idAcquisto) {
+	public boolean impostaAcquistoCompletato(int idAcquisto, float pagato, float daPagare) {
 		try {
-			acquistoDAO.impostaCompletato(idAcquisto);
-			JOptionPane.showInternalMessageDialog(null, "L'acquisto è andato a buon fine", "Successo", JOptionPane.INFORMATION_MESSAGE);
+			if(pagato < daPagare) {
+				JOptionPane.showInternalMessageDialog(null, "Il cliente non ha pagato", "Errore", JOptionPane.ERROR_MESSAGE);
+				return false;
+			} else {
+				acquistoDAO.impostaCompletato(idAcquisto);
+				JOptionPane.showInternalMessageDialog(null, "L'acquisto è andato a buon fine", "Successo", JOptionPane.INFORMATION_MESSAGE);
+				return true;
+			}
 		} catch (SQLException e) {
 			JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
-	public void vaiVisualizzaScontrino(Persona p, int idAcquisto, JFrame precedente) {
-		visualizzaScontrino = new VisualizzaScontrinoFrame(this, p, idAcquisto);
-		visualizzaScontrino.setVisible(true);
-		precedente.dispose();
-	}
 	
-	public String generaScontrino(int idAcquisto) {
+	
+	public String generaScontrino(int idAcquisto, float pagato, float resto) {
 		StringBuilder sb = new StringBuilder();
 		
 		try {
@@ -957,10 +985,10 @@ public class Controller {
                     .append(prodotto[0].toString())
                     .append("</td>"
                         + "<td align='right'>")
-                    .append(prodotto[2].toString())
+                    .append(prodotto[1].toString())
                     .append("</td>"
                         + "<td align='right'>")
-                    .append(String.format("%.2f", Float.parseFloat(prodotto[3].toString()) * Float.parseFloat(prodotto[2].toString())))
+                    .append(String.format("%.2f", Float.parseFloat(prodotto[3].toString()) * Float.parseFloat(prodotto[1].toString())))
                     .append("</td>"
                         + "</tr>");
 		    }
@@ -968,7 +996,7 @@ public class Controller {
                     + "<td>&nbsp;")
                 .append("</td>"
                     + "<td align='right'>")
-                .append("Totale")
+                .append("<b>Totale</b>")
                 .append("</td>"
                     + "<td align='right'>")
                 .append(String.format("%.2f", acquisto.getTotale()))
@@ -976,9 +1004,13 @@ public class Controller {
                 	+ "<td>&nbsp;</td>")
                 .append("<td align='right'>Sconto</td><td align='right'>-")
                 .append(acquisto.getScontoPercentuale()+"%</td>")
-                .append("</tr><tr><td>&nbsp;</td><td align='right'>Totale calcolato</td><td align='right'>")
+                .append("</tr><tr><td>&nbsp;</td><td align='right'><b>Totale calcolato</b></td><td align='right'>")
                 .append(String.format("%.2f", acquisto.getTotale() - (acquisto.getTotale()*acquisto.getScontoPercentuale()/100)))
                 .append("</td></tr>");
+		    sb.append("<tr><td>&nbsp;</td><td align='right'>Contanti</td><td align='right'>" + String.format("%.2f", pagato) + "</td></tr>");
+		    sb.append("<tr><td>&nbsp;</td><td align='right'>Resto</td><td align='right'>" + String.format("%.2f", resto) + "</td></tr>");
+
+		    
 		    sb.append("</table>");
 		    if(acquisto.getCF() != null) {
 		    	TesseraPunti tp = tesseraPuntiDAO.getTesseraPuntiDaCF(acquisto.getCF());

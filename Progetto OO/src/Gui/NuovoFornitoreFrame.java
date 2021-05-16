@@ -20,6 +20,7 @@ import Controller.Controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class NuovoFornitoreFrame extends JFrame {
 
@@ -41,7 +42,7 @@ public class NuovoFornitoreFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 400);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -127,5 +128,10 @@ public class NuovoFornitoreFrame extends JFrame {
 		inserisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		inserisciButton.setBounds(293, 271, 101, 42);
 		contentPane.add(inserisciButton);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(NuovoFornitoreFrame.class.getResource("/immagini/box.png")));
+		lblNewLabel.setBounds(306, 73, 116, 129);
+		contentPane.add(lblNewLabel);
 	}
 }

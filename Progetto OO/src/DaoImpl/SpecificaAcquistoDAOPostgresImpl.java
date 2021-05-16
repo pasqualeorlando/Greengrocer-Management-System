@@ -27,8 +27,8 @@ public class SpecificaAcquistoDAOPostgresImpl implements SpecificaAcquistoDAO {
 		while(risultato.next()) {
 			Object[] temp = new Object[4];
 			temp[0] = risultato.getString("nome");
-			temp[1] = risultato.getString("marca");
-			temp[2] = risultato.getFloat("quantita");
+			temp[1] = risultato.getFloat("quantita");
+			temp[2] = risultato.getString("marca");
 			temp[3] = risultato.getFloat("prezzo");
 			daRestituire.add(temp);
 		}

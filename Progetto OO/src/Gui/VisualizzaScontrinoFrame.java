@@ -26,7 +26,7 @@ public class VisualizzaScontrinoFrame extends JFrame {
 	private Controller controller;
 
 	
-	public VisualizzaScontrinoFrame(Controller c, Persona p, int idAcquisto) {
+	public VisualizzaScontrinoFrame(Controller c, Persona p, int idAcquisto, float pagato, float resto) {
 		controller = c;
 		JFrame attuale = this;
 		
@@ -50,7 +50,7 @@ public class VisualizzaScontrinoFrame extends JFrame {
 		textPane.setBorder(null);
 		textPane.setEditable(false);
 		textPane.setContentType("text/html");
-		textPane.setText(controller.generaScontrino(idAcquisto));
+		textPane.setText(controller.generaScontrino(idAcquisto, pagato, resto));
 		textPane.setBounds(10, 10, 426, 623);
 		JScrollPane scrollPane = new JScrollPane(textPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(null);

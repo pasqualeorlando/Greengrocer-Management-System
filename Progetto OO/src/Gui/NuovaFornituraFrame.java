@@ -26,10 +26,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class NuovaFornituraFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel fornituraPanel;
 	private JTextField dataFornituraTF;
 	private JTextField nomeProdottoTF;
 	private JTextField paeseTF;
@@ -48,6 +50,11 @@ public class NuovaFornituraFrame extends JFrame {
 	private JLabel jollyLabel2;
 	private JLabel dataScadenzaLabel;
 	private Controller controller;
+	private JLabel camionLabel;
+	private JLabel frecciaLabel;
+	private JLabel bioLabel;
+	private JLabel fruttaLabel;
+	private JLabel corniceLabel;
 
 	
 	public NuovaFornituraFrame(Controller c, Persona p) {
@@ -60,7 +67,7 @@ public class NuovaFornituraFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 828, 521);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -229,11 +236,6 @@ public class NuovaFornituraFrame extends JFrame {
 		datiProdottoLabel.setBounds(424, 10, 167, 24);
 		contentPane.add(datiProdottoLabel);
 		
-		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(338, 36, 2, 382);
-		contentPane.add(separator);
-		
 		JLabel notaLabel = new JLabel("NB: i campi contrassegnati con * sono obbligatori");
 		notaLabel.setVerticalAlignment(SwingConstants.TOP);
 		notaLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -267,7 +269,7 @@ public class NuovaFornituraFrame extends JFrame {
 		jollyLabel1.setHorizontalAlignment(SwingConstants.LEFT);
 		jollyLabel1.setForeground(Color.BLACK);
 		jollyLabel1.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		jollyLabel1.setBounds(360, 351, 179, 24);
+		jollyLabel1.setBounds(360, 357, 179, 24);
 		contentPane.add(jollyLabel1);
 		
 		jollyTF1 = new JTextField();
@@ -279,7 +281,7 @@ public class NuovaFornituraFrame extends JFrame {
 		contentPane.add(jollyTF1);
 		
 		jollyCB = new JComboBox();
-		jollyCB.setBounds(507, 352, 192, 29);
+		jollyCB.setBounds(525, 357, 192, 29);
 		jollyCB.setFont(new Font("Georgia", Font.PLAIN, 15));
 		jollyCB.setVisible(false);
 		contentPane.add(jollyCB);
@@ -354,6 +356,37 @@ public class NuovaFornituraFrame extends JFrame {
 		inserisciButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		inserisciButton.setBounds(635, 441, 101, 42);
 		contentPane.add(inserisciButton);
+		
+		fornituraPanel = new JPanel();
+		fornituraPanel.setBackground(new Color(0, 102, 0));
+		fornituraPanel.setBounds(0, 0, 341, 492);
+		contentPane.add(fornituraPanel);
+		fornituraPanel.setLayout(null);
+		
+		camionLabel = new JLabel("");
+		camionLabel.setIcon(new ImageIcon(NuovaFornituraFrame.class.getResource("/immagini/delivery-truck.png")));
+		camionLabel.setBounds(180, 239, 75, 64);
+		fornituraPanel.add(camionLabel);
+		
+		frecciaLabel = new JLabel("");
+		frecciaLabel.setIcon(new ImageIcon(NuovaFornituraFrame.class.getResource("/immagini/freccia.png")));
+		frecciaLabel.setBounds(129, 239, 41, 64);
+		fornituraPanel.add(frecciaLabel);
+		
+		bioLabel = new JLabel("");
+		bioLabel.setIcon(new ImageIcon(NuovaFornituraFrame.class.getResource("/immagini/bio.png")));
+		bioLabel.setBounds(44, 239, 75, 64);
+		fornituraPanel.add(bioLabel);
+		
+		fruttaLabel = new JLabel("");
+		fruttaLabel.setIcon(new ImageIcon(NuovaFornituraFrame.class.getResource("/immagini/fruttagirata.png")));
+		fruttaLabel.setBounds(305, 351, 179, 188);
+		contentPane.add(fruttaLabel);
+		
+		corniceLabel = new JLabel("");
+		corniceLabel.setIcon(new ImageIcon(NuovaFornituraFrame.class.getResource("/immagini/corniceuva.png")));
+		corniceLabel.setBounds(631, 0, 238, 256);
+		contentPane.add(corniceLabel);
 	}
 	
 	public void resetForm() {

@@ -37,13 +37,13 @@ public class HomepageFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(204, 204, 204));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(178, 34, 34));
+		panel.setBackground(new Color(0, 102, 0));
 		panel.setBounds(0, 0, 269, 571);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -86,7 +86,7 @@ public class HomepageFrame extends JFrame {
 		esciButton.setContentAreaFilled(false);
 		esciButton.setForeground(new Color(255, 255, 255));
 		esciButton.setFont(new Font("Georgia", Font.PLAIN, 17));
-		esciButton.setBounds(170, 520, 89, 40);
+		esciButton.setBounds(170, 464, 89, 40);
 		panel.add(esciButton);
 		
 		JButton modificaAccButton = new JButton("<html><center>Modifica<br>Account</center></html>");
@@ -100,8 +100,18 @@ public class HomepageFrame extends JFrame {
 		modificaAccButton.setFont(new Font("Georgia", Font.PLAIN, 16));
 		modificaAccButton.setContentAreaFilled(false);
 		modificaAccButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(255, 255, 255)));
-		modificaAccButton.setBounds(10, 520, 125, 40);
+		modificaAccButton.setBounds(10, 464, 125, 40);
 		panel.add(modificaAccButton);
+		
+		JLabel corniceSuLabel = new JLabel("");
+		corniceSuLabel.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/divisore1.png")));
+		corniceSuLabel.setBounds(-43, 11, 312, 74);
+		panel.add(corniceSuLabel);
+		
+		JLabel corniceGiuLabel = new JLabel("");
+		corniceGiuLabel.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/divisore1.png")));
+		corniceGiuLabel.setBounds(-43, 515, 355, 56);
+		panel.add(corniceGiuLabel);
 		
 		JButton personaleButton = new JButton("Personale");
 		personaleButton.addMouseListener(new MouseAdapter() {
@@ -113,10 +123,10 @@ public class HomepageFrame extends JFrame {
 		personaleButton.setContentAreaFilled(false);
 		personaleButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/personale.png")));
 		personaleButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		personaleButton.setForeground(new Color(178, 34, 34));
-		personaleButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
+		personaleButton.setForeground(new Color(0, 102, 0));
+		personaleButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
 		personaleButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		personaleButton.setBackground(new Color(178, 34, 34));
+		personaleButton.setBackground(new Color(0, 102, 0));
 		personaleButton.setBounds(304, 11, 135, 165);
 		personaleButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		personaleButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -131,9 +141,9 @@ public class HomepageFrame extends JFrame {
 		clientiButton.setContentAreaFilled(false);
 		clientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/clienti.png")));
 		clientiButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		clientiButton.setForeground(new Color(178, 34, 34));
-		clientiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		clientiButton.setBackground(new Color(178, 34, 34));
+		clientiButton.setForeground(new Color(0, 102, 0));
+		clientiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		clientiButton.setBackground(new Color(0, 102, 0));
 		clientiButton.setBounds(466, 11, 135, 165);
 		clientiButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		clientiButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -149,9 +159,9 @@ public class HomepageFrame extends JFrame {
 		prodottiButton.setContentAreaFilled(false);
 		prodottiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/prodotti.png")));
 		prodottiButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		prodottiButton.setForeground(new Color(178, 34, 34));
-		prodottiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		prodottiButton.setBackground(new Color(153, 51, 51));
+		prodottiButton.setForeground(new Color(0, 102, 0));
+		prodottiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		prodottiButton.setBackground(new Color(0, 102, 0));
 		prodottiButton.setBounds(626, 11, 135, 165);
 		prodottiButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		prodottiButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -167,9 +177,9 @@ public class HomepageFrame extends JFrame {
 		ricercaClientiButton.setContentAreaFilled(false);
 		ricercaClientiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/ricercaclienti.png")));
 		ricercaClientiButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		ricercaClientiButton.setForeground(new Color(178, 34, 34));
-		ricercaClientiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		ricercaClientiButton.setBackground(new Color(153, 51, 51));
+		ricercaClientiButton.setForeground(new Color(0, 102, 0));
+		ricercaClientiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		ricercaClientiButton.setBackground(new Color(0, 102, 0));
 		ricercaClientiButton.setBounds(304, 395, 135, 165);
 		ricercaClientiButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ricercaClientiButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -185,9 +195,9 @@ public class HomepageFrame extends JFrame {
 		acquistiButton.setContentAreaFilled(false);
 		acquistiButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzacquisto.png")));
 		acquistiButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		acquistiButton.setForeground(new Color(178, 34, 34));
-		acquistiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		acquistiButton.setBackground(new Color(153, 51, 51));
+		acquistiButton.setForeground(new Color(0, 102, 0));
+		acquistiButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		acquistiButton.setBackground(new Color(0, 102, 0));
 		acquistiButton.setBounds(466, 395, 135, 165);
 		acquistiButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		acquistiButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -203,9 +213,9 @@ public class HomepageFrame extends JFrame {
 		fornitureButton.setContentAreaFilled(false);
 		fornitureButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/visualizzaforniture.png")));
 		fornitureButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		fornitureButton.setForeground(new Color(178, 34, 34));
-		fornitureButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		fornitureButton.setBackground(new Color(153, 51, 51));
+		fornitureButton.setForeground(new Color(0, 102, 0));
+		fornitureButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		fornitureButton.setBackground(new Color(0, 102, 0));
 		fornitureButton.setBounds(626, 395, 135, 165);
 		fornitureButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		fornitureButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -221,9 +231,9 @@ public class HomepageFrame extends JFrame {
 		nuovoAcquistoButton.setContentAreaFilled(false);
 		nuovoAcquistoButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/acquisto.png")));
 		nuovoAcquistoButton.setFont(new Font("Georgia", Font.BOLD, 15));
-		nuovoAcquistoButton.setForeground(new Color(178, 34, 34));
-		nuovoAcquistoButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		nuovoAcquistoButton.setBackground(new Color(153, 51, 51));
+		nuovoAcquistoButton.setForeground(new Color(0, 102, 0));
+		nuovoAcquistoButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		nuovoAcquistoButton.setBackground(new Color(0, 102, 0));
 		nuovoAcquistoButton.setBounds(626, 199, 135, 165);
 		nuovoAcquistoButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		nuovoAcquistoButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -237,9 +247,9 @@ public class HomepageFrame extends JFrame {
 			}
 		});
 		nuovaFornituraButton.setContentAreaFilled(false);
-		nuovaFornituraButton.setBackground(new Color(178, 34, 34));
-		nuovaFornituraButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		nuovaFornituraButton.setForeground(new Color(178, 34, 34));
+		nuovaFornituraButton.setBackground(new Color(0, 102, 0));
+		nuovaFornituraButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		nuovaFornituraButton.setForeground(new Color(0, 102, 0));
 		nuovaFornituraButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		nuovaFornituraButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/piu.png")));
 		nuovaFornituraButton.setBounds(466, 199, 135, 165);
@@ -257,11 +267,11 @@ public class HomepageFrame extends JFrame {
 		NuovoFornitoreButton.setIcon(new ImageIcon(HomepageFrame.class.getResource("/immagini/inventario.png")));
 		NuovoFornitoreButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		NuovoFornitoreButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		NuovoFornitoreButton.setForeground(new Color(178, 34, 34));
+		NuovoFornitoreButton.setForeground(new Color(0, 102, 0));
 		NuovoFornitoreButton.setFont(new Font("Georgia", Font.BOLD, 15));
 		NuovoFornitoreButton.setContentAreaFilled(false);
-		NuovoFornitoreButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(178, 34, 34)));
-		NuovoFornitoreButton.setBackground(new Color(178, 34, 34));
+		NuovoFornitoreButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 102, 0)));
+		NuovoFornitoreButton.setBackground(new Color(0, 102, 0));
 		NuovoFornitoreButton.setBounds(304, 199, 135, 165);
 		contentPane.add(NuovoFornitoreButton);
 	}

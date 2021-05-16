@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.ImageIcon;
 
 public class EffettuaAcquistoFrame extends JFrame {
 
@@ -59,9 +60,9 @@ public class EffettuaAcquistoFrame extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(EffettuaAcquistoFrame.class.getResource("/immagini/fruits.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 562);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -82,7 +83,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 		prodottiAcquistatiTab.setModel(new DefaultTableModel(
 			null,
 			new String[] {
-					"Nome prodotto", "Marca", "Quantità"
+					"Nome prodotto", "Quantità", "Marca"
 			}
 		));
 		prodottiAcquistatiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
@@ -102,7 +103,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 		
 		JLabel prodottoLabel = new JLabel("Prodotto:");
 		prodottoLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		prodottoLabel.setBounds(385, 226, 80, 18);
+		prodottoLabel.setBounds(383, 246, 80, 18);
 		contentPane.add(prodottoLabel);
 		
 		JComboBox prodottoCB = new JComboBox(controller.getProdottiAcquistabili().toArray());
@@ -116,17 +117,13 @@ public class EffettuaAcquistoFrame extends JFrame {
 		});
 		prodottoCB.setFont(new Font("Georgia", Font.PLAIN, 12));
 		prodottoCB.setEnabled(false);
-		prodottoCB.setBounds(464, 224, 258, 21);
+		prodottoCB.setBounds(462, 244, 258, 21);
 		contentPane.add(prodottoCB);
 		
 		JLabel quantitaLabel = new JLabel("Quantit\u00E0:");
 		quantitaLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		quantitaLabel.setBounds(385, 254, 80, 18);
+		quantitaLabel.setBounds(383, 274, 80, 18);
 		contentPane.add(quantitaLabel);
-		
-		JSeparator separatorOrizzontale = new JSeparator();
-		separatorOrizzontale.setBounds(373, 322, 425, 2);
-		contentPane.add(separatorOrizzontale);
 		
 		JButton aggiungiProdottoButton = new JButton("Aggiungi prodotto");
 		aggiungiProdottoButton.addActionListener(new ActionListener() {
@@ -140,7 +137,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 				prodottiAcquistatiTab.setModel(new DefaultTableModel(
 						controller.getProdottiAcquistoDaCod(codAcquistoAttuale).toArray(new Object[controller.getProdottiAcquistoDaCod(codAcquistoAttuale).size()][]),
 						new String[] {
-								"Nome prodotto", "Marca", "Quantità"
+								"Nome prodotto", "Quantità", "Marca"
 						}
 				));
 				
@@ -159,24 +156,19 @@ public class EffettuaAcquistoFrame extends JFrame {
 		aggiungiProdottoButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		aggiungiProdottoButton.setContentAreaFilled(false);
 		aggiungiProdottoButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		aggiungiProdottoButton.setBounds(639, 280, 147, 32);
+		aggiungiProdottoButton.setBounds(637, 300, 147, 32);
 		contentPane.add(aggiungiProdottoButton);
 		
 		quantitaSpinner = new JSpinner();
 		quantitaSpinner.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(0.01)));
 		quantitaSpinner.setEnabled(false);
 		quantitaSpinner.setFont(new Font("Georgia", Font.PLAIN, 15));
-		quantitaSpinner.setBounds(464, 253, 80, 21);
+		quantitaSpinner.setBounds(462, 273, 80, 21);
 		contentPane.add(quantitaSpinner);
 		
-		JSeparator separatorVerticale = new JSeparator();
-		separatorVerticale.setOrientation(SwingConstants.VERTICAL);
-		separatorVerticale.setBounds(373, 0, 2, 533);
-		contentPane.add(separatorVerticale);
-		
 		JLabel aggiuntaProdottiLabel = new JLabel("Sezione aggiunta prodotti");
-		aggiuntaProdottiLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		aggiuntaProdottiLabel.setBounds(489, 193, 202, 21);
+		aggiuntaProdottiLabel.setFont(new Font("Georgia", Font.ITALIC, 17));
+		aggiuntaProdottiLabel.setBounds(487, 213, 202, 21);
 		contentPane.add(aggiuntaProdottiLabel);
 		
 		JLabel selezioneClienteLabel = new JLabel("*Selezione cliente:");
@@ -193,38 +185,38 @@ public class EffettuaAcquistoFrame extends JFrame {
 		
 		JLabel totaleDaPagareLabel = new JLabel("Totale da pagare:");
 		totaleDaPagareLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		totaleDaPagareLabel.setBounds(387, 396, 137, 21);
+		totaleDaPagareLabel.setBounds(389, 434, 137, 21);
 		contentPane.add(totaleDaPagareLabel);
 		
 		totaleDaPagareTF = new JTextField("0.00");
 		totaleDaPagareTF.setEditable(false);
 		totaleDaPagareTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		totaleDaPagareTF.setColumns(10);
-		totaleDaPagareTF.setBounds(544, 398, 161, 21);
+		totaleDaPagareTF.setBounds(546, 436, 161, 21);
 		contentPane.add(totaleDaPagareTF);
 		
 		JLabel totalePagatoLabel = new JLabel("Totale pagato:");
 		totalePagatoLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		totalePagatoLabel.setBounds(387, 427, 137, 21);
+		totalePagatoLabel.setBounds(389, 465, 137, 21);
 		contentPane.add(totalePagatoLabel);
 		
 		JLabel restoDovutoLabel = new JLabel("Resto dovuto:");
 		restoDovutoLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		restoDovutoLabel.setBounds(387, 458, 137, 21);
+		restoDovutoLabel.setBounds(389, 496, 137, 21);
 		contentPane.add(restoDovutoLabel);
 		
 		restoDovutoTF = new JTextField();
 		restoDovutoTF.setFont(new Font("Georgia", Font.PLAIN, 15));
 		restoDovutoTF.setEditable(false);
 		restoDovutoTF.setColumns(10);
-		restoDovutoTF.setBounds(544, 459, 161, 21);
+		restoDovutoTF.setBounds(546, 497, 161, 21);
 		contentPane.add(restoDovutoTF);
 		
 		completaButton = new JButton("Completa");
 		completaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.impostaAcquistoCompletato(codAcquistoAttuale);
-				controller.vaiVisualizzaScontrino(p, codAcquistoAttuale, attuale);
+				if(controller.impostaAcquistoCompletato(codAcquistoAttuale, Float.parseFloat(totalePagatoSpinner.getValue().toString()), Float.parseFloat(totaleDaPagareTF.getText())))
+					controller.vaiVisualizzaScontrino(p, codAcquistoAttuale, Float.parseFloat(totalePagatoSpinner.getValue().toString()), Float.parseFloat(restoDovutoTF.getText()));
 			}
 		});
 		completaButton.setEnabled(false);
@@ -232,7 +224,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 		completaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		completaButton.setContentAreaFilled(false);
 		completaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		completaButton.setBounds(674, 490, 110, 32);
+		completaButton.setBounds(676, 528, 110, 32);
 		contentPane.add(completaButton);
 		
 		JButton annullaButton = new JButton("Annulla");
@@ -246,12 +238,12 @@ public class EffettuaAcquistoFrame extends JFrame {
 		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		annullaButton.setContentAreaFilled(false);
 		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		annullaButton.setBounds(383, 490, 110, 32);
+		annullaButton.setBounds(385, 528, 110, 32);
 		contentPane.add(annullaButton);
 		
 		JLabel generalitaAcquistoLabel = new JLabel("Sezione generalit\u00E0 acquisto");
-		generalitaAcquistoLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		generalitaAcquistoLabel.setBounds(489, 335, 212, 21);
+		generalitaAcquistoLabel.setFont(new Font("Georgia", Font.ITALIC, 17));
+		generalitaAcquistoLabel.setBounds(491, 373, 212, 21);
 		contentPane.add(generalitaAcquistoLabel);
 		
 		JLabel infoLabel = new JLabel("* selezionare solo se il cliente possiede la tessera punti");
@@ -264,53 +256,10 @@ public class EffettuaAcquistoFrame extends JFrame {
 		riepilogoAcquistoLabel.setBounds(76, 10, 231, 21);
 		contentPane.add(riepilogoAcquistoLabel);
 		
-		rimuoviButton = new JButton("Rimuovi");
-		rimuoviButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nomeProdotto = prodottiAcquistatiTab.getValueAt(prodottiAcquistatiTab.getSelectedRow(), 0).toString();
-				String marcaProdotto = prodottiAcquistatiTab.getValueAt(prodottiAcquistatiTab.getSelectedRow(), 1).toString();
-				controller.rimuoviProdottoDaAcquisto(codAcquistoAttuale, nomeProdotto, marcaProdotto);
-				rimuoviButton.setEnabled(false);
-				
-				prodottiAcquistatiTab.setModel(new DefaultTableModel(
-						controller.getProdottiAcquistoDaCod(codAcquistoAttuale).toArray(new Object[controller.getProdottiAcquistoDaCod(codAcquistoAttuale).size()][]),
-						new String[] {
-								"Nome prodotto", "Marca", "Quantità"
-						}
-				));
-				
-				totaleDaPagareTF.setText(String.format("%.2f", controller.ricalcolaTotaleAcquisto(codAcquistoAttuale, Integer.parseInt(scontoSpinner.getValue().toString()))).replaceAll(",", "."));
-				float resto = Float.parseFloat(totalePagatoSpinner.getValue().toString())  - Float.parseFloat(totaleDaPagareTF.getText());
-				if(resto<0)
-					resto = 0;
-				restoDovutoTF.setText(String.format("%.2f", resto).replaceAll(",", "."));
-				if(prodottiAcquistatiTab.getRowCount() == 0) {
-					completaButton.setEnabled(false);
-					totalePagatoSpinner.setEnabled(false);
-					totalePagatoSpinner.setValue(Float.parseFloat("0.00"));
-					restoDovutoTF.setText("");
-					scontoSpinner.setEnabled(false);
-					scontoSpinner.setValue(Integer.parseInt("0"));
-				}
-					
-			}
-		});
-		rimuoviButton.setEnabled(false);
-		rimuoviButton.setForeground(Color.BLACK);
-		rimuoviButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		rimuoviButton.setContentAreaFilled(false);
-		rimuoviButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		rimuoviButton.setBounds(10, 490, 110, 32);
-		contentPane.add(rimuoviButton);
-		
 		JLabel creazioneAcquistoLabel = new JLabel("Sezione creazione acquisto");
-		creazioneAcquistoLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		creazioneAcquistoLabel.setBounds(487, 10, 202, 21);
+		creazioneAcquistoLabel.setFont(new Font("Georgia", Font.ITALIC, 17));
+		creazioneAcquistoLabel.setBounds(487, 10, 218, 21);
 		contentPane.add(creazioneAcquistoLabel);
-		
-		JSeparator separatorOrizzontale2 = new JSeparator();
-		separatorOrizzontale2.setBounds(373, 180, 425, 2);
-		contentPane.add(separatorOrizzontale2);
 		
 		JButton creaAcquistoButton = new JButton("Crea acquisto");
 		creaAcquistoButton.addMouseListener(new MouseAdapter() {
@@ -362,12 +311,12 @@ public class EffettuaAcquistoFrame extends JFrame {
 		totalePagatoSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0.01)));
 		totalePagatoSpinner.setFont(new Font("Georgia", Font.PLAIN, 15));
 		totalePagatoSpinner.setEnabled(false);
-		totalePagatoSpinner.setBounds(544, 428, 161, 23);
+		totalePagatoSpinner.setBounds(546, 466, 161, 23);
 		contentPane.add(totalePagatoSpinner);
 		
 		JLabel scontoPercentualeLabel = new JLabel("Sconto sul totale(%):");
 		scontoPercentualeLabel.setFont(new Font("Georgia", Font.PLAIN, 17));
-		scontoPercentualeLabel.setBounds(387, 367, 157, 21);
+		scontoPercentualeLabel.setBounds(389, 405, 157, 21);
 		contentPane.add(scontoPercentualeLabel);
 		
 		scontoSpinner = new JSpinner();
@@ -386,8 +335,68 @@ public class EffettuaAcquistoFrame extends JFrame {
 		scontoSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		scontoSpinner.setFont(new Font("Georgia", Font.PLAIN, 15));
 		scontoSpinner.setEnabled(false);
-		scontoSpinner.setBounds(544, 367, 161, 23);
+		scontoSpinner.setBounds(546, 405, 161, 23);
 		contentPane.add(scontoSpinner);
+		
+		JPanel riepilogoPanel = new JPanel();
+		riepilogoPanel.setBackground(new Color(0, 102, 0));
+		riepilogoPanel.setBounds(0, 0, 375, 635);
+		contentPane.add(riepilogoPanel);
+		riepilogoPanel.setLayout(null);
+		
+		JLabel fruttaLabel = new JLabel("");
+		fruttaLabel.setIcon(new ImageIcon(EffettuaAcquistoFrame.class.getResource("/immagini/ortaggi.png")));
+		fruttaLabel.setBounds(137, 444, 284, 180);
+		riepilogoPanel.add(fruttaLabel);
+		
+		rimuoviButton = new JButton("Rimuovi");
+		rimuoviButton.setBounds(10, 526, 110, 32);
+		riepilogoPanel.add(rimuoviButton);
+		rimuoviButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nomeProdotto = prodottiAcquistatiTab.getValueAt(prodottiAcquistatiTab.getSelectedRow(), 0).toString();
+				String marcaProdotto = prodottiAcquistatiTab.getValueAt(prodottiAcquistatiTab.getSelectedRow(), 2).toString();
+				controller.rimuoviProdottoDaAcquisto(codAcquistoAttuale, nomeProdotto, marcaProdotto);
+				rimuoviButton.setEnabled(false);
+				
+				prodottiAcquistatiTab.setModel(new DefaultTableModel(
+						controller.getProdottiAcquistoDaCod(codAcquistoAttuale).toArray(new Object[controller.getProdottiAcquistoDaCod(codAcquistoAttuale).size()][]),
+						new String[] {
+								"Nome prodotto", "Quantità", "Marca"
+						}
+				));
+				
+				totaleDaPagareTF.setText(String.format("%.2f", controller.ricalcolaTotaleAcquisto(codAcquistoAttuale, Integer.parseInt(scontoSpinner.getValue().toString()))).replaceAll(",", "."));
+				float resto = Float.parseFloat(totalePagatoSpinner.getValue().toString())  - Float.parseFloat(totaleDaPagareTF.getText());
+				if(resto<0)
+					resto = 0;
+				restoDovutoTF.setText(String.format("%.2f", resto).replaceAll(",", "."));
+				if(prodottiAcquistatiTab.getRowCount() == 0) {
+					completaButton.setEnabled(false);
+					totalePagatoSpinner.setEnabled(false);
+					totalePagatoSpinner.setValue(Float.parseFloat("0.00"));
+					restoDovutoTF.setText("");
+					scontoSpinner.setEnabled(false);
+					scontoSpinner.setValue(Integer.parseInt("0"));
+				}
+					
+			}
+		});
+		rimuoviButton.setEnabled(false);
+		rimuoviButton.setForeground(Color.BLACK);
+		rimuoviButton.setFont(new Font("Georgia", Font.ITALIC, 15));
+		rimuoviButton.setContentAreaFilled(false);
+		rimuoviButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
+		
+		JLabel divisore1Label = new JLabel("");
+		divisore1Label.setIcon(new ImageIcon(EffettuaAcquistoFrame.class.getResource("/immagini/dividerfruttares.png")));
+		divisore1Label.setBounds(440, 163, 314, 72);
+		contentPane.add(divisore1Label);
+		
+		JLabel divisore1Label_1 = new JLabel("");
+		divisore1Label_1.setIcon(new ImageIcon(EffettuaAcquistoFrame.class.getResource("/immagini/dividerfruttares.png")));
+		divisore1Label_1.setBounds(440, 322, 314, 72);
+		contentPane.add(divisore1Label_1);
 	}
 }
 

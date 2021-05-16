@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.ImageIcon;
 
 public class ClientiFrame extends JFrame {
 
@@ -41,6 +42,9 @@ public class ClientiFrame extends JFrame {
 	private JComboBox nuovoSessoCB, nuovaProvinciaCB, nuovaCittaCB;
 	private JButton annullaButton, eliminaButton;
 	private JButton modificaMailButton;
+	private JLabel venditoreLabel;
+	private JLabel mangoLabel;
+	private JLabel melaLabel;
 	
 	public ClientiFrame(Controller c, Persona p) {
 		controller = c;
@@ -52,13 +56,14 @@ public class ClientiFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel inserimentoClientiPanel = new JPanel();
-		inserimentoClientiPanel.setBackground(new Color(255, 255, 255));
+		inserimentoClientiPanel.setForeground(new Color(0, 0, 0));
+		inserimentoClientiPanel.setBackground(new Color(204, 153, 0));
 		inserimentoClientiPanel.setBounds(10, 286, 400, 274);
 		contentPane.add(inserimentoClientiPanel);
 		inserimentoClientiPanel.setLayout(null);
@@ -69,15 +74,15 @@ public class ClientiFrame extends JFrame {
 				resetForm();
 			}
 		});
-		resetButton.setForeground(new Color(255, 255, 255));
+		resetButton.setForeground(new Color(0, 0, 0));
 		resetButton.setBorderPainted(false);
-		resetButton.setBackground(new Color(165, 42, 42));
+		resetButton.setBackground(new Color(204, 204, 102));
 		resetButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		resetButton.setBounds(28, 236, 102, 27);
 		inserimentoClientiPanel.add(resetButton);
 		
 		JButton inserisciButton = new JButton("Inserisci");
-		inserisciButton.setForeground(new Color(255, 255, 255));
+		inserisciButton.setForeground(new Color(0, 0, 0));
 		inserisciButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				boolean inserito = controller.inserisciPersona(nuovoNomeTF.getText().toUpperCase(), nuovoCognomeTF.getText().toUpperCase(), 
@@ -98,11 +103,12 @@ public class ClientiFrame extends JFrame {
 		});
 		inserisciButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		inserisciButton.setBorderPainted(false);
-		inserisciButton.setBackground(new Color(165, 42, 42));
+		inserisciButton.setBackground(new Color(204, 204, 102));
 		inserisciButton.setBounds(261, 236, 102, 27);
 		inserimentoClientiPanel.add(inserisciButton);
 		
 		JLabel nuovoClienteLabel = new JLabel("Inserimento nuovo cliente");
+		nuovoClienteLabel.setBackground(new Color(204, 102, 51));
 		nuovoClienteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nuovoClienteLabel.setFont(new Font("Georgia", Font.BOLD, 14));
 		nuovoClienteLabel.setIcon(null);
@@ -238,7 +244,7 @@ public class ClientiFrame extends JFrame {
 					clientiTab.setRowSelectionInterval(riga, riga);
 			}
 		});
-		eliminaButton.setForeground(Color.BLACK);
+		eliminaButton.setForeground(new Color(0, 0, 0));
 		eliminaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		eliminaButton.setContentAreaFilled(false);
 		eliminaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
@@ -246,56 +252,56 @@ public class ClientiFrame extends JFrame {
 		contentPane.add(eliminaButton);
 		
 		CFLabel = new JLabel("CF:");
-		CFLabel.setForeground(Color.WHITE);
+		CFLabel.setForeground(new Color(0, 0, 0));
 		CFLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		CFLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		CFLabel.setBounds(434, 57, 350, 23);
 		contentPane.add(CFLabel);
 		
 		nomeLabel = new JLabel("Nome:");
-		nomeLabel.setForeground(Color.WHITE);
+		nomeLabel.setForeground(new Color(0, 0, 0));
 		nomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		nomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		nomeLabel.setBounds(434, 90, 350, 26);
 		contentPane.add(nomeLabel);
 		
 		cognomeLabel = new JLabel("Cognome:");
-		cognomeLabel.setForeground(Color.WHITE);
+		cognomeLabel.setForeground(new Color(0, 0, 0));
 		cognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		cognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		cognomeLabel.setBounds(434, 126, 350, 26);
 		contentPane.add(cognomeLabel);
 		
 		dataNascitaLabel = new JLabel("DataNascita:");
-		dataNascitaLabel.setForeground(Color.WHITE);
+		dataNascitaLabel.setForeground(new Color(0, 0, 0));
 		dataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		dataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		dataNascitaLabel.setBounds(434, 162, 350, 25);
 		contentPane.add(dataNascitaLabel);
 		
 		emailLabel = new JLabel("Email:");
-		emailLabel.setForeground(Color.WHITE);
+		emailLabel.setForeground(new Color(0, 0, 0));
 		emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		emailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		emailLabel.setBounds(434, 314, 350, 26);
 		contentPane.add(emailLabel);
 		
 		sessoLabel = new JLabel("Sesso:");
-		sessoLabel.setForeground(Color.WHITE);
+		sessoLabel.setForeground(new Color(0, 0, 0));
 		sessoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		sessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		sessoLabel.setBounds(434, 198, 350, 26);
 		contentPane.add(sessoLabel);
 		
 		cittaLabel = new JLabel("Citt\u00E0:");
-		cittaLabel.setForeground(Color.WHITE);
+		cittaLabel.setForeground(new Color(0, 0, 0));
 		cittaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		cittaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		cittaLabel.setBounds(434, 235, 350, 27);
 		contentPane.add(cittaLabel);
 		
 		provinciaLabel = new JLabel("Provincia:");
-		provinciaLabel.setForeground(Color.WHITE);
+		provinciaLabel.setForeground(new Color(0, 0, 0));
 		provinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		provinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		provinciaLabel.setBounds(434, 273, 350, 31);
@@ -313,7 +319,7 @@ public class ClientiFrame extends JFrame {
 				controller.vaiModificaAccount(attuale, p, clientiTab.getValueAt(clientiTab.getSelectedRow(), 0).toString());
 			}
 		});
-		modificaMailButton.setForeground(Color.BLACK);
+		modificaMailButton.setForeground(new Color(0, 0, 0));
 		modificaMailButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		modificaMailButton.setEnabled(false);
 		modificaMailButton.setContentAreaFilled(false);
@@ -338,6 +344,21 @@ public class ClientiFrame extends JFrame {
 		clientiTab.setDefaultEditor(Object.class, null);			//permette di non modificare le celle nella tabella
 		clientiTab.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(clientiTab);
+		
+		venditoreLabel = new JLabel("");
+		venditoreLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/delivery-courier.png")));
+		venditoreLabel.setBounds(567, 412, 67, 72);
+		contentPane.add(venditoreLabel);
+		
+		mangoLabel = new JLabel("");
+		mangoLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/mango.png")));
+		mangoLabel.setBounds(475, 432, 46, 52);
+		contentPane.add(mangoLabel);
+		
+		melaLabel = new JLabel("");
+		melaLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/mela.png")));
+		melaLabel.setBounds(683, 432, 46, 52);
+		contentPane.add(melaLabel);
 	}
 	public void setData(String[] etichetteAggiornate) {
 		CFLabel.setText("CF: " + etichetteAggiornate[0]);

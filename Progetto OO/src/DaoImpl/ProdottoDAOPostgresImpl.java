@@ -60,8 +60,11 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 			try {
 				prod.setDataScadenza(ris.getDate("datascadenza").toLocalDate());
 			}catch(NullPointerException e) {
-				//prod.setDataScadenza(null);
+				//prod.setDataScadenza("");
 			}
+			
+			/*if(ris.getDate("datascadenza") != null)
+				prod.setDataScadenza(ris.getDate("datascadenza").toLocalDate());*/
 			return prod;
 		}
 		return null;

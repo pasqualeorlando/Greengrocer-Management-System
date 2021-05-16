@@ -22,6 +22,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
+import javax.swing.ImageIcon;
 
 public class VisualizzaFornitureFrame extends JFrame {
 
@@ -31,6 +32,7 @@ public class VisualizzaFornitureFrame extends JFrame {
 	private JTextField dataInizioTF;
 	private JTextField dataFineTF;
 	private JButton indietroButton;
+	private JLabel divisoreLabel;
 	
 	public VisualizzaFornitureFrame(Controller c, Persona p) {
 		controller = c;
@@ -43,7 +45,7 @@ public class VisualizzaFornitureFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 782, 519);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(165, 42, 42));
+		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -143,6 +145,11 @@ public class VisualizzaFornitureFrame extends JFrame {
 		cercaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		cercaButton.setBounds(540, 40, 78, 24);
 		contentPane.add(cercaButton);
+		
+		divisoreLabel = new JLabel("");
+		divisoreLabel.setIcon(new ImageIcon(VisualizzaFornitureFrame.class.getResource("/immagini/divisore3.png")));
+		divisoreLabel.setBounds(138, 428, 511, 48);
+		contentPane.add(divisoreLabel);
 		
 	}
 }
