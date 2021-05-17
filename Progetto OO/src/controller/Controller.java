@@ -418,7 +418,20 @@ public class Controller {
 		}
 		
 	public void inserisciProdotto(String pIvaFornitore, float prezzoFornitura, String dataFornitura, String tipoProdotto, String nomeProdotto, String dataScadenza, String marca, String paese, float quantitaNegozio, float quantitaDeposito, float prezzo, String jolly1, String jolly2, Object jolly3) {
-			//inserisce un prodotto 
+			//inserisce un prodotto
+			
+			//controllo prima che il prodotto non sia già presente
+			try {
+				Prodotto P = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marca);
+				if(P != null && (P.getQuantitaDeposito() != 0 || P.getQuantitaNegozio() != 0)) {
+					JOptionPane.showInternalMessageDialog(null, "Il prodotto già esiste all'interno del database. Per favore vendere prima questo prodotto.", "Errore", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			} catch (SQLException e) {
+				JOptionPane.showInternalMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
 			pIvaFornitore = pIvaFornitore.substring(0, 11);
 			if(pIvaFornitore.equals("") || prezzoFornitura == 0 || dataFornitura.equals(""))
 				JOptionPane.showInternalMessageDialog(null, "Compilare tutti i campi relativi alla fornitura", "Errore", JOptionPane.ERROR_MESSAGE);
