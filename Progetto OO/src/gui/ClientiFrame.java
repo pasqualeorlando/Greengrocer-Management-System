@@ -30,6 +30,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ClientiFrame extends JFrame {
 
@@ -58,13 +60,10 @@ public class ClientiFrame extends JFrame {
 		contentPane.setBackground(new Color(204, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JPanel inserimentoClientiPanel = new JPanel();
 		inserimentoClientiPanel.setForeground(new Color(0, 0, 0));
 		inserimentoClientiPanel.setBackground(new Color(204, 153, 0));
-		inserimentoClientiPanel.setBounds(10, 286, 400, 274);
-		contentPane.add(inserimentoClientiPanel);
 		inserimentoClientiPanel.setLayout(null);
 		
 		JButton resetButton = new JButton("Reset");
@@ -220,8 +219,6 @@ public class ClientiFrame extends JFrame {
 		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
 		annullaButton.setContentAreaFilled(false);
 		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
-		annullaButton.setBounds(420, 518, 101, 42);
-		contentPane.add(annullaButton);
 		
 		eliminaButton = new JButton("Elimina");
 		eliminaButton.setEnabled(false);
@@ -247,70 +244,50 @@ public class ClientiFrame extends JFrame {
 		eliminaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		eliminaButton.setContentAreaFilled(false);
 		eliminaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		eliminaButton.setBounds(683, 518, 101, 42);
-		contentPane.add(eliminaButton);
 		
 		CFLabel = new JLabel("CF:");
 		CFLabel.setForeground(new Color(0, 0, 0));
 		CFLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		CFLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		CFLabel.setBounds(434, 57, 350, 23);
-		contentPane.add(CFLabel);
 		
 		nomeLabel = new JLabel("Nome:");
 		nomeLabel.setForeground(new Color(0, 0, 0));
 		nomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		nomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		nomeLabel.setBounds(434, 90, 350, 26);
-		contentPane.add(nomeLabel);
 		
 		cognomeLabel = new JLabel("Cognome:");
 		cognomeLabel.setForeground(new Color(0, 0, 0));
 		cognomeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		cognomeLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		cognomeLabel.setBounds(434, 126, 350, 26);
-		contentPane.add(cognomeLabel);
 		
 		dataNascitaLabel = new JLabel("DataNascita:");
 		dataNascitaLabel.setForeground(new Color(0, 0, 0));
 		dataNascitaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		dataNascitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		dataNascitaLabel.setBounds(434, 162, 350, 25);
-		contentPane.add(dataNascitaLabel);
 		
 		emailLabel = new JLabel("Email:");
 		emailLabel.setForeground(new Color(0, 0, 0));
 		emailLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		emailLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		emailLabel.setBounds(434, 314, 350, 26);
-		contentPane.add(emailLabel);
 		
 		sessoLabel = new JLabel("Sesso:");
 		sessoLabel.setForeground(new Color(0, 0, 0));
 		sessoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		sessoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		sessoLabel.setBounds(434, 198, 350, 26);
-		contentPane.add(sessoLabel);
 		
 		cittaLabel = new JLabel("Citt\u00E0:");
 		cittaLabel.setForeground(new Color(0, 0, 0));
 		cittaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		cittaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		cittaLabel.setBounds(434, 235, 350, 27);
-		contentPane.add(cittaLabel);
 		
 		provinciaLabel = new JLabel("Provincia:");
 		provinciaLabel.setForeground(new Color(0, 0, 0));
 		provinciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		provinciaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
-		provinciaLabel.setBounds(434, 273, 350, 31);
-		contentPane.add(provinciaLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 10, 400, 266);
-		contentPane.add(scrollPane);
 		
 		modificaMailButton = new JButton("Modifica");
 		modificaMailButton.addActionListener(new ActionListener() {
@@ -323,8 +300,6 @@ public class ClientiFrame extends JFrame {
 		modificaMailButton.setEnabled(false);
 		modificaMailButton.setContentAreaFilled(false);
 		modificaMailButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
-		modificaMailButton.setBounds(552, 518, 101, 42);
-		contentPane.add(modificaMailButton);
 		
 		clientiTab = new JTable();
 		clientiTab.addMouseListener(new MouseAdapter() {
@@ -346,18 +321,101 @@ public class ClientiFrame extends JFrame {
 		
 		venditoreLabel = new JLabel("");
 		venditoreLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/delivery-courier.png")));
-		venditoreLabel.setBounds(567, 412, 67, 72);
-		contentPane.add(venditoreLabel);
 		
 		mangoLabel = new JLabel("");
 		mangoLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/mango.png")));
-		mangoLabel.setBounds(475, 432, 46, 52);
-		contentPane.add(mangoLabel);
 		
 		melaLabel = new JLabel("");
 		melaLabel.setIcon(new ImageIcon(ClientiFrame.class.getResource("/immagini/mela.png")));
-		melaLabel.setBounds(683, 432, 46, 52);
-		contentPane.add(melaLabel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+						.addComponent(inserimentoClientiPanel, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(CFLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(nomeLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(cognomeLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(dataNascitaLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(sessoLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(cittaLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(provinciaLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(14)
+							.addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(55)
+							.addComponent(mangoLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addGap(46)
+							.addComponent(venditoreLabel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+							.addGap(49)
+							.addComponent(melaLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(annullaButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+							.addGap(31)
+							.addComponent(modificaMailButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+							.addGap(30)
+							.addComponent(eliminaButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(inserimentoClientiPanel, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(52)
+					.addComponent(CFLabel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(nomeLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(cognomeLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(dataNascitaLabel, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(sessoLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(cittaLabel, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(provinciaLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(72)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(20)
+							.addComponent(mangoLabel, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+						.addComponent(venditoreLabel, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(20)
+							.addComponent(melaLabel, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+					.addGap(34)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(annullaButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(modificaMailButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(eliminaButton, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)))
+		);
+		contentPane.setLayout(gl_contentPane);
+		pack();
 	}
 	public void setData(String[] etichetteAggiornate) {
 		CFLabel.setText("CF: " + etichetteAggiornate[0]);
