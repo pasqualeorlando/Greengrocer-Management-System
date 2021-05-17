@@ -42,12 +42,14 @@ public class RifornimentoFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel quantitaNegozioLabel = new JLabel("Quantit\u00E0 Negozio: " + p.getQuantitaNegozio());
+		quantitaNegozioLabel.setForeground(Color.WHITE);
 		quantitaNegozioLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		quantitaNegozioLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		quantitaNegozioLabel.setBounds(70, 69, 327, 17);
 		contentPane.add(quantitaNegozioLabel);
 		
 		JLabel quantitaDepositoLabel = new JLabel("Quantit\u00E0 Deposito: " + p.getQuantitaDeposito());
+		quantitaDepositoLabel.setForeground(Color.WHITE);
 		quantitaDepositoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		quantitaDepositoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		quantitaDepositoLabel.setBounds(70, 106, 354, 17);
@@ -66,7 +68,7 @@ public class RifornimentoFrame extends JFrame {
 				controller.rifornisciProdotto(p, (double)rifornimentoSpinner.getValue(), committente);
 			}
 		});
-		salvaButton.setForeground(Color.BLACK);
+		salvaButton.setForeground(Color.WHITE);
 		salvaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		salvaButton.setEnabled(true);
 		salvaButton.setContentAreaFilled(false);
@@ -81,7 +83,7 @@ public class RifornimentoFrame extends JFrame {
 				controller.vaiProdotti(committente, attuale);
 			}
 		});
-		annullaButton.setForeground(Color.BLACK);
+		annullaButton.setForeground(Color.WHITE);
 		annullaButton.setFont(new Font("Georgia", Font.ITALIC, 15));
 		annullaButton.setContentAreaFilled(false);
 		annullaButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.WHITE));
@@ -89,12 +91,14 @@ public class RifornimentoFrame extends JFrame {
 		contentPane.add(annullaButton);
 		
 		JLabel rifornimentoLabel = new JLabel("Rifornimento:");
+		rifornimentoLabel.setForeground(Color.WHITE);
 		rifornimentoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		rifornimentoLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		rifornimentoLabel.setBounds(70, 147, 137, 17);
 		contentPane.add(rifornimentoLabel);
 		
 		JLabel modificaQuantitaLabel = new JLabel("Modifica quantit\u00E0 per " + p.getNome());
+		modificaQuantitaLabel.setForeground(Color.WHITE);
 		modificaQuantitaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		modificaQuantitaLabel.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 16));
 		modificaQuantitaLabel.setBounds(10, 21, 414, 37);

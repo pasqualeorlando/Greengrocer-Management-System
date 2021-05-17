@@ -81,7 +81,7 @@ public class ProdottoDAOPostgresImpl implements ProdottoDAO {
 	
 	public void aggiornaQuantita(Prodotto P, double quantitaDaRifornire) throws SQLException{
 		
-		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 || quantitadeposito <> 0)");
+		PreparedStatement statement = connessione.prepareStatement("UPDATE prodotto SET quantitanegozio = quantitanegozio + ?, quantitadeposito = quantitadeposito - ? WHERE nome = ? AND marca = ? AND (quantitanegozio <> 0 OR quantitadeposito <> 0)");
 		statement.setDouble(1, quantitaDaRifornire);
 		statement.setDouble(2, quantitaDaRifornire);
 		statement.setString(3, P.getNome());

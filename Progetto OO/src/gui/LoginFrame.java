@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.border.MatteBorder;
 
 import controller.Controller;
+import javax.swing.SpringLayout;
 
 public class LoginFrame extends JFrame {
 
@@ -48,20 +49,21 @@ public class LoginFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setBounds(100, 233, 128, 30);
 		usernameLabel.setForeground(new Color(255, 255, 255));
 		usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		usernameLabel.setFont(new Font("Georgia", Font.BOLD, 17));
-		usernameLabel.setBounds(95, 228, 128, 30);
 		contentPane.add(usernameLabel);
 		
 		JLabel passwordLabel = new JLabel("Password :");
+		passwordLabel.setBounds(100, 273, 128, 30);
 		passwordLabel.setForeground(new Color(255, 255, 255));
 		passwordLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		passwordLabel.setFont(new Font("Georgia", Font.BOLD, 17));
-		passwordLabel.setBounds(95, 268, 128, 30);
 		contentPane.add(passwordLabel);
 		
 		usernameTF = new JTextField();
+		usernameTF.setBounds(244, 233, 239, 30);
 		usernameTF.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -71,11 +73,11 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		usernameTF.setFont(new Font("Georgia", Font.PLAIN, 17));
-		usernameTF.setBounds(239, 228, 239, 30);
 		contentPane.add(usernameTF);
 		usernameTF.setColumns(10);
 		
 		passPF = new JPasswordField();
+		passPF.setBounds(244, 273, 239, 30);
 		passPF.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -84,10 +86,10 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		passPF.setFont(new Font("Georgia", Font.PLAIN, 17));
-		passPF.setBounds(239, 268, 239, 30);
 		contentPane.add(passPF);
 		
 		JButton entraButton = new JButton("Entra");
+		entraButton.setBounds(255, 326, 101, 38);
 		entraButton.setContentAreaFilled(false);
 		entraButton.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(255, 255, 255)));
 		entraButton.addMouseListener(new MouseAdapter() {
@@ -100,28 +102,27 @@ public class LoginFrame extends JFrame {
 		entraButton.setFont(new Font("Georgia", Font.ITALIC, 16));
 		entraButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		entraButton.setBackground(new Color(255, 255, 255));
-		entraButton.setBounds(250, 321, 101, 38);
 		contentPane.add(entraButton);
 		
 		JLabel foto = new JLabel("");
+		foto.setBounds(244, 72, 128, 128);
 		foto.setIcon(new ImageIcon(LoginFrame.class.getResource("/immagini/profile.png")));
-		foto.setBounds(239, 67, 128, 128);
 		contentPane.add(foto);
 		
 		JLabel titoloLabel = new JLabel("");
+		titoloLabel.setBounds(54, 16, 497, 51);
 		titoloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titoloLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/immagini/logo login.png")));
-		titoloLabel.setBounds(49, 11, 497, 51);
 		contentPane.add(titoloLabel);
 		
 		JLabel corniceSxLabel = new JLabel("");
+		corniceSxLabel.setBounds(-62, 392, 390, 128);
 		corniceSxLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/immagini/boh.png")));
-		corniceSxLabel.setBounds(-67, 387, 390, 128);
 		contentPane.add(corniceSxLabel);
 		
 		JLabel corniceDxLabel = new JLabel("");
+		corniceDxLabel.setBounds(241, 291, 431, 248);
 		corniceDxLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/immagini/frutta.png")));
-		corniceDxLabel.setBounds(236, 286, 431, 248);
 		contentPane.add(corniceDxLabel);
 	}
 }

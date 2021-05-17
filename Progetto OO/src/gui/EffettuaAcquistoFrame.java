@@ -340,7 +340,7 @@ public class EffettuaAcquistoFrame extends JFrame {
 		
 		JPanel riepilogoPanel = new JPanel();
 		riepilogoPanel.setBackground(new Color(0, 102, 0));
-		riepilogoPanel.setBounds(0, 0, 375, 635);
+		riepilogoPanel.setBounds(0, 0, 375, 571);
 		contentPane.add(riepilogoPanel);
 		riepilogoPanel.setLayout(null);
 		
