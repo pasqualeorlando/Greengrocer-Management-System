@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import classi.*;
-import dao.*;
+import classi.Persona;
+import classi.CittaItaliana;
+import dao.PersonaDAO;
 
 public class PersonaDAOPostgresImpl implements PersonaDAO{
 	
@@ -148,7 +149,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 		return daRestituire;
 	}
 	
-public ArrayList<Object[]> getClientiPerPunti() throws SQLException{
+	public ArrayList<Object[]> getClientiPerPunti() throws SQLException{
 		
 		PreparedStatement statement = connessione.prepareStatement("SELECT * FROM persona AS P JOIN differenziazionepunti AS DIFF ON DIFF.persona = P.cf");
 		ResultSet risultato = statement.executeQuery();

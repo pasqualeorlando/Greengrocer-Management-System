@@ -3,7 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import classi.*;
+import classi.Persona;
 
 public interface PersonaDAO {
 	

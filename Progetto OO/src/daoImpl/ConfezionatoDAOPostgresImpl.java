@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ConfezionatoDAOPostgresImpl {
+import dao.ConfezionatoDAO;
+
+public class ConfezionatoDAOPostgresImpl implements ConfezionatoDAO{
 	
 	private Connection connessione;
 	

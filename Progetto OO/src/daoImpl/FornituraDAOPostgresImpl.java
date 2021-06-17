@@ -75,10 +75,6 @@ public class FornituraDAOPostgresImpl implements FornituraDAO{
 			temp[3] = risultato.getString("quantitafornita");
 			temp[4] = risultato.getString("nome");
 			daRestituire.add(temp);
-			/*for(Object[] p : daRestituire) {
-				System.out.println(p[0] + " " + p[1] + " " + p[2] + " " + p[3] + " " + p[4]);
-			}
-			System.out.println();*/
 		}
 		
 		return daRestituire;

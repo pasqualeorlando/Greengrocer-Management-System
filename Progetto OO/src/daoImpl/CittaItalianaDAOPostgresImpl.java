@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dao.*;
+import dao.CittaItalianaDAO;
 
 public class CittaItalianaDAOPostgresImpl implements CittaItalianaDAO{
 	

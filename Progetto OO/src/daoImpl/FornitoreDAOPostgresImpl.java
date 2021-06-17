@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classi.Fornitore;
-import dao.*;
+import dao.FornitoreDAO;
 
 public class FornitoreDAOPostgresImpl implements FornitoreDAO{
 	
