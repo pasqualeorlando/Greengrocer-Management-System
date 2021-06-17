@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import classi.Acquisto;
 import classi.Persona;
 import controller.Controller;
 

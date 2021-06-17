@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 
-import classi.*;
+import classi.Persona;
 import controller.Controller;
 
 import javax.swing.ImageIcon;

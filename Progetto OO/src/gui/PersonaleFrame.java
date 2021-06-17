@@ -20,10 +20,11 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import classi.CittaItaliana;
 import classi.Persona;
 import controller.Controller;
-import enumerazioni.*;
+import enumerazioni.TSesso;
+import enumerazioni.TRuolo;
+
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;

@@ -22,7 +22,8 @@ import java.awt.event.MouseEvent;
 
 import classi.Persona;
 import controller.Controller;
-import enumerazioni.*;
+import enumerazioni.TSesso;
+
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
