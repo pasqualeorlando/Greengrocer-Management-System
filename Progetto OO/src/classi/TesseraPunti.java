@@ -43,7 +43,10 @@ public class TesseraPunti {
 		this.scadenza = scadenza;
 	}
 	public void setScadenza(String scadenza) {
-		this.scadenza = LocalDate.parse(scadenza, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
+		if(scadenza.equals(""))
+			this.scadenza = null;
+		else
+			this.scadenza = LocalDate.parse(scadenza, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ITALIAN));
 	}
 	public int getPuntiFrutta() {
 		return puntiFrutta;

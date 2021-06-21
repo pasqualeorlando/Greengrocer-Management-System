@@ -19,14 +19,15 @@ public class Persona {
 	private TRuolo ruolo;
 	private TPersona tipo;
 	private ArrayList<Acquisto> acquisti;
-	private String codiceBarre;
+	//private String codiceBarre;
+	private TesseraPunti tessera;
 	private CittaItaliana natoIn;
 	
 	//Costruttori
 	
 	//Costruttore completo di tutti gli attributi
 	public Persona(String nome, String cognome, String cF, LocalDate dataNascita, String email, String sesso,
-			String ruolo, String tipo, ArrayList<Acquisto> acquisti, String codiceBarre, CittaItaliana natoIn) {
+			String ruolo, String tipo, ArrayList<Acquisto> acquisti, TesseraPunti tessera, CittaItaliana natoIn) {
 		this.setNome(nome);
 		this.setCognome(cognome);
 		this.setCF(cF);
@@ -36,7 +37,7 @@ public class Persona {
 		this.setRuolo(ruolo);
 		this.setTipo(tipo);
 		this.setAcquisti(acquisti);
-		this.setCodiceBarre(codiceBarre);
+		this.setTessera(tessera);
 		this.setNatoIn(natoIn);
 		this.checkInfo();
 	}
@@ -169,11 +170,17 @@ public class Persona {
 	public void setAcquisti(ArrayList<Acquisto> acquisti) {
 		this.acquisti = acquisti;
 	}
-	public String getCodiceBarre() {
+	/*public String getCodiceBarre() {
 		return codiceBarre;
 	}
 	public void setCodiceBarre(String codiceBarre) {
 		this.codiceBarre = codiceBarre;
+	}*/
+	public TesseraPunti getTessera() {
+		return tessera;
+	}
+	public void setTessera(TesseraPunti t) {
+		tessera = t;
 	}
 	public CittaItaliana getNatoIn() {
 		return natoIn;

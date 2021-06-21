@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import classi.Persona;
+import classi.TesseraPunti;
 import classi.CittaItaliana;
 import dao.PersonaDAO;
 
@@ -35,7 +36,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 		risultato.next();
 		Persona p = new Persona(risultato.getString("nome"), risultato.getString("cognome"), risultato.getString("cf"), 
 								risultato.getDate("datanascita").toLocalDate(), risultato.getString("email"), risultato.getString("sesso"), 
-								risultato.getString("ruolo"), risultato.getString("tipo"), null, risultato.getString("codicebarre"),
+								risultato.getString("ruolo"), risultato.getString("tipo"), null, new TesseraPunti(risultato.getString("codicebarre"),"", 0,0,0,0,0,0),
 								new CittaItaliana(risultato.getString("denominazione"), risultato.getString("provincia")));
 		return p;
 	}
@@ -48,7 +49,7 @@ public class PersonaDAOPostgresImpl implements PersonaDAO{
 		risultato.next();
 		Persona p = new Persona(risultato.getString("nome"), risultato.getString("cognome"), risultato.getString("cf"), 
 								risultato.getDate("datanascita").toLocalDate(), risultato.getString("email"), risultato.getString("sesso"), 
-								risultato.getString("ruolo"), risultato.getString("tipo"), null, risultato.getString("codicebarre"),
+								risultato.getString("ruolo"), risultato.getString("tipo"), null, new TesseraPunti(risultato.getString("codicebarre"),"", 0,0,0,0,0,0),
 								new CittaItaliana(risultato.getString("denominazione"), risultato.getString("provincia")));
 		return p;
 	}
