@@ -93,6 +93,8 @@ public class Controller {
 	//Questo metodo chiude la homepage e torna nella schermata di login
 	public void exit() {     
 		homepage.dispose();
+		login.dispose();
+		login = new LoginFrame(this);
 		login.setVisible(true);
 	}
 	
