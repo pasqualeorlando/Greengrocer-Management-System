@@ -56,6 +56,8 @@ public class Controller {
         connection = null;
 
         try{
+        	
+        	//Inizializzazione della connessione al DB e creazione dei DAO
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             personaDAO = new PersonaDAOPostgresImpl(connection);
@@ -86,18 +88,22 @@ public class Controller {
 	}
 	
 	//Sezione dedicata ai metodi applicati per passare da un frame all'altro
-
-	public void exit() {    //questa funzione chiude la homepage e torna nella schermata di login 
+	
+	
+	//Questo metodo chiude la homepage e torna nella schermata di login
+	public void exit() {     
 		homepage.dispose();
 		login.setVisible(true);
 	}
 	
+	//Questo metodo chiude qualsiasi degli altri frame e apre la homepage
 	public void vaiHomepage(JFrame framePrecedente, Persona p) {
 		homepage = new HomepageFrame(this, p);
 		homepage.setVisible(true);
 		framePrecedente.dispose();
 	}
 	
+	//Questo metodo apre il frame di modifica account (cioè quello che permette di modificare la mail)
 	public void vaiModificaAccount(JFrame provenienza, Persona committente, String CFPersonaDaModificare) {
 		try {
 			Persona daModificare = personaDAO.getPersonaDaCF(CFPersonaDaModificare);
@@ -189,8 +195,10 @@ public class Controller {
 	
 	//Sezione dedicata ai metodi utilizzati nei singoli frame
 	
-	//metodo utilizzato nel frame di Login
-	public void validaCredenziali(String user, String password) {  //questo metodo controlla se le credenziali sono corrette
+	/*Metodo utilizzato nel frame di Login per controllare se le credenziali del dipendente sono corrette
+	 * e in tal caso apre la schermata di homepage. Se le credenziali non sono corrette riporta un errore
+	 */
+	public void validaCredenziali(String user, String password) {
 		if(user.length() == 0 || password.length() == 0) {
 			JOptionPane.showInternalMessageDialog(null, "Inserire entrambe le informazioni!", "Errore durante l'accesso", JOptionPane.ERROR_MESSAGE);
 		}else {
@@ -210,8 +218,11 @@ public class Controller {
 		}
 	}
 	
-	//metodo utilizzato nel frame di ModificaAccount
-	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) { //metodo che salva una nuova mail
+	/*Metodo utilizzato nel frame di ModificaAccount.
+	 * prima controlla che la mail sia diversa da quella attuale e che sia nel formato corretto
+	 * poi prova a modificarla nel db e infine torna alla schermata da cui abbiamo invocato il metodo
+	 */
+	public void salvaNuovaMail(String newMail, Persona daModificare, Persona committente) {
 		if(newMail.equals(daModificare.getEmail()))
 			JOptionPane.showInternalMessageDialog(null, "La nuova mail deve essere diversa da quella attuale", "Errore", JOptionPane.ERROR_MESSAGE);
 		else if(!newMail.matches("^(.+)@(.+)$"))
@@ -238,8 +249,10 @@ public class Controller {
 		}
 	}
 
-	//metodi utilizzati nel frame Personale
-	public Object[][] getPersonale(){  //questo metodo prende tutto il personale
+	//Metodi utilizzati nel frame Personale
+	
+	//Questo metodo restituisce tutto il personale contenuto nel database
+	public Object[][] getPersonale(){
 		int i = 0;
 		try {
 			int len = personaDAO.getPersonale().size();
@@ -264,8 +277,12 @@ public class Controller {
 		}
 	}
 	
+	/*Questo metodo permette di modificare il ruolo di un dipendente
+	 * controllando prima che l'operazione sia possibile (quindi che non puoi modificare il tuo ruolo e non puoi modificare un titolare)
+	 * o che il profilo scelto non abbia già quel ruolo.
+	 * Se i controlli vanno a buon fine si procede con la modifica nel DB
+	 */
 	public boolean modificaRuoloDaCF(String nuovoRuolo, Persona committente, String cfPersonaDaModificare) {
-		//questo metodo modifica il ruolo di un dipendente 
 		try{
 			Persona personaDaModificare = personaDAO.getPersonaDaCF(cfPersonaDaModificare);
 			if(personaDaModificare.getCF().equals(committente.getCF())) {
@@ -290,8 +307,10 @@ public class Controller {
 		}
 	}
 	
-	//metodi utilizzati nel frame Clienti
-	public Object[][] getClienti(){ //metodo che prende tutti i clienti dal DB
+	//Metodi utilizzati nel frame Clienti
+	
+	//Questo metodo restituisce tutti i clienti presenti nel DB
+	public Object[][] getClienti(){
 			int i = 0;
 			try {
 				int len = personaDAO.getClienti().size();
@@ -316,8 +335,10 @@ public class Controller {
 			}
 		}
 	
-	//metodi utilizzati nel frame Prodotti 
-	public void aggiornaLabelsProdotti(String nome, String marca) { //aggiorna le labels nella finestra dei prodotti
+	//Metodi utilizzati nel frame Prodotti 
+	
+	//Questo metodo aggiorna le labels nel frame Prodotti ogniqualvolta viene selezionato un nuovo prodotto
+	public void aggiornaLabelsProdotti(String nome, String marca) {
 		try {
 			Prodotto prod = prodottoDAO.getProdottoDaNomeMarca(nome, marca);
 			Object[] aggiornamento = {prod.getNome(), prod.getPaeseDiProvenienza(), prod.getMarca(), prod.getDataScadenza(),
@@ -330,7 +351,8 @@ public class Controller {
 		}
 	}
 	
-	public Object[][] getProdotti(){ //metodo che prende tutti i prodotti 
+	//Questo metodo restituisce tutti i prodotti presenti nel DB
+	public Object[][] getProdotti(){
 		int i = 0;
 		try {
 			int len = prodottoDAO.getProdotti().size();
@@ -354,8 +376,11 @@ public class Controller {
 		}
 	}
 	
+	/*Metodo che modifica lo sconto di un prodotto dati il nome e la marca
+	 * controllando prima che il prodotto non abbia già quello sconto.
+	 * Se l'operazione va a buon fine viene aggiornato anche il DB
+	 */
 	public void aggiornaScontoProdotto(String nomeProdotto, String marcaProdotto, int nuovoSconto) {
-		//metodo che modifica lo sconto di un prodotto dati il nome e la marca 
 		try {
 			Prodotto prodottoDaAggiornare = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
 			if(prodottoDaAggiornare.getScontoPercentuale() == nuovoSconto)
@@ -370,9 +395,9 @@ public class Controller {
 		}
 	}
 	
-	//metodo utilizzato nel frame di rifornimento
+	//Metodo utilizzato nel frame di rifornimento
+	//Rifornisce il prodotto selezionato nel frame ProdottiFrame aggiornandone le quantità (sia in negozio che in deposito)
 	public void rifornisciProdotto(Prodotto p, double quantitaDaRifornire, Persona committente) {
-			//rifornisce il prodotto selezionato nel frame Prodotti
 			if(quantitaDaRifornire == 0)
 				JOptionPane.showInternalMessageDialog(null, "Non puoi rifornire di 0 unità.", "Errore", JOptionPane.ERROR_MESSAGE);
 			else {
@@ -389,9 +414,13 @@ public class Controller {
 			}
 		}
 	
-	//metodi utilizzati nel frame nuovo fornitore
+	//Metodi utilizzati nel frame nuovo fornitore
+	/*Metodo che permette di inserire un nuovo fornitore specificandone i dati essenziali
+	 * quali partita iva, nome società, anagrafica del titolare. Viene prima controllato che i dati siano
+	 * stati inseriti tutti e poi si procede con l'inserimento. Altri controlli sono fatti durante
+	 * l'inserimento nel DB con delle procedure in PLSQL.
+	 */
 	public void inserisciFornitore(String pIva, String nomeSocieta, String nomeTitolare, String cognomeTitolare) {
-			//inserisce un nuovo fornitore 
 			if(pIva.equals("") || nomeSocieta.equals("") || nomeTitolare.equals("") || cognomeTitolare.equals("")) 
 				JOptionPane.showInternalMessageDialog(null, "Inserire tutti i campi richiesti.", "Errore", JOptionPane.ERROR_MESSAGE);
 			else {
@@ -407,8 +436,9 @@ public class Controller {
 			
 		}
 	
-	//metodi utilizzati nel frame di nuova fornitura
-	public ArrayList<String> getFornitoriPIvaNomeSocieta(){  //prende la PIva e il nome della società di tutti i fornitori 
+	//Metodi utilizzati nel frame di nuova fornitura
+	//Metodo che restituisce la PIva e il nome società di tutti i fornitori presenti nel DB
+	public ArrayList<String> getFornitoriPIvaNomeSocieta(){
 			try {
 				return fornitoreDAO.getFornitoriPIvaNomeSocieta();
 			} catch (SQLException e) {
@@ -416,11 +446,12 @@ public class Controller {
 				return null;
 			}
 		}
-		
+	
+	/*Metodo che inserisce un prodotto nel DB. Viene prima controllato che il prodotto non sia già presente (e se esiste ne controlla le quantità).
+	 * Se il prodotto non è nel DB allora in base al tipo di prodotto utilizzerà delle variabili diverse per specificarne gli attributi
+	 * e procederà con l'inserimento.
+	 */
 	public void inserisciProdotto(String pIvaFornitore, float prezzoFornitura, String dataFornitura, String tipoProdotto, String nomeProdotto, String dataScadenza, String marca, String paese, float quantitaNegozio, float quantitaDeposito, float prezzo, String jolly1, String jolly2, Object jolly3) {
-			//inserisce un prodotto
-			
-			//controllo prima che il prodotto non sia già presente
 			try {
 				Prodotto P = prodottoDAO.getProdottoDaNomeMarca(nomeProdotto, marca);
 				if(P != null && (P.getQuantitaDeposito() != 0 || P.getQuantitaNegozio() != 0)) {
@@ -638,8 +669,9 @@ public class Controller {
 			nuovaFornitura.resetForm();
 		}
 	
-	//metodi utilizzati per il frame di effettua acquisto
-	public ArrayList<String> getProdottiAcquistabili(){ //prende tutti i prodotti acquistabili
+	//Metodi utilizzati per il frame di effettua acquisto
+	//Metodo che restituisce tutti i prodotti acquistabili (cioè non scaduti) contenuti nel DB
+	public ArrayList<String> getProdottiAcquistabili(){
 		ArrayList<String> daRestituire = new ArrayList<String>();
 		for(Object[] prodotto : getProdotti()) {
 			Prodotto p = new Prodotto(prodotto[0].toString(), prodotto[1].toString(), prodotto[2].toString(), Float.valueOf(prodotto[4].toString()), Float.valueOf(prodotto[5].toString()), Integer.valueOf(prodotto[6].toString()), Float.valueOf(prodotto[7].toString()), null);
@@ -655,6 +687,7 @@ public class Controller {
 		return daRestituire;
 	}
 	
+	//Metodo che inizializza un acquisto inserendolo nel DB e restituendo il suo codice univoco
 	public int creaAcquisto(char cassa, String cf) { 
 		if(cassa == '\0') {
 			JOptionPane.showInternalMessageDialog(null, "Inserire il numero di cassa", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -675,7 +708,8 @@ public class Controller {
 		}
 	}
 	
-	public ArrayList<String> getClientiPerComboBox(){ //prende tutti i clienti registrati 
+	//Metodo che restituisce tutti i clienti registrati prendendoli dal DB
+	public ArrayList<String> getClientiPerComboBox(){
 		ArrayList<String> risultato = new ArrayList<String>();
 		
 		try {
@@ -689,8 +723,8 @@ public class Controller {
 		}
 	}
 	
+	//Metodo che inserisce un prodotto in un dato acquisto specificandone nome, marca e quantità
 	public void inserisciSpecificaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto, float quantitaAcquistata) {
-		//inserisce in specifica acquisto, date le informazioni passate al metodo
 		try {
 			int idProdotto = prodottoDAO.getIdProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
 			specAcquistoDAO.inserisciSpecificaAcquisto(idAcquisto, idProdotto, quantitaAcquistata);
@@ -700,7 +734,8 @@ public class Controller {
 		}
 	}
 	
-	public Prodotto getProdottoDaNomeMarca(String nome, String marca) { //prende i prodotti dati il nome e la marca
+	//Metodo che prende i prodotti dati il nome e la marca
+	public Prodotto getProdottoDaNomeMarca(String nome, String marca) {
 		try {
 			return prodottoDAO.getProdottoDaNomeMarca(nome, marca);
 		} catch (SQLException e) {
@@ -709,7 +744,8 @@ public class Controller {
 		}
 	}
 	
-	public ArrayList<Object[]> getProdottiAcquistoDaCod(int idAcquisto){ //prende i prodotti dato il codice dell'acquisto
+	//Metodo che prende i prodotti di un determinato acquisto dato il codice dell'acquisto
+	public ArrayList<Object[]> getProdottiAcquistoDaCod(int idAcquisto){
 		try {
 			return specAcquistoDAO.getProdottiDaIdAcquisto(idAcquisto);
 		} catch (SQLException e) {
@@ -718,7 +754,8 @@ public class Controller {
 		}
 	}
 	
-	public void rimuoviProdottoDaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto) { //rimuove un prodotto da un acquisto
+	//Metodo che rimuove un prodotto da un acquisto
+	public void rimuoviProdottoDaAcquisto(int idAcquisto, String nomeProdotto, String marcaProdotto) {
 		try {
 			int codProdotto = prodottoDAO.getIdProdottoDaNomeMarca(nomeProdotto, marcaProdotto);
 			specAcquistoDAO.rimuoviProdotto(idAcquisto, codProdotto);
@@ -728,7 +765,10 @@ public class Controller {
 		}
 	}
 	
-	public float ricalcolaTotaleAcquisto(int idAcquisto, int scontoPercentuale) { //ricalcola il totale dell'acquisto, dato uno sconto
+	/*Metodo che ricalcola e restituisce il totale dell'acquisto indicato dal codice dato anche lo sconto.
+	 * Il calcolo è effettuato anche in base allo sconto applicato ai singoli prodotti
+	 */
+	public float ricalcolaTotaleAcquisto(int idAcquisto, int scontoPercentuale) {
 		float totale = 0.0f;
 		
 		try {
@@ -745,7 +785,10 @@ public class Controller {
 		}
 	}
 	
-	public boolean impostaAcquistoCompletato(int idAcquisto, float pagato, float daPagare) { //completa l'acquisto
+	/*Metodo che imposta l'acquisto a completo così che il DB possa aggiornare automaticamente
+	 * le quantità dei prodotti e il totale. Restituisce true se l'operazione è andata a buon fine
+	 */
+	public boolean impostaAcquistoCompletato(int idAcquisto, float pagato, float daPagare) {
 		try {
 			if(pagato < daPagare) {
 				JOptionPane.showInternalMessageDialog(null, "Il cliente non ha pagato", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -761,7 +804,9 @@ public class Controller {
 		}
 	}
 	
-	//metodo utilizzato nel frame di visualizzazione scontrino
+	/*Metodo utilizzato nel frame di visualizzazione scontrino.
+	 * Stampa uno scontrino in linguaggio HTML per permettere una personalizzazione completa
+	 */
 	public String generaScontrino(int idAcquisto, float pagato, float resto) {
 		StringBuilder sb = new StringBuilder();
 		
@@ -851,9 +896,9 @@ public class Controller {
 		}
 	}
 	
-	//metodi utilizzati per il frame di ricerca clienti
+	//Metodi utilizzati per il frame di ricerca clienti
+	//Metodo che restituisce i clienti differenziandoli per categoria di prodotti acquistati (quantità)
 	public ArrayList<Object[]> getClientiPerTipologiaProdotto(){
-			//prende tutti i clienti, differenziandoli per categoria di prodotti acquistati
 			try {
 				return personaDAO.getClientiPerTipologiaProdotto();
 			}catch(SQLException e) {
@@ -861,8 +906,9 @@ public class Controller {
 				return null;
 			}
 		}
-		
-	public ArrayList<Object[]> getClientiPerPunti(){ //prende tutti i clienti, differenziandoli per i punti sulla tessera
+	
+	//Metodo che restituisce i clienti differenziandoli in base ai punti accumulati sulla tessera
+	public ArrayList<Object[]> getClientiPerPunti(){
 			try {
 				return personaDAO.getClientiPerPunti();
 			}catch(SQLException e) {
@@ -871,9 +917,9 @@ public class Controller {
 			}
 		}
 	
-	//metodi utilizzati per il frame di visualizza acquisti
+	//Metodi utilizzati per il frame di visualizza acquisti
+	//Metodo che prende tutti gli acquisti a partire da una data di inizio e una di fine
 	public ArrayList<Object[]> getAcquisti(String dataInizio, String dataFine) {
-			//prende tutti gli acquisti, date le date di inizio e di fine
 			try {
 				if(dataInizio.equals("") || dataFine.equals(""))
 					return acquistoDAO.getAcquistiCompletati();
@@ -891,8 +937,9 @@ public class Controller {
 				}
 			}
 		}
-		
-	public ArrayList<Object[]> getProdottiAcquisto(String dataOra, char cassa){ //prende tutti i prodotti di un determinato acquisto
+	
+	//Metodo che restituisce i prodotti di un acquisto dati dataOra e cassa
+	public ArrayList<Object[]> getProdottiAcquisto(String dataOra, char cassa){
 			int idAcquisto;
 			
 			try {
@@ -904,9 +951,9 @@ public class Controller {
 			}
 		}
 	
-	//metodo utilizzato per il frame di visualizza forniture
-	public ArrayList<Object[]> getForniture(String dataInizio, String dataFine) { 
-		//prende tutte le forniture, date le date di inizio e di fine
+	//Metodo utilizzato per il frame di visualizza forniture
+	//Restituisce tutte le forniture fatte tra la data di inizio e di fine specificate nei parametri
+	public ArrayList<Object[]> getForniture(String dataInizio, String dataFine) {
 		try {
 			if(dataInizio.equals("") || dataFine.equals(""))
 				return fornituraDAO.getForniture();
@@ -926,9 +973,12 @@ public class Controller {
 	}
 	
 	
-	//sezione dedicata a metodi utilizzati in più frame
+	//Sezione dedicata a metodi utilizzati in più frame
 	
-	public void aggiornaLabels(String cf, String finestra) {  //aggiorna le labels nelle finestre di gestione del personale e dei clienti
+	/*Aggiorna le labels nei frame di gestione del Personale(PersonaleFrame) e dei clienti (ClientiFrame)
+	 * impostando tutti i dati necessari alla visualizzazione
+	 */
+	public void aggiornaLabels(String cf, String finestra) {
 			try {
 				Persona p = personaDAO.getPersonaDaCF(cf);
 				String[] aggiornamento = {p.getCF(),p.getNome(),p.getCognome(),p.getDataNascita().toString(),p.getEmail(),p.getSesso().toString(),p.getNatoIn().getDenominazione(), p.getNatoIn().getProvincia()};
@@ -947,9 +997,9 @@ public class Controller {
 				JOptionPane.showInternalMessageDialog(null, "Selezionare una persona dalla tabella", "Aggiornamento fallito", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
+	
+	//Metodo che elimina una persona (Personale o Cliente) dato il codice fiscale (non si può eliminare il profilo corrente)
 	public boolean eliminaPersonaDaCF(String cfPersonaDaEliminare, Persona committente) { 
-			//metodo che elimina una persona, usato nei frame Clienti e Personale
 			try {
 				if(cfPersonaDaEliminare.equals(committente.getCF())) {
 					JOptionPane.showInternalMessageDialog(null, "Non puoi eliminare il profilo corrente", "Eliminazione fallita", JOptionPane.ERROR_MESSAGE);
@@ -966,9 +1016,11 @@ public class Controller {
 				return false;
 			}
 		}
-		
+	
+	/*Metodo che inserisce una persona (Personale o Cliente). Prima controlla che tutti i campi siano stati inseriti
+	 * correttamente in base al tipo della persona e poi prova ad inserirla. Vengono effettuati controlli anche lato DB.
+	 */
 	public boolean inserisciPersona(String nuovoNome, String nuovoCognome, String nuovaDataNascita, String nuovaMail, String nuovoSesso, String nuovoRuolo, String Tipo, String nuovaCitta, String nuovaProvincia) {
-			//metodo che inserisce una nuova persona, usato in Personale e in Clienti
 			try {
 				if(Tipo.equals(TPersona.Personale.toString())) {
 					if(nuovoNome.equals("")||nuovoCognome.equals("")||nuovaMail.equals("")
@@ -1002,8 +1054,9 @@ public class Controller {
 				return false;
 			}
 		}
-		
-	public ArrayList<String> getProvince() {  //metodo che prende tutte le province, utilizzato nei frame Personale e Clienti
+	
+	//Metodo che restituisce tutte le province d'Italia prendendole dal DB
+	public ArrayList<String> getProvince() {
 			try {
 				return cittaItalianaDAO.getProvince();
 			} catch (SQLException e) {
@@ -1012,9 +1065,9 @@ public class Controller {
 				return null;
 			}
 		}
-		
+	
+	//Metodo che prende tutte le città, dal DB, di una data provincia
 	public ArrayList<String> getCittaFromProvincia(String provincia){ 
-			//metodo che prende tutte le città data una provincia, utilizzato nei frame Personale e Clienti
 			try {
 				return cittaItalianaDAO.getCittaFromProvincia(provincia);
 			} catch (SQLException e) {
